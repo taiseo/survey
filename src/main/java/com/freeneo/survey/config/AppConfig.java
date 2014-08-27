@@ -61,7 +61,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    internalResourceViewResolver.setSuffix(".jsp");
 	    return internalResourceViewResolver;
 	}
-
+	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 	    configurer.enable();

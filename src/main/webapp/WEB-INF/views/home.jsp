@@ -12,18 +12,18 @@
 <body>
 
 <div class="login-form-wrapper">
-<form class="form-horizontal  login-form">
+<form class="form-horizontal  login-form" method="post" action="<%= request.getContextPath() %>/login">
   <h1 class="page-title">고객만족 설문조사 프로그램</h1>
   <div class="control-group">
     <label class="control-label" for="username">아이디</label>
     <div class="controls">
-      <input type="text" id="username">
+      <input type="text" id="username" name="username">
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="password">암호</label>
     <div class="controls">
-      <input type="password" id="password">
+      <input type="password" id="password" name="password">
     </div>
   </div>
   <div class="control-group">
