@@ -18,11 +18,13 @@
     FROM BOOK
   </select>
   
-  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.freeneo.survey.User" resultMap="BaseResultMap">
     SELECT
 		id, username, name, password, part, tel, email
     FROM BOOK
-    WHERE ID = #{id,jdbcType=NUMERIC}
+    WHERE username = #{username,jdbcType=VARCHAR}
+    	AND
+    	password = #{password,jdbcType=VARCHAR}
   </select>
   
   <insert id="insert" parameterType="com.freeneo.survey.domain.User">
