@@ -9,3 +9,16 @@
 	<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/css/style.css" />
 </head>
 <body>
+<c:if test="${not empty sessionScope.user}">
+	<div class="navbar  limit-width  center-block">
+	  <div class="navbar-inner">
+	    <a class="brand" href="#">고객 만족 설문</a>
+	    <ul class="nav">
+	      <li class="active"><a href="#">Home</a></li>
+	      <li><a href="#">Link</a></li>
+	      <li><a href="<%= request.getContextPath() %>/logout">로그아웃</a></li>
+	    </ul>
+	  </div>
+	</div>
+</c:if>
+

@@ -1,16 +1,39 @@
 @charset "utf-8";
+body {
+	padding-top: 10px;
+}
 .page-title {
     font-size: 1.5em;
+}
+.limit-width {
+	max-width: 900px;
+}
+.center-block {
+	margin-right: auto;
+	margin-left: auto;
+}
+l-block {
+	display: block;
+}
+.base-margin {
+	margin-bottom: 20px;
+}
+.base-padding {
+	padding: 20px;
+}
+.no-margin-bottom {
+	margin-bottom: 0;
 }
 .login-form-wrapper {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -210px;
-	margin-top: -200px;
-	width: 420px;
-	height: 400px;
+	margin-left: -200px;
+	margin-top: -250px;
+	width: 360px;
+	height: 420px;
 }
-.login-form {
-	border: 4px solid #ddd;
+.login-form-inner{
+	border: 1px solid #ddd;
 }
+.login-form {}
