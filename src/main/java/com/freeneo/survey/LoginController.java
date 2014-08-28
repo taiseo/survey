@@ -17,18 +17,34 @@ import com.freeneo.survey.domain.User;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class LoginController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpSession session, Model model) {
 		
-		return "home";
+		String viewPage = "redirect:login";
+		if(session.getAttribute("user") != null){
+			viewPage = "redirect:list";
+		}
+		
+		return viewPage;
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(){
+		return "login";
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session){
+		session.removeAttribute("user");
+		return "redirect:login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(
+	public String loginAction(
 			@RequestParam(value="username", required=true) String username,
 			@RequestParam(value="password", required=true) String password,
 			HttpSession session,
@@ -37,7 +53,7 @@ public class HomeController {
 //		model.addAttribute("serverTime", formattedDate );
 		
 		User user = null;
-		String viewPage = "home";
+		String viewPage = "login";
 		
 		if(username.equals("test") && password.equals("test")){
 			user = new User();

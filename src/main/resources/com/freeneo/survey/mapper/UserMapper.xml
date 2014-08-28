@@ -18,7 +18,7 @@
     FROM BOOK
   </select>
   
-  <select id="select" parameterType="com.freeneo.survey.User" resultMap="BaseResultMap">
+  <select id="select" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
     SELECT
 		id, username, name, password, part, tel, email
     FROM BOOK

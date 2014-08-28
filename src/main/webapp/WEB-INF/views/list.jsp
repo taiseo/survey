@@ -11,6 +11,7 @@
 </head>
 <body>
   <h1 class="page-title">설문 목록</h1>
+  <p><a href="<%= request.getContextPath() %>/logout">로그아웃</a></p>
   <ul>
       <li>목록</li>
   </ul>
