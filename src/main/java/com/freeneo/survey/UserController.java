@@ -109,4 +109,18 @@ public class UserController {
 		session.setAttribute("user", newUser);
 		return "redirect:/users/";
 	}
+	
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public String insert(
+			HttpServletRequest request,
+			Model model
+			) {
+
+		User user = new User();
+		model.addAttribute("pageTitle", "사용자 입력");
+		model.addAttribute("user", user);
+		
+		return "user_update";
+	}
+
 }
