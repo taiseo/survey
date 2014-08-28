@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class LoginController {
 	
