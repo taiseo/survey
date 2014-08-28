@@ -4,7 +4,6 @@
 
 <div class="limit-width  center-block">
 	<h1 class="page-title">${pageTitle}</h1>
-	
 	<ul>
 	    <li>목록</li>
 	</ul>
