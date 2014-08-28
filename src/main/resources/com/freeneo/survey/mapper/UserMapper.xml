@@ -5,48 +5,51 @@
   <resultMap id="BaseResultMap" type="com.freeneo.survey.domain.User">
     <id column="id" jdbcType="NUMERIC" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="part" jdbcType="VARCHAR" property="part" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="user_level" jdbcType="VARCHAR" property="userLevel" />
   </resultMap>
   
   <select id="list" resultMap="BaseResultMap">
     SELECT
- 		id, username, name, password, part, tel, email
-    FROM BOOK
+ 		*
+    FROM sv_users
   </select>
   
   <select id="select" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
     SELECT
-		id, username, name, password, part, tel, email
-    FROM BOOK
+		*
+    FROM sv_users
     WHERE username = #{username,jdbcType=VARCHAR}
     	AND
     	password = #{password,jdbcType=VARCHAR}
   </select>
   
   <insert id="insert" parameterType="com.freeneo.survey.domain.User">
-    INSERT INTO user (id, username, name, password, part, tel, email)
+    INSERT INTO user (id, username, name, password, part, tel, email, user_level)
     VALUES (#{id,jdbcType=NUMERIC}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}
+      #{password,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, , #{userLevel,jdbcType=VARCHAR}
     )
   </insert>
  
   <update id="update" parameterType="com.freeneo.survey.domain.User">
-    UPDATE user 
+    UPDATE sv_users 
     SET username = #{username,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      part = #{part,jdbcType=VARCHAR}
-      tel = #{tel,jdbcType=VARCHAR}
-      email = #{email,jdbcType=VARCHAR}
+      part = #{part,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      user_level = #{userLevel,jdbcType=VARCHAR}
     WHERE ID = #{id,jdbcType=NUMERIC}
   </update>
   
   <delete id="delete" parameterType="java.lang.Long">
-    DELETE FROM user
+    DELETE FROM sv_users
     WHERE id = #{id,jdbcType=NUMERIC}
   </delete>
   

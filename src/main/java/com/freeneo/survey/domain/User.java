@@ -1,27 +1,33 @@
 package com.freeneo.survey.domain;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @AutoProperty
 public class User {
 	private Long id;
-	private String name;
 	private String username;
 	private String password;
+	private String name;
 	private String part;
 	private String tel;
 	private String email;
+	private String userLevel;
+	
+	static Logger logger = LoggerFactory.getLogger(User.class);
 
 	public User() {
 	};
 
 	public User(Long id, String name, String username, String password, String part,
-			String tel, String email) {
+			String tel, String email, String userLevel) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
-		this.password = password;
+		setPassword(password);
 		this.part = part;
 		this.tel = tel;
 		this.email = email;
@@ -56,7 +62,8 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		// !@#$asdf 는 salt.
+		this.password = DigestUtils.sha1Hex(password + "!@#$asdf");
 	}
 
 	public String getPart() {
@@ -83,18 +90,27 @@ public class User {
 		this.email = email;
 	}
 
+	public String getUserLevel() {
+		return userLevel;
+	}
+
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		return Pojomatic.equals(this, o);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Pojomatic.hashCode(this);
 	}
-
+	
 	@Override
 	public String toString() {
 		return Pojomatic.toString(this);
 	}
+	
 }

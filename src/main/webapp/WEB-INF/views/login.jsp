@@ -14,6 +14,10 @@
 <div class="login-form-wrapper">
 <form class="form-horizontal  login-form" method="post" action="<%= request.getContextPath() %>/login">
   <h1 class="page-title">고객만족 설문조사 프로그램</h1>
+  <c:if test="${not empty login_failed_msg}">
+  	<p>${login_failed_msg}</p>
+  </c:if>
+  
   <div class="control-group">
     <label class="control-label" for="username">아이디</label>
     <div class="controls">
