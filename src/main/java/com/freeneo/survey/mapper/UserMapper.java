@@ -7,6 +7,7 @@ import com.freeneo.survey.domain.User;
 public interface UserMapper {
     List<User> list();
     User select(User user);
+    User selectById(User user);
     int insert(User user);
     int update(User user);
     int delete(User user);

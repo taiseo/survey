@@ -22,15 +22,18 @@ public class User {
 	public User() {
 	};
 
-	public User(Long id, String name, String username, String password, String part,
+	public User(Long id, String username, String password, String name, String part,
 			String tel, String email, String userLevel) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
-		setPassword(password);
+		if( ! password.equals("")){
+			setPassword(password);
+		}
 		this.part = part;
 		this.tel = tel;
 		this.email = email;
+		this.userLevel = userLevel;
 	}
 
 	public Long getId() {
@@ -62,8 +65,16 @@ public class User {
 	}
 
 	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * 이미 해시된 패스워드를 세팅할 때 사용한다.
+	 * @param passwordHashed
+	 */
+	public void setPasswordToHash() {
 		// !@#$asdf 는 salt.
-		this.password = DigestUtils.sha1Hex(password + "!@#$asdf");
+		this.password = DigestUtils.sha1Hex(this.password + "!@#$asdf");
 	}
 
 	public String getPart() {

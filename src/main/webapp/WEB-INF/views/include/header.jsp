@@ -15,7 +15,9 @@
 	    <a class="brand" href="#">고객 만족 설문</a>
 	    <ul class="nav">
 	      <li class="active"><a href="#">Home</a></li>
-	      <li><a href="#">Link</a></li>
+	      <c:if test="${sessionScope.user.userLevel == 'admin'}">
+	      	<li><a href="<%=request.getContextPath() %>/users">사용자 관리</a></li>
+	      </c:if>
 	      <li><a href="<%= request.getContextPath() %>/logout">로그아웃</a></li>
 	    </ul>
 	  </div>

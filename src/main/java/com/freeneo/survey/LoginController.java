@@ -56,6 +56,7 @@ public class LoginController {
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);
+		user.setPasswordToHash();
 		user = userService.getUser(user);
 		
 		if(user != null){

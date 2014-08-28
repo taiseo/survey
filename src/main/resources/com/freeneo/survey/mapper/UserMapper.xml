@@ -28,6 +28,13 @@
     	password = #{password,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectById" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
+    SELECT
+		*
+    FROM sv_users
+    WHERE id = #{id,jdbcType=NUMERIC}
+  </select>
+  
   <insert id="insert" parameterType="com.freeneo.survey.domain.User">
     INSERT INTO user (id, username, name, password, part, tel, email, user_level)
     VALUES (#{id,jdbcType=NUMERIC}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
@@ -39,8 +46,8 @@
   <update id="update" parameterType="com.freeneo.survey.domain.User">
     UPDATE sv_users 
     SET username = #{username,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       part = #{part,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
