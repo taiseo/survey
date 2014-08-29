@@ -21,11 +21,14 @@
 					<c:if test="${sessionScope.user.userLevel == 'admin'}">
 						<li><a href="<%=request.getContextPath()%>/users">사용자 관리</a></li>
 					</c:if>
+					<c:if test="${sessionScope.user.userLevel != 'admin' }">
+						<li><a href="<%=request.getContextPath()%>/users/${sessionScope.user.id}">내 정보</a></li>
+					</c:if>
 				</ul>
 				<ul class="nav pull-right">
 					<li>
 						<a href="<%= request.getContextPath() %>/logout">
-						${user.name } 로그아웃
+						${sessionScope.user.name } 로그아웃
 						</a>
 					</li>
 				</ul>
