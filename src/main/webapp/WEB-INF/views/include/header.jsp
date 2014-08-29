@@ -23,3 +23,26 @@
 	  </div>
 	</div>
 </c:if>
+
+<div class="limit-width center-block">
+	<c:if test="${not empty msg }">
+		<div class="alert">
+			<strong>알림!</strong> ${msg }
+		</div>
+	</c:if>
+	<c:if test="${not empty error_msg }">
+		<div class="alert alert-error">
+			<strong>에러!</strong> ${error_msg }
+		</div>
+	</c:if>
+	<c:if test="${not empty success_msg }">
+		<div class="alert alert-success">
+			<strong>성공!</strong> ${success_msg }
+		</div>
+	</c:if>
+	<c:if test="${not empty info_msg }">
+		<div class="alert alert-info">
+			<strong>알림!</strong> ${info_msg }
+		</div>
+	</c:if>
+</div>

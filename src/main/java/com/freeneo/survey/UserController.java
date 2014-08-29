@@ -51,8 +51,10 @@ public class UserController {
 
 		logger.debug(selectedUser.toString());
 		
+		model.addAttribute("pageCommand", "update");
 		model.addAttribute("pageTitle", selectedUser.getName() + " 님 정보 변경");
 		model.addAttribute("user", selectedUser);
+		model.addAttribute("httpMethod", "PUT");
 		
 		return "user_update";
 	}
@@ -117,10 +119,44 @@ public class UserController {
 			) {
 
 		User user = new User();
+		user.setUserLevel("normal");
+		model.addAttribute("pageCommand", "insert");
 		model.addAttribute("pageTitle", "사용자 입력");
 		model.addAttribute("user", user);
+		model.addAttribute("httpMethod", "POST");
 		
 		return "user_update";
+	}
+	
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public String insertAction(
+			@RequestParam(value="username") String username,
+			@RequestParam(value="password") String password,
+			@RequestParam(value="passwordConfirm") String passwordConfirm,
+			@RequestParam(value="name") String name,
+			@RequestParam(value="part") String part,
+			@RequestParam(value="tel") String tel,
+			@RequestParam(value="email") String email,
+			@RequestParam(value="userLevel") String userLevel,
+			HttpServletRequest request,
+			Model model
+			) {
+		
+		User user = new User(null, username, password, name, part, tel, email, userLevel);
+		
+		// 필수 입력 항목 검사
+		if(username.equals("") || name.equals("") || password.equals("") || passwordConfirm.equals("")){
+			model.addAttribute("error_msg", "필수 항목을 입력하지 않았습니다.");
+			model.addAttribute("user", user);
+			model.addAttribute("pageCommand", "insert");
+			model.addAttribute("httpMethod", "POST");
+			return "user_update";
+		}
+		
+		user.setPasswordToHash();
+		userService.insertUser(user);
+		
+		return "user_list";
 	}
 
 }

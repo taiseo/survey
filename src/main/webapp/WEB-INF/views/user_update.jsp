@@ -10,20 +10,29 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<c:if test="${not empty error_msg }">
-		<p>${error_msg}</p>
-	</c:if>
-	
-	<form:form method="PUT" modelAttribute="user">
+	<form:form method="${httpMethod }" modelAttribute="user">
 		<form:hidden path="username"/>
 		<table class="table  table-striped">
+			<colgroup>
+				<col width="20%"/>
+			</colgroup>
 			<tbody>
+				<c:if test="${pageCommand == 'update' }">
 				<tr>
 					<th>아이디</th>
 					<td>
 						${user.username }
 					</td>
 				</tr>
+				</c:if>
+				<c:if test="${pageCommand == 'insert' }">
+				<tr>
+					<th><form:label path="name">아이디</form:label></th>
+					<td>
+						<form:input path="username"/>
+					</td>
+				</tr>
+				</c:if>
 				<tr>
 					<th><form:label path="name">이름</form:label></th>
 					<td>
@@ -57,17 +66,27 @@
 						</form:select>
 					</td>
 				</tr>
+				
 			</tbody>
 		</table>
+
+		<c:if test="${pageCommand == 'update' }">		
+				<p class="text-center">
+					<input class="btn btn-primary btn-large" type="submit" value="저장" />
+				</p>
+		</c:if>	
 		
-		<p class="text-center">
-			<input class="btn btn-primary btn-large" type="submit" value="저장" />
-		</p>
+		<c:if test="${pageCommand == 'update' }">		
+				<h2>비밀번호 변경</h2>
+				<p>비밀번호를 변경하는 경우에만 채워 주세요.</p>
+		</c:if>
 		
-		<h2>비밀번호 변경</h2>
-		<p>비밀번호를 변경하는 경우에만 채워 주세요.</p>
 		<table class="table table-striped">
+			<colgroup>
+				<col width="20%"/>
+			</colgroup>
 			<tbody>
+				<c:if test="${pageCommand == 'update' }">
 				<tr>
 					<th>
 						<label for="oldPassword">비밀번호</label>
@@ -76,6 +95,7 @@
 						<input type="password" name="oldPassword" id="oldPassword" />
 					</td>
 				</tr>
+				</c:if>
 				<tr>
 					<th>
 						<label for="password">새 비밀번호</label>
