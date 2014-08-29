@@ -17,7 +17,6 @@
 			<div class="navbar-inner">
 				<a class="brand" href="<%=request.getContextPath()%>">고객 만족 설문</a>
 				<ul class="nav">
-					<li class="active"><a href="#">Home</a></li>
 					<c:if test="${sessionScope.user.userLevel == 'admin'}">
 						<li><a href="<%=request.getContextPath()%>/users">사용자 관리</a></li>
 					</c:if>
@@ -35,6 +34,7 @@
 			</div>
 		</div>
 	</c:if>
+	
 	<div class="limit-width center-block">
 		<c:if test="${not empty msg }">
 			<div class="alert">
