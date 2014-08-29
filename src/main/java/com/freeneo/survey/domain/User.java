@@ -69,12 +69,14 @@ public class User {
 	}
 
 	/**
-	 * 이미 해시된 패스워드를 세팅할 때 사용한다.
-	 * @param passwordHashed
+	 * 평문으로 들어있는 암호를 해시값으로 바꾼다.
+	 * 빈 값이 들어있는 경우엔 해시하지 않는다.
 	 */
 	public void setPasswordToHash() {
-		// !@#$asdf 는 salt.
-		this.password = DigestUtils.sha1Hex(this.password + "!@#$asdf");
+		if(this.password != null){
+			// !@#$asdf 는 salt.
+			this.password = DigestUtils.sha1Hex(this.password + "!@#$asdf");
+		}
 	}
 
 	public String getPart() {

@@ -11,7 +11,6 @@
 	</div>
 	
 	<form:form method="${httpMethod }" modelAttribute="user">
-		<form:hidden path="username"/>
 		<table class="table  table-striped">
 			<colgroup>
 				<col width="20%"/>
@@ -22,6 +21,7 @@
 					<th>아이디</th>
 					<td>
 						${user.username }
+						<form:hidden path="username"/>
 					</td>
 				</tr>
 				</c:if>

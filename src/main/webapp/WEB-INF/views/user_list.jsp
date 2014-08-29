@@ -11,7 +11,8 @@
 			<th>부서</th>
 			<th>전화</th>
 			<th>이메일</th>
-			<th>등급</th>		
+			<th>등급</th>
+			<th>삭제</th>
 		</tr>
 	</thead>
 	<c:forEach var="user" items="${users}">
@@ -30,6 +31,15 @@
 			<td>${user.tel}</td>
 			<td>${user.email}</td>
 			<td>${user.userLevel}</td>
+			<td>
+				<c:if test="${user.username != 'admin' }">
+					<a href="<%=request.getContextPath() %>/users/delete/${user.id}" 
+						onclick="return confirm('${user.name} 님을 정말로 삭제할까요?')"
+						class="btn btn-danger">
+						삭제
+					</a>
+				</c:if>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>

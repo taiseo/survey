@@ -30,6 +30,10 @@ public class UserService {
 		return userMapper.selectById(user);
 	}
 	
+	public User getUserByUsername(User user){
+		return userMapper.selectByUsername(user);
+	}
+	
 	public int insertUser(User user){
 		return userMapper.insert(user);
 	}

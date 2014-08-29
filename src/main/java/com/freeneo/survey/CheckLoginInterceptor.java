@@ -21,12 +21,6 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 
 		HttpSession session = request.getSession();
 		
-		// 로컬에서 개발중이면 로그인 검사 패스
-		if(request.getRemoteAddr().equals("127.0.0.1") || request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")){
-			session.setAttribute("user", new User(1L, "admin", "", "최고관리자", "최고관리자", "", "email", "admin"));
-			return true;
-		}
-		
 		if((request.getContextPath() + "/login").equals(request.getRequestURI())) {
 			return true;
 		};
@@ -36,6 +30,13 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 		};
 		
 		if(session.getAttribute("user") == null){
+			
+			// 로컬에서 개발중이면 로그인 검사 패스
+			if(request.getRemoteAddr().equals("127.0.0.1") || request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")){
+				session.setAttribute("user", new User(1L, "admin", "", "로컬임의아이디", "로컬임의아이디", "", "email", "admin"));
+				return true;
+			}
+			
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
 		}

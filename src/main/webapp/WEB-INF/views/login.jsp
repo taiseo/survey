@@ -12,9 +12,6 @@
 			class="l-block  base-spacing" src="http://lorempixel.com/400/150" alt="" />
 		<div class="login-form-inner  base-padding">
 			<h1 class="page-title  text-center" style="margin-top: 0">고객만족 설문조사 프로그램</h1> 
-			<c:if test="${not empty login_failed_msg}">
-				<p>${login_failed_msg}</p>
-			</c:if>
 			
 			<div class="base-margin">
 				<label for="username">아이디</label>

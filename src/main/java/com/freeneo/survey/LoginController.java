@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.service.UserService;
+import com.freeneo.survey.util.Util;
 
 @Controller
 public class LoginController {
@@ -34,15 +35,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model){
+	public String login(Model model, HttpSession session){
 		model.addAttribute("pageTitle", "로그인");
 		return "login";
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session){
-		session.removeAttribute("user");
-		return "redirect:login";
+	public String logout(Model model, HttpSession session){
+		session.setAttribute("user", null);
+		return login(model, session);
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -60,14 +61,14 @@ public class LoginController {
 		user = userService.getUser(user);
 		
 		if(user != null){
+			logger.debug("로그인한 사용자 : " + Util.getPrintr(user));
 			session.setAttribute("user", user);
-			viewPage = "redirect:list";
-		}else{
-			model.addAttribute("login_failed_msg", "아이디나 비밀번호가 잘못됐습니다.");
-			viewPage = "login";
+			return "redirect:list";
 		}
 		
-		return viewPage;
+		logger.debug("로그인 실패");
+		model.addAttribute("error_msg", "아이디나 비밀번호가 잘못됐습니다.");
+		return login(model, session);
 	}
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET)
