@@ -42,3 +42,44 @@ create table sv_surveys
 
 create sequence seq_sv_surveys start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
 
+
+
+
+create table sv_questions
+(
+  id            NUMBER NOT NULL,
+  survey_id     NUMBER NOT NULL,
+  content       VARCHAR2(3000),
+  constraint pk_sv_questions primary key (id)
+);
+
+create sequence seq_sv_questions start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
+
+
+create table sv_response_item
+(
+  id            NUMBER NOT NULL,
+  question_id   NUMBER NOT NULL,
+  content       VARCHAR2(3000),
+  constraint pk_sv_response_item primary key (id)
+);
+
+create sequence seq_sv_response_item start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
+
+
+
+
+
+create table sv_response
+(
+  id                  NUMBER NOT NULL,
+  response_item_id    NUMBER NOT NULL,
+  respondant          VARCHAR2(300),
+  response            VARCHAR2(1000),
+  constraint pk_sv_response primary key (id)
+);
+
+create sequence seq_sv_response start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
+
+
+
