@@ -74,7 +74,7 @@ create table sv_response
 (
   id                  NUMBER NOT NULL,
   response_item_id    NUMBER NOT NULL,
-  respondant          VARCHAR2(300),
+  respondent          VARCHAR2(300),
   response            VARCHAR2(1000),
   constraint pk_sv_response primary key (id)
 );

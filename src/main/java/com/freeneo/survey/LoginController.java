@@ -28,7 +28,7 @@ public class LoginController {
 		
 		String viewPage = "redirect:login";
 		if(session.getAttribute("user") != null){
-			viewPage = "redirect:list";
+			viewPage = "redirect:/surveys";
 		}
 		
 		return viewPage;
@@ -63,17 +63,11 @@ public class LoginController {
 		if(user != null){
 			logger.debug("로그인한 사용자 : " + Util.getPrintr(user));
 			session.setAttribute("user", user);
-			return "redirect:list";
+			return "redirect:/surveys";
 		}
 		
 		logger.debug("로그인 실패");
 		model.addAttribute("error_msg", "아이디나 비밀번호가 잘못됐습니다.");
 		return login(model, session);
-	}
-	
-	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public String list(Model model){
-		model.addAttribute("pageTitle", "설문 목록");
-		return "list";
 	}
 }

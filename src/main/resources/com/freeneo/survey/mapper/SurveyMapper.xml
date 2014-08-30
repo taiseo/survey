@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.SurveyMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Survey">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="start_date" jdbcType="VARCHAR" property="startDate" />
+		<result column="end_date" jdbcType="VARCHAR" property="endDate" />
+		<result column="target" jdbcType="VARCHAR" property="target" />
+		<result column="writer" jdbcType="VARCHAR" property="writer" />
+		<result column="part" jdbcType="VARCHAR" property="part" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_SURVEYS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">
+		INSERT INTO sv_surveys 
+			(id, title, description, start_date, end_date, target, writer, part)
+		VALUES (
+			seq_sv_surveys.nextval, 
+			#{title,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{startDate,jdbcType=VARCHAR}, 
+			#{endDate,jdbcType=VARCHAR}, 
+			#{target,jdbcType=VARCHAR},
+			#{writer,jdbcType=VARCHAR}, 
+			#{part,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.Survey">
+		UPDATE sv_surveys
+			title = #{title,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			start_date = #{startDate,jdbcType=VARCHAR}, 
+			end_date = #{endDate,jdbcType=VARCHAR}, 
+			target = #{target,jdbcType=VARCHAR},
+			writer = #{writer,jdbcType=VARCHAR}, 
+			part = #{part,jdbcType=VARCHAR}
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM sv_surveys
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>

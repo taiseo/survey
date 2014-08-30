@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.ResponseItemMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.ResponseItem">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="question_id" jdbcType="NUMERIC" property="quesetionId" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT * FROM SV_RESPONSE_ITEM
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSE_ITEM
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
+		INSERT INTO SV_RESPONSE_ITEM 
+			(id, question_id, content)
+		VALUES (
+			seq_SV_RESPONSE_ITEM.nextval, 
+			#{questionId,jdbcType=NUMERIC},
+			#{content,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.ResponseItem">
+		UPDATE SV_RESPONSE_ITEM
+			question_id = #{questionId,jdbcType=NUMERIC},
+			content = #{content,jdbcType=VARCHAR}
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SV_RESPONSE_ITEM
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>

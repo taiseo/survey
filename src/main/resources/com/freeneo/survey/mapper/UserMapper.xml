@@ -2,69 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.freeneo.survey.mapper.UserMapper">
 
-  <resultMap id="BaseResultMap" type="com.freeneo.survey.domain.User">
-    <id column="id" jdbcType="NUMERIC" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="part" jdbcType="VARCHAR" property="part" />
-    <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="user_level" jdbcType="VARCHAR" property="userLevel" />
-  </resultMap>
-  
-  <select id="list" resultMap="BaseResultMap">
-    SELECT
- 		*
-    FROM sv_users
-  </select>
-  
-  <select id="select" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
-    SELECT
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.User">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="part" jdbcType="VARCHAR" property="part" />
+		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="user_level" jdbcType="VARCHAR" property="userLevel" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
 		*
-    FROM sv_users
-    WHERE username = #{username,jdbcType=VARCHAR}
-    	AND
-    	password = #{password,jdbcType=VARCHAR}
-  </select>
-  
-  <select id="selectById" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
-    SELECT
+		FROM sv_users
+	</select>
+
+	<select id="select" parameterType="com.freeneo.survey.domain.User"
+		resultMap="BaseResultMap">
+		SELECT
 		*
-    FROM sv_users
-    WHERE id = #{id,jdbcType=NUMERIC}
-  </select>
-  
-  <select id="selectByUsername" parameterType="com.freeneo.survey.domain.User" resultMap="BaseResultMap">
-    SELECT
+		FROM sv_users
+		WHERE username = #{username,jdbcType=VARCHAR}
+		AND
+		password = #{password,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectById" parameterType="com.freeneo.survey.domain.User"
+		resultMap="BaseResultMap">
+		SELECT
 		*
-    FROM sv_users
-    WHERE username = #{username,jdbcType=VARCHAR}
-  </select>
-  
-  <insert id="insert" parameterType="com.freeneo.survey.domain.User">
-    INSERT INTO sv_users (id, username, password, name, part, tel, email, user_level)
-    VALUES (seq_sv_users.nextval, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-    	#{name,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
-        #{email,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}
-    )
-  </insert>
- 
-  <update id="update" parameterType="com.freeneo.survey.domain.User">
-    UPDATE sv_users 
-    SET username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      part = #{part,jdbcType=VARCHAR},
-      tel = #{tel,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      user_level = #{userLevel,jdbcType=VARCHAR}
-    WHERE ID = #{id,jdbcType=NUMERIC}
-  </update>
-  
-  <delete id="delete" parameterType="java.lang.Long">
-    DELETE FROM sv_users
-    WHERE id = #{id,jdbcType=NUMERIC}
-  </delete>
-  
+		FROM sv_users
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByUsername" parameterType="com.freeneo.survey.domain.User"
+		resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_users
+		WHERE username = #{username,jdbcType=VARCHAR}
+	</select>
+
+	<insert id="insert" parameterType="com.freeneo.survey.domain.User">
+		INSERT INTO sv_users (id, username, password, name, part, tel, email,
+		user_level)
+		VALUES (seq_sv_users.nextval, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.User">
+		UPDATE sv_users
+		SET username = #{username,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		part = #{part,jdbcType=VARCHAR},
+		tel = #{tel,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		user_level = #{userLevel,jdbcType=VARCHAR}
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM sv_users
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
 </mapper>
