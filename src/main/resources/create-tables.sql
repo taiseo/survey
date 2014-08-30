@@ -41,6 +41,7 @@ create table sv_surveys
   constraint pk_sv_surveys primary key (id)
 );
 
+
 create sequence seq_sv_surveys start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
 
 
@@ -51,6 +52,7 @@ create table sv_questions
   id            NUMBER NOT NULL,
   survey_id     NUMBER NOT NULL,
   content       VARCHAR2(3000),
+  order_no      NUMBER DEFAULT 0,
   datetime      DATE,
   constraint pk_sv_questions primary key (id)
 );
@@ -58,32 +60,33 @@ create table sv_questions
 create sequence seq_sv_questions start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
 
 
-create table sv_response_item
+create table sv_response_items
 (
   id            NUMBER NOT NULL,
   question_id   NUMBER NOT NULL,
   content       VARCHAR2(3000),
+  order_no      NUMBER DEFAULT 0,
   datetime      DATE,
-  constraint pk_sv_response_item primary key (id)
+  constraint pk_sv_response_items primary key (id)
 );
 
-create sequence seq_sv_response_item start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
+create sequence seq_sv_response_items start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
 
 
 
 
 
-create table sv_response
+create table sv_responses
 (
   id                  NUMBER NOT NULL,
   response_item_id    NUMBER NOT NULL,
   respondent          VARCHAR2(300),
   response            VARCHAR2(1000),
   datetime            DATE,
-  constraint pk_sv_response primary key (id)
+  constraint pk_sv_responses primary key (id)
 );
 
-create sequence seq_sv_response start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
+create sequence seq_sv_responses start with 1 increment by 1 maxvalue 9999999999999999 cycle nocache;
 
 
 

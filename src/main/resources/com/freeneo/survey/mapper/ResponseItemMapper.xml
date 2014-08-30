@@ -6,40 +6,43 @@
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="question_id" jdbcType="NUMERIC" property="quesetionId" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="order_no" jdbcType="NUMERIC" property="orderNo" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM SV_RESPONSE_ITEM
+		SELECT * FROM SV_RESPONSE_ITEMS
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		SELECT
 		*
-		FROM SV_RESPONSE_ITEM
+		FROM SV_RESPONSE_ITEMS
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
-		INSERT INTO SV_RESPONSE_ITEM 
-			(id, question_id, content, datetime)
+		INSERT INTO SV_RESPONSE_ITEMS 
+			(id, question_id, content, orderNo, datetime)
 		VALUES (
-			seq_SV_RESPONSE_ITEM.nextval, 
+			seq_SV_RESPONSE_ITEMS.nextval, 
 			#{questionId,jdbcType=NUMERIC},
 			#{content,jdbcType=VARCHAR},
+			#{orderNo, jdbcType=NUMERIC},
 			SYSDATE
 		)
 	</insert>
 
 	<update id="update" parameterType="com.freeneo.survey.domain.ResponseItem">
-		UPDATE SV_RESPONSE_ITEM
+		UPDATE SV_RESPONSE_ITEMS
 			question_id = #{questionId,jdbcType=NUMERIC},
-			content = #{content,jdbcType=VARCHAR}
+			content = #{content,jdbcType=VARCHAR},
+			order_no = #{orderNo, jdbcType=NUMERIC}
 		WHERE ID = #{id,jdbcType=NUMERIC}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.Long">
-		DELETE FROM SV_RESPONSE_ITEM
+		DELETE FROM SV_RESPONSE_ITEMS
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
 

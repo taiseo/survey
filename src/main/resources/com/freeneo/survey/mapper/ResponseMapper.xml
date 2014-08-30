@@ -11,21 +11,21 @@
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM SV_RESPONSE
+		SELECT * FROM SV_RESPONSES
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		SELECT
 		*
-		FROM SV_RESPONSE
+		FROM SV_RESPONSES
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Response">
-		INSERT INTO SV_RESPONSE 
+		INSERT INTO SV_RESPONSES 
 			(id, response_item_id, respondent, response)
 		VALUES (
-			seq_SV_RESPONSE.nextval, 
+			seq_SV_RESPONSES.nextval, 
 			#{response_item_id,jdbcType=NUMERIC},
 			#{respondent,jdbcType=VARCHAR},
 			#{response,jdbcType=VARCHAR},
@@ -34,7 +34,7 @@
 	</insert>
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Response">
-		UPDATE SV_RESPONSE
+		UPDATE SV_RESPONSES
 			responseItemId = #{response_item_id,jdbcType=NUMERIC},
 			respondent = #{respondent,jdbcType=VARCHAR},
 			response = #{response,jdbcType=VARCHAR} 
@@ -42,7 +42,7 @@
 	</update>
 
 	<delete id="delete" parameterType="java.lang.Long">
-		DELETE FROM SV_RESPONSE
+		DELETE FROM SV_RESPONSES
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
 

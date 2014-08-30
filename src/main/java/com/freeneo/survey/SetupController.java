@@ -126,11 +126,11 @@ public class SetupController {
 			}
 			c.commit();
 		} catch (SQLException e) {
-			logger.debug(e.getMessage());
+			logger.error(e.getMessage());
 		} catch (FileNotFoundException e) {
-			logger.debug(e.getMessage());
+			logger.error(e.getMessage());
 		} catch (IOException e) {
-			logger.debug(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 }

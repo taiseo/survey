@@ -9,6 +9,7 @@ public class Question {
 	private Long id;
 	private Long surveyId;
 	private String content;
+	private int orderNo;
 	private String datetime;
 	
 	public Long getId() {
@@ -41,6 +42,14 @@ public class Question {
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
+	}
+
+	public int getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	@Override
