@@ -9,6 +9,7 @@ public class ResponseItem {
 	private Long id;
 	private Long questionId;
 	private String content;
+	private String datetime;
 	
 	public Long getId() {
 		return id;
@@ -32,6 +33,14 @@ public class ResponseItem {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 
 	@Override

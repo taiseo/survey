@@ -14,6 +14,7 @@ public class Survey {
 	private String target;
 	private String writer;
 	private String part;
+	private String datetime;
 
 	public Long getId() {
 		return id;
@@ -77,6 +78,14 @@ public class Survey {
 
 	public void setPart(String part) {
 		this.part = part;
+	}
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 
 	@Override

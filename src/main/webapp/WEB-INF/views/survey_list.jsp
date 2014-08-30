@@ -39,7 +39,7 @@
 						<td>${survey.target }</td>
 						<td>${survey.writer }</td>
 						<td>${survey.part }</td>
-						<td>필드생성필요</td>
+						<td>${survey.datetime }</td>
 						<td>
 							<a class="btn" href="<%=request.getContextPath()%>/surveys/${survey.id}">
 							수정

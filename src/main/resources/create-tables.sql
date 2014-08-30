@@ -37,6 +37,7 @@ create table sv_surveys
   target        VARCHAR2(30),
   writer        VARCHAR2(30),
   part          VARCHAR2(30),
+  datetime      DATE,
   constraint pk_sv_surveys primary key (id)
 );
 
@@ -50,6 +51,7 @@ create table sv_questions
   id            NUMBER NOT NULL,
   survey_id     NUMBER NOT NULL,
   content       VARCHAR2(3000),
+  datetime      DATE,
   constraint pk_sv_questions primary key (id)
 );
 
@@ -61,6 +63,7 @@ create table sv_response_item
   id            NUMBER NOT NULL,
   question_id   NUMBER NOT NULL,
   content       VARCHAR2(3000),
+  datetime      DATE,
   constraint pk_sv_response_item primary key (id)
 );
 
@@ -76,6 +79,7 @@ create table sv_response
   response_item_id    NUMBER NOT NULL,
   respondent          VARCHAR2(300),
   response            VARCHAR2(1000),
+  datetime            DATE,
   constraint pk_sv_response primary key (id)
 );
 

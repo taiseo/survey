@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -678,4 +680,7 @@ public class Util {
 		System.out.print(gson.toJson(obj));
 	}
 
+	public static boolean isLocal(HttpServletRequest request){
+		return request.getRemoteAddr().equals("127.0.0.1") || request.getRemoteAddr().equals("0:0:0:0:0:0:0:1");
+	}
 }

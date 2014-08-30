@@ -6,6 +6,7 @@
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="question_id" jdbcType="NUMERIC" property="quesetionId" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -21,11 +22,12 @@
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
 		INSERT INTO SV_RESPONSE_ITEM 
-			(id, question_id, content)
+			(id, question_id, content, datetime)
 		VALUES (
 			seq_SV_RESPONSE_ITEM.nextval, 
 			#{questionId,jdbcType=NUMERIC},
-			#{content,jdbcType=VARCHAR}
+			#{content,jdbcType=VARCHAR},
+			SYSDATE
 		)
 	</insert>
 

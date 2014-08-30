@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.freeneo.survey.domain.User;
 import com.freeneo.survey.util.Util;
 
 @RequestMapping(value = "/setup")
@@ -47,9 +49,25 @@ public class SetupController {
 		return conn;
 	}
 
+	@RequestMapping(value="/reset", method = RequestMethod.GET)
+	@ResponseBody
+	public String reset(HttpServletRequest request, HttpSession session) {
+		
+		drop(request, session);
+		create(request, session);
+		
+		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
+	}
+	
 	@RequestMapping(value="/create", method = RequestMethod.GET)
 	@ResponseBody
-	public String create() {
+	public String create(HttpServletRequest request, HttpSession session) {
+		
+		User currentUser = (User) session.getAttribute("user");
+		
+		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "admin"){
+			return "You cannot handle setup";
+		}
 		
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../create-tables.sql");
 		logger.info("테이블과 시퀀스 생성함.");
@@ -58,7 +76,14 @@ public class SetupController {
 	
 	@RequestMapping(value="/drop", method = RequestMethod.GET)
 	@ResponseBody
-	public String drop() {
+	public String drop(HttpServletRequest request, HttpSession session) {
+		
+		User currentUser = (User) session.getAttribute("user");
+		
+		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "admin"){
+			return "You cannot handle setup";
+		}
+		
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../drop-tables.sql");
 		logger.info("테이블과 시퀀스 드롭함.");
 		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";

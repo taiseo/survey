@@ -6,6 +6,7 @@
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="survey_id" jdbcType="NUMERIC" property="surveyId" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -25,7 +26,8 @@
 		VALUES (
 			seq_SV_QUESTIONS.nextval, 
 			#{surveyId,jdbcType=NUMERIC},
-			#{content,jdbcType=VARCHAR}
+			#{content,jdbcType=VARCHAR},
+			SYSDATE
 		)
 	</insert>
 

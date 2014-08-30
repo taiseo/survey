@@ -7,6 +7,7 @@
 		<result column="respons_item_id" jdbcType="NUMERIC" property="responseItemId" />
 		<result column="respondent" jdbcType="VARCHAR" property="respondent" />
 		<result column="response" jdbcType="VARCHAR" property="response" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -27,7 +28,8 @@
 			seq_SV_RESPONSE.nextval, 
 			#{response_item_id,jdbcType=NUMERIC},
 			#{respondent,jdbcType=VARCHAR},
-			#{response,jdbcType=VARCHAR} 
+			#{response,jdbcType=VARCHAR},
+			SYSDATE
 		)
 	</insert>
 

@@ -11,6 +11,7 @@
 		<result column="target" jdbcType="VARCHAR" property="target" />
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -26,7 +27,7 @@
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">
 		INSERT INTO sv_surveys 
-			(id, title, description, start_date, end_date, target, writer, part)
+			(id, title, description, start_date, end_date, target, writer, part, datetime)
 		VALUES (
 			seq_sv_surveys.nextval, 
 			#{title,jdbcType=VARCHAR},
@@ -35,7 +36,8 @@
 			#{endDate,jdbcType=VARCHAR}, 
 			#{target,jdbcType=VARCHAR},
 			#{writer,jdbcType=VARCHAR}, 
-			#{part,jdbcType=VARCHAR}
+			#{part,jdbcType=VARCHAR},
+			SYSDATE
 		)
 	</insert>
 

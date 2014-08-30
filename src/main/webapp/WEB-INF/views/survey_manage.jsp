@@ -22,9 +22,9 @@
 				<tr>
 					<th>게시일</th>
 					<td>
-						<form:input cssClass="datepicker" path="startDate" />
+						<form:input cssClass="datepicker  span2" path="startDate" />
 						~
-						<form:input cssClass="datepicker" path="endDate" />
+						<form:input cssClass="datepicker  span2" path="endDate" />
 					</td>
 				</tr>
 				<tr>
