@@ -34,7 +34,7 @@
 	</insert>
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Response">
-		UPDATE SV_RESPONSES
+		UPDATE SV_RESPONSES SET
 			responseItemId = #{response_item_id,jdbcType=NUMERIC},
 			respondent = #{respondent,jdbcType=VARCHAR},
 			response = #{response,jdbcType=VARCHAR} 

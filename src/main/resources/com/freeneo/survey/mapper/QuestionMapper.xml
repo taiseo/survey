@@ -34,7 +34,7 @@
 	</insert>
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Question">
-		UPDATE SV_QUESTIONS
+		UPDATE SV_QUESTIONS SET
 			survey_id = #{surveyId,jdbcType=NUMERIC},
 			content = #{content,jdbcType=VARCHAR},
 			order_no = #{orderNo,jdbcType=NUMERIC}

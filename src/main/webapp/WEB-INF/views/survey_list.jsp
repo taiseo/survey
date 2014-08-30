@@ -30,7 +30,7 @@
 				<c:forEach var="survey" items="${list}">
 					<tr>
 						<td>
-							<a href="<%=request.getContextPath()%>/surveys/${survey.id}">
+							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 							${survey.title }
 							</a>
 						</td>
@@ -41,7 +41,7 @@
 						<td>${survey.part }</td>
 						<td>${survey.datetime }</td>
 						<td>
-							<a class="btn" href="<%=request.getContextPath()%>/surveys/${survey.id}">
+							<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 							수정
 							</a>
 						</td>

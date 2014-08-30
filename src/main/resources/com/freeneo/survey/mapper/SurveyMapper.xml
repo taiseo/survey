@@ -42,7 +42,7 @@
 	</insert>
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Survey">
-		UPDATE sv_surveys
+		UPDATE sv_surveys SET
 			title = #{title,jdbcType=VARCHAR},
 			description = #{description,jdbcType=VARCHAR},
 			start_date = #{startDate,jdbcType=VARCHAR}, 

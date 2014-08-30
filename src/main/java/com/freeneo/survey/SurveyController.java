@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,4 +88,81 @@ public class SurveyController {
 		
 		return "redirect:/surveys";
 	}
+	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+	public String updatePage(
+			@PathVariable(value="id") Long id,
+			Model model,
+			HttpSession session,
+			Survey survey
+			){
+
+		User currentUser = (User) session.getAttribute("user");
+		logger.debug("survey={}" ,survey);
+		if(survey.getTitle() == null){
+			logger.debug("DB에 있는 survey를 가져옴.");
+			survey = surveyMapper.select(id);
+			logger.debug("survey={}" ,survey);
+		}
+		
+		// admin이 아닌데, 남의 것을 수정하려고 하면
+		logger.debug("currentUser.userLevel={}", currentUser.getUserLevel());
+		logger.debug("currentUser.username={}", currentUser.getUsername());
+		logger.debug("survey.writer={}", survey.getWriter());
+		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
+			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
+			return list(model);
+		}
+		
+		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
+		model.addAttribute("survey", survey);
+		model.addAttribute("httpMethod", "PUT");
+		return "survey_manage";
+	}
+	
+	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
+	public String updateAction(
+			@PathVariable(value="id") Long id,
+			@RequestParam(value="title") String title,
+			@RequestParam(value="description") String description,
+			@RequestParam(value="startDate") String startDate,
+			@RequestParam(value="endDate") String endDate,
+			@RequestParam(value="target") String target,
+			Model model,
+			HttpSession session
+			){
+
+		User currentUser = (User) session.getAttribute("user");
+		Survey oldSurvey = surveyMapper.select(id);
+		
+		// admin이 아닌데, 남의 것을 수정하려고 하면
+		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(oldSurvey.getWriter())){
+			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
+			return list(model);
+		}
+		
+		Survey newSurvey = new Survey();
+		newSurvey.setId(id);
+		newSurvey.setTitle(title);
+		newSurvey.setDescription(description);
+		newSurvey.setStartDate(startDate);
+		newSurvey.setEndDate(endDate);
+		newSurvey.setTarget(target);
+		newSurvey.setWriter(oldSurvey.getWriter());
+		newSurvey.setPart(oldSurvey.getPart());
+		
+		if(title.equals("") || endDate.equals("")){
+			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일)을 모두 입력해 주세요.");
+			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
+			return updatePage(id, model, session, newSurvey);
+		}
+		
+		logger.debug("oldSurvey = {}", oldSurvey);
+		logger.debug("newSurvey = {}", newSurvey);
+		
+		surveyMapper.update(newSurvey);
+		
+		return "redirect:/surveys";
+	}
+
 }

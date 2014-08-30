@@ -33,7 +33,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			
 			// 로컬에서 개발중이면 로그인 검사 패스
 			if(request.getRemoteAddr().equals("127.0.0.1") || request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")){
-				session.setAttribute("user", new User(4L, "mytory", "", "로컬임의아이디", "임의 부서", "", "email", "normal"));
+				session.setAttribute("user", new User(4L, "mytory", "", "로컬임의아이디", "임의 부서", "", "email", "admin"));
 				return true;
 			}
 			
