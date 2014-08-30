@@ -3,17 +3,52 @@
 <jsp:include page="include/header.jsp" />
 
 <div class="limit-width  center-block">
-	<h1 class="page-title">${pageTitle}</h1>
+	<div class="page-header">
+		<h1>${pageTitle }</h1>
+	</div>
 	
 	<p class="text-center">
 		<a href="<%=request.getContextPath() %>/surveys/insert" class="btn  btn-primary  btn-large">
 			새 설문
 		</a>
 	</p>
-	
-	<ul>
-	    <li>목록</li>
-	</ul>
+
+	<table class="table  table-striped">
+		<thead>
+			<tr>
+				<th>제목</th>
+				<th>설문시작일</th>
+				<th>종료일</th>
+				<th>대상</th>
+				<th>작성자</th>
+				<th>부서</th>
+				<th>입력일시</th>
+				<th>기능</th>
+			</tr>
+		</thead>
+		<tbody>
+				<c:forEach var="survey" items="${list}">
+					<tr>
+						<td>
+							<a href="<%=request.getContextPath()%>/surveys/${survey.id}">
+							${survey.title }
+							</a>
+						</td>
+						<td>${survey.startDate }</td>
+						<td>${survey.endDate }</td>
+						<td>${survey.target }</td>
+						<td>${survey.writer }</td>
+						<td>${survey.part }</td>
+						<td>필드생성필요</td>
+						<td>
+							<a class="btn" href="<%=request.getContextPath()%>/surveys/${survey.id}">
+							수정
+							</a>
+						</td>
+					</tr>
+				</c:forEach>
+		</tbody>
+	</table>	
 </div>
 
 <jsp:include page="include/footer.jsp" />
