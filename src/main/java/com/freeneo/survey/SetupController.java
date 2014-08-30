@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.freeneo.survey.util.Util;
 
@@ -47,16 +48,20 @@ public class SetupController {
 	}
 
 	@RequestMapping(value="/create", method = RequestMethod.GET)
-	public void create() {
+	@ResponseBody
+	public String create() {
 		
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../create-tables.sql");
 		logger.info("테이블과 시퀀스 생성함.");
+		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
 	}
 	
 	@RequestMapping(value="/drop", method = RequestMethod.GET)
-	public void drop() {
+	@ResponseBody
+	public String drop() {
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../drop-tables.sql");
 		logger.info("테이블과 시퀀스 드롭함.");
+		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
 	}
 	
 	private void executeSqlFile(String path){
