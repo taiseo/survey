@@ -178,7 +178,8 @@ public class SurveyController {
 			model.addAttribute("error_msg", "남의 것을 편집할 수는 없습니다.");
 			return list(model);
 		}
-		
+	
+		model.addAttribute("survey", survey);
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
 		return "survey_detail";
 	}

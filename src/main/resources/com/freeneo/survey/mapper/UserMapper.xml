@@ -46,9 +46,13 @@
 	</select>
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.User">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+	        SELECT seq_sv_users.nextval.nextval FROM DUAL
+	    </selectKey>
+	    
 		INSERT INTO sv_users (id, username, password, name, part, tel, email,
 		user_level)
-		VALUES (seq_sv_users.nextval, #{username,jdbcType=VARCHAR},
+		VALUES (#{id}, #{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
 		#{email,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}

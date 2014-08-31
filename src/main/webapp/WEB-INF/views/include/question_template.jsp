@@ -6,16 +6,20 @@
 <%= "<script type='text/template' id='주관식1'>" %>
 <div class="question  clearfix">
 
-	<input type="hidden" name="id" />
-	<label>
-		질문
-		<input type="text" name="content" class="input-block-level" />
-	</label>
-	
-	<label>
-		질문 보조 설명
-		<input type="text" name="contentDetail" class="input-block-level" />
-	</label>
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="주관식1" />
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		<label>
+			질문
+			<input type="text" name="content" class="input-block-level" />
+		</label>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" />
+		</label>
+	</form>
 	
 	<label>
 		<input type="text" class="input-block-level" value="답변 칸은 이렇게 나옵니다." disabled />
@@ -32,19 +36,27 @@
 </div>
 <%= "</script>" %>
 
+
+
+
 <%= "<script type='text/template' id='주관식2'>" %>
 <div class="question  clearfix">
 
-	<input type="hidden" name="id" />
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="주관식2" />
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		
 		<label>
-		질문
-		<input type="text" name="content" class="input-block-level" />
-	</label>
-	
-	<label>
-		질문 보조 설명
-		<input type="text" name="contentDetail" class="input-block-level" />
-	</label>
+			질문
+			<input type="text" name="content" class="input-block-level" />
+		</label>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" />
+		</label>
+	</form>
 	
 	<label>
 		<textarea class="input-block-level" rows="5" disabled>답변 칸은 이렇게 나옵니다.</textarea>
@@ -64,25 +76,32 @@
 <%= "<script type='text/template' id='객관식1'>" %>
 <div class="question  clearfix">
 
-	<input type="hidden" name="id" />
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="객관식1" />
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		
 		<label>
-		질문
-		<input type="text" name="content" class="input-block-level" />
-	</label>
-	
-	<label>
-		질문 보조 설명
-		<input type="text" name="contentDetail" class="input-block-level" />
-	</label>
-	
-	<div class="js-response-items-area">
-		<label class="js-reponse-item">
-			<i class="js-move-response-item  icon-move  move-response-item"></i>
-			<input type="radio" disabled/>
-			<input class="span7" type="text" name="content" />
-			<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
+			질문
+			<input type="text" name="content" class="input-block-level" />
 		</label>
-	</div>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" />
+		</label>
+	</form>
+	
+	<form class="response-item-form" onsubmit="return false">
+		<div class="js-response-items-area">
+			<label class="js-reponse-item">
+				<i class="js-move-response-item  icon-move  move-response-item"></i>
+				<input type="radio" disabled/>
+				<input class="span7" type="text" name="content" />
+				<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
+			</label>
+		</div>
+	</form>
 	
 	<div>
 		<input type="radio" disabled/>
@@ -123,28 +142,38 @@
 <%= "</script>" %>
 
 
+
+
+
 <%= "<script type='text/template' id='객관식2'>" %>
 <div class="question  clearfix">
 
-	<input type="hidden" name="id" />
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="객관식2" />
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		
 		<label>
-		질문
-		<input type="text" name="content" class="input-block-level" />
-	</label>
-	
-	<label>
-		질문 보조 설명
-		<input type="text" name="contentDetail" class="input-block-level" />
-	</label>
-	
-	<div class="js-response-items-area">
-		<label class="js-reponse-item">
-			<i class="js-move-response-item  icon-move  move-response-item"></i>
-			<input type="checkbox" disabled/>
-			<input class="span7" type="text" name="content" />
-			<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
+			질문
+			<input type="text" name="content" class="input-block-level" />
 		</label>
-	</div>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" />
+		</label>
+	</form>
+	
+	<form class="response-item-form" onsubmit="return false">
+		<div class="js-response-items-area">
+			<label class="js-reponse-item">
+				<i class="js-move-response-item  icon-move  move-response-item"></i>
+				<input type="checkbox" disabled/>
+				<input class="span7" type="text" name="content" />
+				<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
+			</label>
+		</div>
+	</form>
 	
 	<div>
 		<input type="checkbox" disabled/>
@@ -190,16 +219,21 @@
 <%= "<script type='text/template' id='점수범위'>" %>
 <div class="question  clearfix">
 
-	<input type="hidden" name="id" />
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="점수범위" />
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		
 		<label>
-		질문
-		<input type="text" name="content" class="input-block-level" />
-	</label>
-	
-	<label>
-		질문 보조 설명
-		<input type="text" name="contentDetail" class="input-block-level" />
-	</label>
+			질문
+			<input type="text" name="content" class="input-block-level" />
+		</label>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" />
+		</label>
+	</form>
 	
     <label>
     	최솟값 : <input type="text" class="span1  js-number" name="min"/>
@@ -234,4 +268,5 @@
 		<i class="icon-move"></i>
 	</div>
 	<hr />
-</div><%= "</script>" %>
+</div>
+<%= "</script>" %>

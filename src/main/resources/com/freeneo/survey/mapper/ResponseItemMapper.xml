@@ -22,10 +22,14 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+	        SELECT seq_SV_RESPONSE_ITEMS.nextval FROM DUAL
+	    </selectKey>
+	
 		INSERT INTO SV_RESPONSE_ITEMS 
 			(id, question_id, content, orderNo, datetime)
 		VALUES (
-			seq_SV_RESPONSE_ITEMS.nextval, 
+			#{id}, 
 			#{questionId,jdbcType=NUMERIC},
 			#{content,jdbcType=VARCHAR},
 			#{orderNo, jdbcType=NUMERIC},

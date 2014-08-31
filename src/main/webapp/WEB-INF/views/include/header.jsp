@@ -10,6 +10,11 @@
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/style.css" />
+	<script type="text/javascript">
+	var survey = {
+		context_path: '<%=request.getContextPath()%>'
+	};
+	</script>
 </head>
 <body>
 	<c:if test="${not empty sessionScope.user}">

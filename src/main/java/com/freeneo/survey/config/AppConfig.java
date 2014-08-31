@@ -1,5 +1,7 @@
 package com.freeneo.survey.config;
 
+import java.util.List;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -12,8 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -78,5 +84,24 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry){
 		registry.addInterceptor(new CheckLoginInterceptor()).excludePathPatterns("/login", "/");
 		registry.addInterceptor(new CheckLoginInterceptor()).addPathPatterns("/*");
+	}
+	
+	@Override
+	public void configureContentNegotiation(
+			ContentNegotiationConfigurer configurer) {
+		configurer.mediaType("json", MediaType.APPLICATION_JSON);
+	}
+
+	@Override
+	public void configureMessageConverters(
+			List<HttpMessageConverter<?>> converters) {
+		converters.add(mappingJacksonHttpMessageConverter());
+	}
+
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setPrettyPrint(true);
+		return converter;
 	}
 }

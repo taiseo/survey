@@ -23,11 +23,14 @@
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<insert id="insert" parameterType="com.freeneo.survey.domain.Question">
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Question" keyColumn="id">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+	        SELECT seq_SV_QUESTIONS.nextval FROM DUAL
+	    </selectKey>
 		INSERT INTO SV_QUESTIONS 
 			(id, survey_id, content, content_detail, type, order_no, datetime)
 		VALUES (
-			seq_SV_QUESTIONS.nextval, 
+			#{id}, 
 			#{surveyId,jdbcType=NUMERIC},
 			#{content,jdbcType=VARCHAR},
 			#{contentDetail,jdbcType=VARCHAR},
@@ -36,6 +39,7 @@
 			SYSDATE
 		)
 	</insert>
+	
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Question">
 		UPDATE SV_QUESTIONS SET

@@ -26,10 +26,14 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+			SELECT seq_sv_surveys.nextval from DUAL; 
+		</selectKey>
+		
 		INSERT INTO sv_surveys 
 			(id, title, description, start_date, end_date, target, writer, part, datetime)
 		VALUES (
-			seq_sv_surveys.nextval, 
+			#{id}, 
 			#{title,jdbcType=VARCHAR},
 			#{description,jdbcType=VARCHAR},
 			#{startDate,jdbcType=VARCHAR}, 
