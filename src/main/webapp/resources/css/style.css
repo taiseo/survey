@@ -65,6 +65,9 @@ l-block {
 .question {
 	position: relative;
 }
+.question h2 {
+	cursor: move;
+}
 
 .move-question {
 	width: 20px;

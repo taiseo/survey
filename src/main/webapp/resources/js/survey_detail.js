@@ -29,7 +29,7 @@ function bind_add_response_item(){
 function bind_sortable(){
 	$('.js-questions-area').sortable({
 		// TODO DB 순서 변경 로직 추가
-		handle: '.js-move-question'
+		handle: '.js-move-question, h2'
 	});
 }
 
