@@ -1,31 +1,49 @@
 @charset "utf-8";
+
 body {
+	font-size: 16px;
 	padding-top: 10px;
+	font-family: Ubuntu, Arial, 'Apple SD Gothic Neo', '애플 SD 고딕 Neo',
+		'NanumBarunGothic', 'NanumBarunGothicOTF', '나눔바른고딕', '나눔바른고딕OTF',
+		'Malgun Gothic', '맑은 고딕', 'NanumGothic', 'NanumGothicOTF', '나눔고딕',
+		'나눔고딕OTF', sans-serif;
+	/* for ie7 */
+	*font-family: 'Apple SD Gothic Neo', '애플 SD 고딕 Neo', 'NanumBarunGothic',
+		'NanumBarunGothicOTF', '나눔바른고딕', '나눔바른고딕OTF', 'Malgun Gothic', '맑은 고딕',
+		'NanumGothic', 'NanumGothicOTF', '나눔고딕', '나눔고딕OTF', sans-serif;
 }
+
 .page-title {
-    font-size: 1.5em;
+	font-size: 1.5em;
 }
+
 .limit-width {
 	padding-left: 20px;
 	padding-right: 20px;
 	max-width: 900px;
 }
+
 .center-block {
 	margin-right: auto;
 	margin-left: auto;
 }
+
 l-block {
 	display: block;
 }
+
 .base-margin {
 	margin-bottom: 20px;
 }
+
 .base-padding {
 	padding: 20px;
 }
+
 .no-margin-bottom {
 	margin-bottom: 0;
 }
+
 .login-form-wrapper {
 	position: absolute;
 	left: 50%;
@@ -35,7 +53,26 @@ l-block {
 	width: 360px;
 	height: 420px;
 }
-.login-form-inner{
+
+.login-form-inner {
 	border: 1px solid #ddd;
 }
-.login-form {}
+
+.question-buttons input {
+	margin-bottom: 5px;
+}
+
+.question {
+	position: relative;
+}
+
+.js-move-question {
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px; position : absolute;
+	right: 0;
+	top: 0;
+	cursor: move;
+	position: absolute;
+}

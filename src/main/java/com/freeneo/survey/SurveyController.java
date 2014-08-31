@@ -84,9 +84,9 @@ public class SurveyController {
 		
 		logger.debug("survey = {}", survey);
 		
-		surveyMapper.insert(survey);
+		Long id = surveyMapper.insert(survey);
 		
-		return "redirect:/surveys";
+		return "redirect:/surveys/detail/" + id;
 	}
 	
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
@@ -162,7 +162,25 @@ public class SurveyController {
 		
 		surveyMapper.update(newSurvey);
 		
-		return "redirect:/surveys";
+		return "redirect:/surveys/detail/" + id;
+	}
+	
+	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
+	public String detailPage(
+			@PathVariable(value="id") Long id,
+			Model model, 
+			HttpSession session
+			){
+		
+		User currentUser = (User) session.getAttribute("user");
+		Survey survey = surveyMapper.select(id);
+		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
+			model.addAttribute("error_msg", "남의 것을 편집할 수는 없습니다.");
+			return list(model);
+		}
+		
+		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
+		return "survey_detail";
 	}
 
 }

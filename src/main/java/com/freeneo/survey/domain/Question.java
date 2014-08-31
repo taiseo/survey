@@ -9,6 +9,8 @@ public class Question {
 	private Long id;
 	private Long surveyId;
 	private String content;
+	private String contentDetail;
+	private String type;
 	private int orderNo;
 	private String datetime;
 	
@@ -34,6 +36,22 @@ public class Question {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getContentDetail() {
+		return contentDetail;
+	}
+
+	public void setContentDetail(String contentDetail) {
+		this.contentDetail = contentDetail;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDatetime() {

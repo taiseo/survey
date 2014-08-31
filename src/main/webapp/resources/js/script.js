@@ -13,16 +13,20 @@ function attachActiveToNav(){
 }
 
 function initTinyMce(){
-	tinymce.init({
-		selector: '.wysiwyg'
-	});
+	if($('.wysiwyg').length > 0){
+		tinymce.init({
+			selector: '.wysiwyg'
+		});
+	}
 }
 
 function initDatepicker(){
-	var datepicker = $('.datepicker').datepicker({
-		format: 'yyyy-mm-dd'
-	});
-	datepicker.on('changeDate', function(){
-		datepicker.datepicker('hide');
-	});
+	if($('.datepicker').length > 0){
+		var datepicker = $('.datepicker').datepicker({
+			format: 'yyyy-mm-dd'
+		});
+		datepicker.on('changeDate', function(){
+			datepicker.datepicker('hide');
+		});
+	}
 }

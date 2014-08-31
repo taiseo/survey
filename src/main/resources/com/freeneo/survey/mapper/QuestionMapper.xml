@@ -6,6 +6,8 @@
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="survey_id" jdbcType="NUMERIC" property="surveyId" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="content_detail" jdbcType="VARCHAR" property="contentDetail" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
 		<result column="order_no" jdbcType="NUMERIC" property="orderNo" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
@@ -23,11 +25,13 @@
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Question">
 		INSERT INTO SV_QUESTIONS 
-			(id, survey_id, content, order_no, datetime)
+			(id, survey_id, content, content_detail, type, order_no, datetime)
 		VALUES (
 			seq_SV_QUESTIONS.nextval, 
 			#{surveyId,jdbcType=NUMERIC},
 			#{content,jdbcType=VARCHAR},
+			#{contentDetail,jdbcType=VARCHAR},
+			#{type,jdbcType=VARCHAR},
 			#{orderNo,jdbcType=NUMERIC},
 			SYSDATE
 		)
@@ -37,6 +41,8 @@
 		UPDATE SV_QUESTIONS SET
 			survey_id = #{surveyId,jdbcType=NUMERIC},
 			content = #{content,jdbcType=VARCHAR},
+			content_detail = #{contentDetail,jdbcType=VARCHAR},
+			type = #{type,jdbcType=VARCHAR},
 			order_no = #{orderNo,jdbcType=NUMERIC}
 		WHERE ID = #{id,jdbcType=NUMERIC}
 	</update>

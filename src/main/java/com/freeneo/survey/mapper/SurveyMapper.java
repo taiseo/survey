@@ -7,7 +7,7 @@ import com.freeneo.survey.domain.Survey;
 public interface SurveyMapper {
 	public List<Survey> list();
 	public Survey select(Long id);
-	public int insert(Survey survey);
-	public int update(Survey survey);
-	public int delete(Long id);
+	public Long insert(Survey survey);
+	public Long update(Survey survey);
+	public Long delete(Long id);
 }

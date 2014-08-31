@@ -49,11 +49,13 @@ create sequence seq_sv_surveys start with 1 increment by 1 maxvalue 999999999999
 
 create table sv_questions
 (
-  id            NUMBER NOT NULL,
-  survey_id     NUMBER NOT NULL,
-  content       VARCHAR2(3000),
-  order_no      NUMBER DEFAULT 0,
-  datetime      DATE,
+  id               NUMBER NOT NULL,
+  survey_id        NUMBER NOT NULL,
+  content          VARCHAR2(500),
+  content_detail   VARCHAR2(500),
+  type             VARCHAR2(20),
+  order_no         NUMBER DEFAULT 0,
+  datetime         DATE,
   constraint pk_sv_questions primary key (id)
 );
 
