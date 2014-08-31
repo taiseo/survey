@@ -7,8 +7,11 @@ $(document).ready(function(){
 
 function bind_add_question(){
 	$('.js-add-question').click(function(){
+		var title = '<h2>' + $(this).val() + '</h2>';
 		var template_id = $(this).data('template-id');
-		$('.js-questions-area').append($('#' + template_id).html());
+		$('.js-questions-area').append($($('#' + template_id).html()).prepend(title));
+		
+		bind_sortable_response_items();
 	});
 }
 
@@ -27,6 +30,12 @@ function bind_sortable(){
 	$('.js-questions-area').sortable({
 		// TODO DB 순서 변경 로직 추가
 		handle: '.js-move-question'
+	});
+}
+
+function bind_sortable_response_items(){
+	$('.js-questions-area .js-response-items-area').sortable({
+		handle: '.js-move-response-item'
 	});
 }
 

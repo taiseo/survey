@@ -48,5 +48,3 @@
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />
-<script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/datepicker/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/resources/lib/datepicker/css/datepicker.css" />

@@ -2,6 +2,7 @@ $(document).ready(function(){
 	attachActiveToNav();
 	initTinyMce();
 	initDatepicker();
+	initOnlyNumber();
 });
 
 function attachActiveToNav(){
@@ -22,11 +23,22 @@ function initTinyMce(){
 
 function initDatepicker(){
 	if($('.datepicker').length > 0){
-		var datepicker = $('.datepicker').datepicker({
+		$('.datepicker').datepicker({
+			language: "kr",
+			autoclose: true,
 			format: 'yyyy-mm-dd'
 		});
-		datepicker.on('changeDate', function(){
-			datepicker.datepicker('hide');
-		});
 	}
+}
+
+function deinitDatepicker(){
+	if($('.datepicker').length > 0){
+		$('.datepicker').datepicker('remove');
+	}
+}
+
+function initOnlyNumber(){
+	$('body').on('blur', '.js-number', function(){
+		$(this).val($(this).val().replace(/[^0-9]/g, ''));
+	});
 }
