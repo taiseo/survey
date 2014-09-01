@@ -5,7 +5,7 @@
 <!-- script 태그를 굳이 이렇게 출력하는 이유는 html syntax highlighting 때문이다. -->
 <%= "<script type='text/template' id='주관식1'>" %>
 <div class="question  clearfix">
-
+	<h2>주관식 짧은 답변</h2>
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="주관식1" />
 		<input type="hidden" name="id" value="<@=id@>"/>
@@ -41,7 +41,7 @@
 
 <%= "<script type='text/template' id='주관식2'>" %>
 <div class="question  clearfix">
-
+	<h2>주관식 긴 답변</h2>
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="주관식2" />
 		<input type="hidden" name="id" value="<@=id@>"/>
@@ -75,7 +75,7 @@
 
 <%= "<script type='text/template' id='객관식1'>" %>
 <div class="question  clearfix">
-
+	<h2>객관식 하나 선택 답변</h2>
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="객관식1" />
 		<input type="hidden" name="id" value="<@=id@>"/>
@@ -135,7 +135,7 @@
 
 <%= "<script type='text/template' id='객관식2'>" %>
 <div class="question  clearfix">
-
+	<h2>객관식 여럿 선택 답변</h2>
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="객관식2" />
 		<input type="hidden" name="id" value="<@=id@>" />
@@ -194,7 +194,7 @@
 
 <%= "<script type='text/template' id='점수범위'>" %>
 <div class="question  clearfix">
-
+	<h2>점수 범위</h2>
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="점수범위" />
 		<input type="hidden" name="id" value="<@=id@>" />
@@ -237,11 +237,12 @@
 
 <%= "<script type='text/template' id='페이지-나누기'>" %>
 <div class="question  clearfix">
+	<h2>페이지 나누기</h2>
 
 	<div class="page-breaker"></div>
 
 	<form class="question-form" onsubmit="return false;">
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@> "/>
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		<input type="hidden" name="type" value="페이지-나누기" />
 		<input type="hidden" name="content" value="$$$pageBreaker$$$" />

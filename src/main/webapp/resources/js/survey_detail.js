@@ -1,20 +1,11 @@
 $(document).ready(function(){
+	init_questions();
 	bind_add_question();
 	bind_add_response_item();
 	bind_sortable();
 	bind_remove();
 	bind_save();
-	init_questions();
 });
-
-function init_titles(){
-	survey.question_titles = {};
-	$('.question-buttons:first input[type=button]').each(function(i, el){
-		var type = $(el).data('template-id')
-		var value = $(el).val();
-		survey.question_titles[type] = value;
-	});
-}
 
 function bind_add_question(){
 	$('.js-add-question').click(function(){
@@ -22,9 +13,10 @@ function bind_add_question(){
 		var $question; 
 		
 		var question = {
+			id: null,
 			content: null,
 			contentDetail: null,
-			type: template_id
+			type: type
 		}
 		
 		$question = add_question(question);
@@ -35,11 +27,10 @@ function bind_add_question(){
 }
 
 function add_question(question){
-	var title = '<h2>' + survey.question_titles[question.type] + '</h2>';
 	var html = $('#' + question.type).html();
-	var compiled = _.template(title + html);
+	var compiled = _.template(html);
 	$('.js-questions-area').append(compiled(question));
-	return $('.js-questions-area .question').last();
+	return $('.question').last();
 }
 
 function bind_add_response_item(){
@@ -103,7 +94,7 @@ function save_question($question){
 	var question_obj = $question_form.serializeObject();
 	
 	// id가 있으면 수정. 이 경우 REST API에 맞게 HTTP method를 PUT으로 보낸다.
-	if(question_obj.id){
+	if($.trim(question_obj.id)){
 		question_obj._method = 'PUT'; 
 	}
 	
@@ -132,6 +123,9 @@ function delete_question($question){
 	};
 	
 	$.post(survey.context_path + '/questions', params, function(deletedQuestion){
+		
+		// TODO 페이지 나누기 제거 메시지 손보기
+		
 		var content = deletedQuestion.content || '';
 		mynoty(content + ' 질문 관련 정보를 삭제했습니다.', {type: 'warning'});
 		$question.remove();
@@ -185,7 +179,7 @@ function save_response_items($question){
 		
 		var id = $(this).find('[name=id]').val();
 		
-		if(id){
+		if($.trim(id)){
 			param.id = id;
 			param._method = 'PUT';
 		}
@@ -220,7 +214,6 @@ function delete_response_item($response_item){
 }
 
 function init_questions(){
-	init_titles();
 	_.each(survey.questions, function(question){
 		add_question(question);
 	});
