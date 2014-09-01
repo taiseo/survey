@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.service.UserService;
-import com.freeneo.survey.util.Util;
 
 @Controller
 public class LoginController {
@@ -53,7 +52,6 @@ public class LoginController {
 			HttpSession session,
 			Model model
 	) {
-		String viewPage;
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(password);

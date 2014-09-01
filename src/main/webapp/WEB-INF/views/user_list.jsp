@@ -47,4 +47,5 @@
 	<p class="text-center">
 		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-large">입력</a>
 	</p>
+</div>
 <jsp:include page="include/footer.jsp" />

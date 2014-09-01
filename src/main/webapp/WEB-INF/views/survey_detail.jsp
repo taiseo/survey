@@ -24,6 +24,10 @@
 
 <jsp:include page="include/question_template.jsp" />
 
+<script type="text/javascript">
+var survey.questions = ${questionsString};
+</script>
+
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/jquery-ui/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/lib/jquery-ui/jquery-ui.theme.min.css" />
