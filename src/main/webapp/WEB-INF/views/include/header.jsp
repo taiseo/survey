@@ -5,6 +5,9 @@
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<c:if test="${isClient}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</c:if>
 <title>${pageTitle}</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
@@ -17,7 +20,22 @@
 	</script>
 </head>
 <body>
-	<c:if test="${not empty sessionScope.user}">
+
+	<c:if test="${isClient}">
+		<div class="navbar  limit-width  center-block">
+			<div class="navbar-inner">
+				<a class="brand" href="<%=request.getContextPath()%>" onclick="return false;">${survey.title }</a>
+				<ul class="nav">
+					<c:forEach var="page" begin="1" end="${pages }">
+						<li><a href="#${page}">${page }p</a></li>
+					</c:forEach>
+				</ul>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${not empty sessionScope.user and ! isClient}">
+		<!-- 관리자 -->
 		<div class="navbar  limit-width  center-block">
 			<div class="navbar-inner">
 				<a class="brand" href="<%=request.getContextPath()%>">고객 만족 설문</a>

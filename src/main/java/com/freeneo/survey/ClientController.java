@@ -41,16 +41,27 @@ public class ClientController {
 			){
 		
 		Survey survey = surveyMapper.select(id);
-		List<Question> questions = questionMapper.list(survey.getId());
 		
+		// TODO 설문 종료일 체크
+		
+		List<Question> questions = questionMapper.list(survey.getId());
+
+		int pageBreakerCount = 0;
 		for(Question question : questions){
 			List<ResponseItem> responseItems = responseItemMapper.list(question.getId());
 			question.setResponseItems(responseItems);
+			if(question.getContent().equals("$$$pageBreaker$$$")){
+				pageBreakerCount++;
+			}
 		}
 		
-		logger.debug("questions = {}", questions);
-		
 		survey.setQuestions(questions);
+		
+		logger.debug("survey = {}", survey);
+		
+		model.addAttribute("pages", pageBreakerCount+1);
+		model.addAttribute("pageTitle", survey.getTitle());
+		model.addAttribute("isClient", true);
 		model.addAttribute("survey", survey);
 		
 		return "client_survey";
