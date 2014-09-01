@@ -1,11 +1,12 @@
 $(document).ready(function(){
-	attachActiveToNav();
-	initTinyMce();
-	initDatepicker();
-	initOnlyNumber();
+	attach_active_to_nav();
+	init_tinymce();
+	init_datepicker();
+	init_only_number();
+	init_underscore_template();
 });
 
-function attachActiveToNav(){
+function attach_active_to_navNav(){
 	$('.navbar li a').each(function(){
 		if(location.href.indexOf($(this).attr('href')) > -1){
 			$(this).parents('li').addClass('active');
@@ -13,7 +14,7 @@ function attachActiveToNav(){
 	});
 }
 
-function initTinyMce(){
+function init_tinymcee(){
 	if($('.wysiwyg').length > 0){
 		tinymce.init({
 			selector: '.wysiwyg'
@@ -21,7 +22,7 @@ function initTinyMce(){
 	}
 }
 
-function initDatepicker(){
+function init_datepicker(){
 	if($('.datepicker').length > 0){
 		$('.datepicker').datepicker({
 			language: "kr",
@@ -31,13 +32,7 @@ function initDatepicker(){
 	}
 }
 
-function deinitDatepicker(){
-	if($('.datepicker').length > 0){
-		$('.datepicker').datepicker('remove');
-	}
-}
-
-function initOnlyNumber(){
+function init_only_number(){
 	$('body').on('blur', '.js-number', function(){
 		$(this).val($(this).val().replace(/[^\-0-9]/g, ''));
 	});
@@ -53,4 +48,12 @@ function mynoty(text, option){
 	};
 	var option = $.extend(defaults, option);
 	noty(option);
+}
+
+function init_underscore_template(){
+	_.templateSettings = {
+	    interpolate: /\<\@\=(.+?)\@\>/gim,
+	    evaluate: /\<\@(.+?)\@\>/gim,
+	    escape: /\<\@\-(.+?)\@\>/gim
+	};
 }
