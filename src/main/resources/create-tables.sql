@@ -9,7 +9,7 @@ CREATE TABLE sv_users
   email      VARCHAR2(30),
   USER_LEVEL VARCHAR2(20) DEFAULT 'normal',
   CONSTRAINT sv_users_PK PRIMARY KEY (id), 
-  CONSTRAINT unique_users unique (username)
+  CONSTRAINT sv_unique_users unique (username)
 );
 
 create sequence seq_sv_users start with 1 increment by 1 maxvalue 999999999999999 cycle nocache;
@@ -92,3 +92,9 @@ create sequence seq_sv_responses start with 1 increment by 1 maxvalue 9999999999
 
 
 
+CREATE TABLE SV_CONFIG
+(
+  KEY_NAME     NUMBER NOT NULL,
+  VALUE        VARCHAR2(1000),
+  CONSTRAINT SV_CONFIG_PK PRIMARY KEY (KEY_NAME)
+);

@@ -13,3 +13,5 @@ drop sequence seq_sv_response_items;
 
 drop table sv_responses;
 drop sequence seq_sv_responses;
+
+drop table SV_CONFIG;
