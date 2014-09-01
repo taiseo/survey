@@ -3,8 +3,7 @@
 
 <jsp:include page="include/header.jsp" />
 
-<div class="limit-width  center-block">
-
+<div class="limit-width  center-block  client" data-client="${sessionId}">
 	<div class="page-header">
 		<h1>${pageTitle }</h1>
 	</div>

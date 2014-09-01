@@ -2,6 +2,8 @@ package com.freeneo.survey;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,8 @@ public class ClientController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String get(
 			@PathVariable(value="id") Long id,
-			Model model
+			Model model,
+			HttpSession session
 			){
 		
 		Survey survey = surveyMapper.select(id);
@@ -61,6 +64,7 @@ public class ClientController {
 		
 		logger.debug("survey = {}", survey);
 		
+		model.addAttribute("sessionId", session.getId());
 		model.addAttribute("pages", pageBreakerCount+1);
 		model.addAttribute("pageTitle", survey.getTitle());
 		model.addAttribute("isClient", true);
