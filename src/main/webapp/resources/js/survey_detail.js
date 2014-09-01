@@ -4,20 +4,42 @@ $(document).ready(function(){
 	bind_sortable();
 	bind_remove();
 	bind_save();
+	init_questions();
 });
+
+function init_titles(){
+	survey.question_titles = {};
+	$('.question-buttons:first input[type=button]').each(function(i, el){
+		var type = $(el).data('template-id')
+		var value = $(el).val();
+		survey.question_titles[type] = value;
+	});
+}
 
 function bind_add_question(){
 	$('.js-add-question').click(function(){
-		var title = '<h2>' + $(this).val() + '</h2>';
-		var template_id = $(this).data('template-id');
+		var type = $(this).data('template-id');
 		var $question; 
 		
-		$('.js-questions-area').append($($('#' + template_id).html()).prepend(title));
-		$question = $('.js-questions-area .question').last();
+		var question = {
+			content: null,
+			contentDetail: null,
+			type: template_id
+		}
+		
+		$question = add_question(question);
 		
 		save_question($question);
 		bind_sortable_response_items();
 	});
+}
+
+function add_question(question){
+	var title = '<h2>' + survey.question_titles[question.type] + '</h2>';
+	var html = $('#' + question.type).html();
+	var compiled = _.template(title + html);
+	$('.js-questions-area').append(compiled(question));
+	return $('.js-questions-area .question').last();
 }
 
 function bind_add_response_item(){
@@ -194,5 +216,12 @@ function delete_response_item($response_item){
 		var content = deletedResponseItem.content || '';
 		mynoty(content + ' 답변을 삭제했습니다.', {type: 'warning'});
 		$response_item.remove();
+	});
+}
+
+function init_questions(){
+	init_titles();
+	_.each(survey.questions, function(question){
+		add_question(question);
 	});
 }

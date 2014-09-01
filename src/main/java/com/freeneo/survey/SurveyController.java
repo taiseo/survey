@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
-import com.google.gson.Gson;
 
 @Controller
 @RequestMapping(value="/surveys")
@@ -190,12 +191,16 @@ public class SurveyController {
 		List<Question> questions = questionMapper.list(id);
 		logger.debug("questions = {}", questions);
 		
-		Gson gson = new Gson();
-		String questionsString = gson.toJson(questions);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String questionsString = null;
+		try {
+			questionsString = objectMapper.writeValueAsString(questions);
+		} catch (JsonProcessingException e) {
+			logger.error(e.getMessage());
+		}
 		logger.debug("questionsString = {}", questionsString);
 		
 		model.addAttribute("survey", survey);
-		model.addAttribute("gson", gson);
 		model.addAttribute("questionsString", questionsString);
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
 		return "survey_detail";

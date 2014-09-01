@@ -6,7 +6,7 @@ $(document).ready(function(){
 	init_underscore_template();
 });
 
-function attach_active_to_navNav(){
+function attach_active_to_nav(){
 	$('.navbar li a').each(function(){
 		if(location.href.indexOf($(this).attr('href')) > -1){
 			$(this).parents('li').addClass('active');
@@ -14,7 +14,7 @@ function attach_active_to_navNav(){
 	});
 }
 
-function init_tinymcee(){
+function init_tinymce(){
 	if($('.wysiwyg').length > 0){
 		tinymce.init({
 			selector: '.wysiwyg'

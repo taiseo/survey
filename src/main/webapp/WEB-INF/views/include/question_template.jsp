@@ -8,16 +8,16 @@
 
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="주관식1" />
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@>"/>
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		<label>
 			질문
-			<input type="text" name="content" class="input-block-level" />
+			<input type="text" name="content" class="input-block-level" value="<@=content@>"/>
 		</label>
 		
 		<label>
 			질문 보조 설명
-			<input type="text" name="contentDetail" class="input-block-level" />
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>"/>
 		</label>
 	</form>
 	
@@ -44,17 +44,17 @@
 
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="주관식2" />
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@>"/>
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		
 		<label>
 			질문
-			<input type="text" name="content" class="input-block-level" />
+			<input type="text" name="content" class="input-block-level" value="<@=content@>"/>
 		</label>
 		
 		<label>
 			질문 보조 설명
-			<input type="text" name="contentDetail" class="input-block-level" />
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>"/>
 		</label>
 	</form>
 	
@@ -78,17 +78,17 @@
 
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="객관식1" />
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@>"/>
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		
 		<label>
 			질문
-			<input type="text" name="content" class="input-block-level" />
+			<input type="text" name="content" class="input-block-level" value="<@=content@>"/>
 		</label>
 		
 		<label>
 			질문 보조 설명
-			<input type="text" name="contentDetail" class="input-block-level" />
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>"/>
 		</label>
 	</form>
 	
@@ -138,17 +138,17 @@
 
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="객관식2" />
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@>" />
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		
 		<label>
 			질문
-			<input type="text" name="content" class="input-block-level" />
+			<input type="text" name="content" class="input-block-level" value="<@=content@>" />
 		</label>
 		
 		<label>
 			질문 보조 설명
-			<input type="text" name="contentDetail" class="input-block-level" />
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>" />
 		</label>
 	</form>
 	
@@ -197,17 +197,17 @@
 
 	<form class="question-form" onsubmit="return false;">
 		<input type="hidden" name="type" value="점수범위" />
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="<@=id@>" />
 		<input type="hidden" name="surveyId" value="${survey.id }" />
 		
 		<label>
 			질문
-			<input type="text" name="content" class="input-block-level" />
+			<input type="text" name="content" class="input-block-level" value="<@=content@>" />
 		</label>
 		
 		<label>
 			질문 보조 설명
-			<input type="text" name="contentDetail" class="input-block-level" />
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>" />
 		</label>
 	</form>
 	

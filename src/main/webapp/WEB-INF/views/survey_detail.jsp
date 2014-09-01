@@ -25,7 +25,7 @@
 <jsp:include page="include/question_template.jsp" />
 
 <script type="text/javascript">
-var survey.questions = ${questionsString};
+survey.questions = ${questionsString};
 </script>
 
 <jsp:include page="include/footer.jsp" />
