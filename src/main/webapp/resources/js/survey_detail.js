@@ -15,7 +15,7 @@ function bind_add_question(){
 		$('.js-questions-area').append($($('#' + template_id).html()).prepend(title));
 		$question = $('.js-questions-area .question').last();
 		
-		save_question($question.find('.question-form'));
+		save_question($question);
 		bind_sortable_response_items();
 	});
 }
@@ -33,15 +33,22 @@ function bind_add_response_item(){
 }
 
 function bind_sortable(){
-	$('.js-questions-area').sortable({
-		// TODO DB 순서 변경 로직 추가
-		handle: '.js-move-question, h2'
+	var tmp = $('.js-questions-area').sortable({
+		handle: '.js-move-question, h2',
+	});
+	tmp.on('sortstop', function(){
+		$('.question').each(function(index, question){
+			save_question($(question));
+		});
 	});
 }
 
 function bind_sortable_response_items(){
-	$('.js-questions-area .js-response-items-area').sortable({
+	var tmp = $('.js-questions-area .js-response-items-area').sortable({
 		handle: '.js-move-response-item'
+	});
+	tmp.on('sortstop', function(e, ui){
+		save_response_items(ui.item.parents('.question'));
 	});
 }
 
@@ -54,8 +61,8 @@ function bind_remove(){
 
 function bind_save(){
 	$('.js-questions-area').on('blur', '.question-form input', function(){
-		var $question_form = $(this).parents('.question-form');
-		save_question($question_form);
+		var $question = $(this).parents('.question');
+		save_question($question);
 	});
 	
 	$('.js-questions-area').on('blur', '.response-items-form input', function(){
@@ -64,8 +71,8 @@ function bind_save(){
 	});
 }
 
-function save_question($question_form){
-	var $question = $question_form.parents('.question');
+function save_question($question){
+	var $question_form = $question.find('.question-form');
 	var question_obj = $question_form.serializeObject();
 	
 	// id가 있으면 수정. 이 경우 REST API에 맞게 HTTP method를 PUT으로 보낸다.
@@ -78,7 +85,6 @@ function save_question($question_form){
 	
 	$.post(survey.context_path + '/questions', question_obj, function(insertedQuestion){
 		$question_form.find('[name=id]').val(insertedQuestion.id);
-		save_response_items($question);
 		mynoty(insertedQuestion.content + ' 질문 관련 정보를 저장했습니다.');
 	}, 'json');
 }

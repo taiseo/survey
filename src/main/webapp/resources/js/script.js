@@ -48,6 +48,7 @@ function mynoty(text, option){
 		layout: 'topRight',
 		type: 'success',
 		timeout: 2000,
+		maxVisible: 10,
 		text: text
 	};
 	var option = $.extend(defaults, option);
