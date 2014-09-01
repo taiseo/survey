@@ -29,6 +29,11 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		};
 		
+		if(request.getRequestURI().contains( request.getContextPath() + "/survey/")){
+			logger.debug("클라이언트 접속");
+			return true;
+		}
+		
 		if(session.getAttribute("user") == null){
 			
 			// 로컬에서 개발중이면 로그인 검사 패스
