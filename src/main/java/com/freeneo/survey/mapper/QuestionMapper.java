@@ -5,7 +5,7 @@ import java.util.List;
 import com.freeneo.survey.domain.Question;
 
 public interface QuestionMapper {
-	public List<Question> list();
+	public List<Question> list(Long surveyId);
 	public Question select(Long id);
 	public void insert(Question question);
 	public void update(Question question);

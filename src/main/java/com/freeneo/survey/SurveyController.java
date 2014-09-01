@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
+import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping(value="/surveys")
@@ -29,6 +32,9 @@ public class SurveyController {
 
 	@Autowired
 	SurveyMapper surveyMapper;
+
+	@Autowired
+	QuestionMapper questionMapper;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
@@ -181,7 +187,16 @@ public class SurveyController {
 			return list(model);
 		}
 	
+		List<Question> questions = questionMapper.list(id);
+		logger.debug("questions = {}", questions);
+		
+		Gson gson = new Gson();
+		String questionsString = gson.toJson(questions);
+		logger.debug("questionsString = {}", questionsString);
+		
 		model.addAttribute("survey", survey);
+		model.addAttribute("gson", gson);
+		model.addAttribute("questionsString", questionsString);
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
 		return "survey_detail";
 	}

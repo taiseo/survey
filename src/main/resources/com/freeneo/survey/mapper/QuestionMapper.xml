@@ -12,8 +12,10 @@
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
-	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM SV_QUESTIONS
+	<select id="list" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT * FROM SV_QUESTIONS 
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+		ORDER BY ORDER_NO ASC
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
