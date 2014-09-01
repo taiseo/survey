@@ -203,18 +203,7 @@
 		</label>
 	</form>
 	
-	<div class="js-response-items-area">
-	    <div class="js-response-item">
-	    	<input type="hidden" name="id" />
-	    	<input type="hidden" name="content" value=""/>
-	    	<label>
-		    	최솟값 : <input type="text" class="span1  js-number" name="min"/>
-		    </label>
-		    <label>
-		    	최댓값 : <input type="text" class="span1  js-number" name="max"/>
-		    </label>
-	    </div>
-    </div>
+	<div class="js-response-items-area"></div>
     
 	<p class="text-right">
 		<input class="btn  js-remove-question" type="button" value="제거" />
@@ -226,6 +215,22 @@
 	<hr />
 </div>
 <%= "</script>" %>
+
+<%= "<script type='text/template' id='점수범위-답항'>" %>
+<div class="js-response-item">
+   	<input type="hidden" name="id" value="<@=id@>"/>
+   	<input type="hidden" name="content" value="<@=content@>"/>
+   	<label>
+    	최솟값 : <input type="text" class="span1  js-number" name="min" value="<@=min@>"/>
+    </label>
+    <label>
+    	최댓값 : <input type="text" class="span1  js-number" name="max" value="<@=max@>"/>
+    </label>
+</div>
+<%= "</script>" %>
+
+
+
 
 <%= "<script type='text/template' id='페이지-나누기'>" %>
 <div class="question  clearfix">

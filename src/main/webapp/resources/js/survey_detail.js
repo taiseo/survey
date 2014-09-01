@@ -19,6 +19,13 @@ function bind_add_question(){
 			type: type
 		}
 		
+		if(type == '점수범위'){
+			question.responseItems = [{
+				id: null,
+				content: '{"min":"0","max":"10"}'
+			}];
+		}
+		
 		$question = add_question(question);
 		
 		save_question($question);
@@ -34,7 +41,6 @@ function add_question(question){
 	
 	if(question.responseItems){
 		_.each(question.responseItems, function(response_item){
-			console.log(response_item);
 			add_response_item($qeustion, response_item);
 		});
 	}
@@ -60,7 +66,9 @@ function bind_add_response_item(){
 
 function add_response_item($question, response_item){
 	var question_type = $question.find('.question-form [name="type"]').val();
-	var type;
+	var type, min_max;
+	
+	
 	if( ! response_item.type){
 		type = question_type + '-답항'; 
 		if(response_item.content == '$$$etc$$$'){
@@ -71,6 +79,15 @@ function add_response_item($question, response_item){
 	}
 	
 	var compiled = _.template($('#' + type).html());
+	
+	if(question_type == '점수범위'){
+		console.log(response_item.content);
+		min_max = $.evalJSON(response_item.content);
+		console.log(min_max);
+		response_item.min = min_max.min;
+		response_item.max = min_max.max;
+	}
+	
 	$question
 		.find('.js-response-items-area')
 		.append(compiled(response_item));
