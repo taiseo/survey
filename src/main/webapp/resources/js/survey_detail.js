@@ -62,8 +62,8 @@ function bind_save(){
 		question_obj.orderNo = $question.index('.question');
 		
 		$.post(survey.context_path + '/questions', question_obj, function(insertedQuestion){
-			console.log(insertedQuestion);
 			$question_form.find('[name=id]').val(insertedQuestion.id);
+			mynoty(insertedQuestion.content + ' 질문 관련 정보를 저장했습니다.');
 		}, 'json');
 	});
 	

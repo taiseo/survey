@@ -42,3 +42,14 @@ function initOnlyNumber(){
 		$(this).val($(this).val().replace(/[^0-9]/g, ''));
 	});
 }
+
+function mynoty(text, option){
+	var defaults = {
+		layout: 'topRight',
+		type: 'success',
+		timeout: 2000,
+		text: text
+	};
+	var option = $.extend(defaults, option);
+	noty(option);
+}
