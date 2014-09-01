@@ -202,8 +202,9 @@ function save_response_items($question){
 }
 
 function delete_response_item($response_item){
+
 	var response_item_id = $response_item.find('[name=id]');
-	var param = {
+	var params = {
 		id: response_item_id,
 		_method: 'DELETE'
 	};
