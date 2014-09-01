@@ -1,5 +1,7 @@
 package com.freeneo.survey.domain;
 
+import java.util.List;
+
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
@@ -15,6 +17,7 @@ public class Survey {
 	private String writer;
 	private String part;
 	private String datetime;
+	private List<Question> questions; 
 
 	public Long getId() {
 		return id;
@@ -86,6 +89,14 @@ public class Survey {
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 	@Override
