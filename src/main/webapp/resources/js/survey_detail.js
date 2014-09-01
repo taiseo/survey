@@ -57,6 +57,11 @@ function bind_remove(){
 		var $question = $(this).parents('.question');
 		delete_question($question);
 	});
+	
+	$('.js-questions-area').on('click', '.js-remove-response-item', function(){
+		var $response_item = $(this).parents('.js-response-item');
+		delete_response_item($response_item);
+	});
 }
 
 function bind_save(){
@@ -65,7 +70,7 @@ function bind_save(){
 		save_question($question);
 	});
 	
-	$('.js-questions-area').on('blur', '.response-items-form input', function(){
+	$('.js-questions-area').on('blur', '.js-response-items-area input', function(){
 		var $question = $(this).parents('.question');
 		save_response_items($question);
 	});
@@ -108,6 +113,37 @@ function delete_question($question){
 function save_response_items($question){
 	var $question_form = $question.find('.question-form')
 	var question_id = $question_form.find('[name=id]').val();
+	var type = $question.find('[name=type]').val();
+	var point_range = {};
+	var $response_item;
+	
+	if(type == '점수범위'){
+		$response_item = $question.find('.js-response-item');
+		var $min = $response_item.find('[name=min]');
+		var $max = $response_item.find('[name=max]');
+		point_range.min = $min.val();
+		point_range.max = $max.val();
+		
+		// 두 값이 모두 입력될 때만 저장한다.
+		if(point_range.max == '' || point_range.min ==''){
+			return false;
+		}
+		
+		// min, max 검증
+		if(parseInt(point_range.max) < parseInt(point_range.min)){
+			// 최솟값이 최댓값보다 큰 경우 두 값을 바꾼다.
+			
+			point_range = {
+				min: point_range.max,
+				max: point_range.min
+			};
+			
+			$min.val(point_range.min);
+			$max.val(point_range.max);
+		}
+		
+		$response_item.find('[name=content]').val($.toJSON(point_range));
+	}
 	
 	$question.find('.js-response-item').each(function(index){
 		var $response_item = $(this);
@@ -126,7 +162,7 @@ function save_response_items($question){
 			param._method = 'PUT';
 		}
 		
-		$.post(survey.context_path + '/response_item', param, function(response_item){
+		$.post(survey.context_path + '/response_items', param, function(response_item){
 			var response_item_content = '';
 			$response_item.find('[name=id]').val(response_item.id);
 			if(response_item.content){
@@ -138,5 +174,19 @@ function save_response_items($question){
 			}
 			mynoty($question_form.find('[name=content]').val() + ' 질문의 답변' + response_item_content + '을 저장했습니다.');
 		}, 'json');
+	});
+}
+
+function delete_response_item($response_item){
+	var response_item_id = $response_item.find('[name=id]');
+	var param = {
+		id: response_item_id,
+		_method: 'DELETE'
+	};
+	
+	$.post(survey.context_path + '/response_items', params, function(deletedResponseItem){
+		var content = deletedResponseItem.content || '';
+		mynoty(content + ' 답변을 삭제했습니다.', {type: 'warning'});
+		$response_item.remove();
 	});
 }

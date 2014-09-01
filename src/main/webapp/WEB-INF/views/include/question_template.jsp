@@ -92,13 +92,11 @@
 		</label>
 	</form>
 	
-	<form class="response-items-form" onsubmit="return false">
-		<div class="js-response-items-area">
-			<jsp:include page="response_item_template.jsp">
-				<jsp:param name="type" value="radio"/>
-			</jsp:include>
-		</div>
-	</form>
+	<div class="js-response-items-area">
+		<jsp:include page="response_item_template.jsp">
+			<jsp:param name="type" value="radio"/>
+		</jsp:include>
+	</div>
 	
 	<div>
 		<input type="radio" disabled/>
@@ -154,13 +152,11 @@
 		</label>
 	</form>
 	
-	<form class="response-items-form" onsubmit="return false">
-		<div class="js-response-items-area">
-			<jsp:include page="response_item_template.jsp">
-				<jsp:param name="type" value="checkbox"/>
-			</jsp:include>
-		</div>
-	</form>
+	<div class="js-response-items-area">
+		<jsp:include page="response_item_template.jsp">
+			<jsp:param name="type" value="checkbox"/>
+		</jsp:include>
+	</div>
 	
 	<div>
 		<input type="checkbox" disabled/>
@@ -215,12 +211,19 @@
 		</label>
 	</form>
 	
-    <label>
-    	최솟값 : <input type="text" class="span1  js-number" name="min"/>
-    </label>
-    <label>
-    	최댓값 : <input type="text" class="span1  js-number" name="max"/>
-    </label>
+	<div class="js-response-items-area">
+	    <div class="js-response-item">
+	    	<input type="hidden" name="id" />
+	    	<input type="hidden" name="content" value=""/>
+	    	<label>
+		    	최솟값 : <input type="text" class="span1  js-number" name="min"/>
+		    </label>
+		    <label>
+		    	최댓값 : <input type="text" class="span1  js-number" name="max"/>
+		    </label>
+	    </div>
+    </div>
+    
 	<p class="text-right">
 		<input class="btn  js-remove-question" type="button" value="제거" />
 	</p>

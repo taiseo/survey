@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 
-@RequestMapping(value="/response_item")
+@RequestMapping(value="/response_items")
 @Controller
 public class ResponseItemController {
 

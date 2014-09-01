@@ -6,5 +6,5 @@
 	<input type="${param.type }" disabled/>
 	기타 : 
 	<input class="span6" type="text" name="content" value="여기에 사용자가 직접입력하게 됩니다." disabled />
-	<i class="js-remove-response-item  icon-remove" onclick="$(this).parent().remove();"></i>
+	<i class="js-remove-response-item  icon-remove"></i>
 </div>

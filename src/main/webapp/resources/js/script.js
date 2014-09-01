@@ -39,7 +39,7 @@ function deinitDatepicker(){
 
 function initOnlyNumber(){
 	$('body').on('blur', '.js-number', function(){
-		$(this).val($(this).val().replace(/[^0-9]/g, ''));
+		$(this).val($(this).val().replace(/[^\-0-9]/g, ''));
 	});
 }
 
