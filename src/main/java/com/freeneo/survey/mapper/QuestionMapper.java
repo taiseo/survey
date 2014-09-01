@@ -6,8 +6,8 @@ import com.freeneo.survey.domain.Question;
 
 public interface QuestionMapper {
 	public List<Question> list();
-	public Question select(int id);
+	public Question select(Long id);
 	public void insert(Question question);
 	public void update(Question question);
-	public void delete(int id);
+	public void delete(Long id);
 }

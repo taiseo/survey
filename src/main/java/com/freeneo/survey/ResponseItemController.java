@@ -11,47 +11,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
-import com.freeneo.survey.domain.Question;
-import com.freeneo.survey.mapper.QuestionMapper;
+import com.freeneo.survey.domain.ResponseItem;
+import com.freeneo.survey.mapper.ResponseItemMapper;
 
-@RequestMapping(value="/questions")
+@RequestMapping(value="/response_item")
 @Controller
-public class QuestionController {
+public class ResponseItemController {
 
-	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ResponseItemController.class);
 	
 	@Autowired
-	QuestionMapper questionMapper;
+	ResponseItemMapper responseItemMapper;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Question insert(Question question){
-		questionMapper.insert(question);
-		logger.debug("insertedQuestion = {}", question);
-		return question;
+	public ResponseItem insert(ResponseItem responseItem){
+		responseItemMapper.insert(responseItem);
+		logger.debug("insertedResponseItem = {}", responseItem);
+		return responseItem;
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Question update(Question question){
-		logger.debug("question = {}", question);
-		questionMapper.update(question);
-		return question;
+	public ResponseItem update(ResponseItem responseItem){
+		logger.debug("responseItem = {}", responseItem);
+		responseItemMapper.update(responseItem);
+		return responseItem;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Question delete(@RequestParam(value="id") Long id){
-		Question question = questionMapper.select(id);
-		logger.debug("question to delete = {}", question);
-		questionMapper.delete(id);
+	public ResponseItem delete(@RequestParam(value="id") Long id){
+		ResponseItem responseItem = responseItemMapper.select(id);
+		logger.debug("responseItem to delete = {}", responseItem);
+		responseItemMapper.delete(id);
 		
 		// TODO responseItem 삭제
 		
-		return question;
+		return responseItem;
 	}
 	
 }

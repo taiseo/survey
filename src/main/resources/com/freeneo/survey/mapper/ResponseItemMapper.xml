@@ -27,7 +27,7 @@
 	    </selectKey>
 	
 		INSERT INTO SV_RESPONSE_ITEMS 
-			(id, question_id, content, orderNo, datetime)
+			(id, question_id, content, order_no, datetime)
 		VALUES (
 			#{id}, 
 			#{questionId,jdbcType=NUMERIC},

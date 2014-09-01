@@ -92,14 +92,11 @@
 		</label>
 	</form>
 	
-	<form class="response-item-form" onsubmit="return false">
+	<form class="response-items-form" onsubmit="return false">
 		<div class="js-response-items-area">
-			<label class="js-reponse-item">
-				<i class="js-move-response-item  icon-move  move-response-item"></i>
-				<input type="radio" disabled/>
-				<input class="span7" type="text" name="content" />
-				<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-			</label>
+			<jsp:include page="response_item_template.jsp">
+				<jsp:param name="type" value="radio"/>
+			</jsp:include>
 		</div>
 	</form>
 	
@@ -123,22 +120,15 @@
 <%= "</script>" %>
 
 <%= "<script type='text/template' id='객관식1-답항'>" %>
-	<label class="js-reponse-item">
-		<i class="js-move-response-item  icon-move  move-response-item"></i>
-		<input type="radio" disabled/>
-		<input class="span7" type="text" name="content" />
-		<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-	</label>
+	<jsp:include page="response_item_template.jsp">
+		<jsp:param name="type" value="radio"/>
+	</jsp:include>
 <%= "</script>" %>
 
 <%= "<script type='text/template' id='객관식1-기타-답항'>" %>
-	<label class="js-reponse-item">
-		<i class="js-move-response-item  icon-move  move-response-item"></i>
-		<input type="radio" disabled/>
-		기타 : 
-		<input class="span6" type="text" name="content" value="여기에 사용자가 직접입력하게 됩니다." disabled />
-		<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-	</label>
+	<jsp:include page="response_etc_item_template.jsp">
+		<jsp:param name="type" value="radio"/>
+	</jsp:include>
 <%= "</script>" %>
 
 
@@ -164,14 +154,11 @@
 		</label>
 	</form>
 	
-	<form class="response-item-form" onsubmit="return false">
+	<form class="response-items-form" onsubmit="return false">
 		<div class="js-response-items-area">
-			<label class="js-reponse-item">
-				<i class="js-move-response-item  icon-move  move-response-item"></i>
-				<input type="checkbox" disabled/>
-				<input class="span7" type="text" name="content" />
-				<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-			</label>
+			<jsp:include page="response_item_template.jsp">
+				<jsp:param name="type" value="checkbox"/>
+			</jsp:include>
 		</div>
 	</form>
 	
@@ -195,22 +182,15 @@
 <%= "</script>" %>
 
 <%= "<script type='text/template' id='객관식2-답항'>" %>
-	<label class="js-reponse-item">
-		<i class="js-move-response-item  icon-move  move-response-item"></i>
-		<input type="checkbox" disabled/>
-		<input class="span7" type="text" name="content" />
-		<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-	</label>
+	<jsp:include page="response_item_template.jsp">
+		<jsp:param name="type" value="checkbox"/>
+	</jsp:include>
 <%= "</script>" %>
 
 <%= "<script type='text/template' id='객관식2-기타-답항'>" %>
-	<label class="js-reponse-item">
-		<i class="js-move-response-item  icon-move  move-response-item"></i>
-		<input type="checkbox" disabled/>
-		기타 : 
-		<input class="span6" type="text" name="content" value="여기에 사용자가 직접입력하게 됩니다." disabled />
-		<i class="js-remove-response-item  icon-remove" onclick="console.log('clicked'); $(this).parent().remove();"></i>
-	</label>
+	<jsp:include page="response_etc_item_template.jsp">
+		<jsp:param name="type" value="checkbox"/>
+	</jsp:include>
 <%= "</script>" %>
 
 
