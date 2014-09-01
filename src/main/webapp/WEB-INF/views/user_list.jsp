@@ -45,7 +45,7 @@
 	</table>
 	
 	<p class="text-center">
-		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-large">입력</a>
+		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-large">새 사용자</a>
 	</p>
 </div>
 <jsp:include page="include/footer.jsp" />
