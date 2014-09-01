@@ -15,9 +15,13 @@
 		</div>
 		<c:forEach items="${survey.questions}" var="question">
 			<c:choose>
-				<c:when test="${question.content == '$$$pageBreaker$$$'}">
+				<c:when test="${question.type == '페이지-나누기'}">
 					<%= "</div>" %>
 					<%= "<div class='questions-block' style='display: none'>" %>
+				</c:when>
+				<c:when test="${question.type == '주관식1'}">
+					<c:set var="question" value="${question }" scope="request"/>
+					<jsp:include page="include/client_short_answer_question.jsp"/>
 				</c:when>
 				<c:otherwise>
 					<h2>
