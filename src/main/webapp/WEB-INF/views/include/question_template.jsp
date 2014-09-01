@@ -92,11 +92,7 @@
 		</label>
 	</form>
 	
-	<div class="js-response-items-area">
-		<jsp:include page="response_item_template.jsp">
-			<jsp:param name="type" value="radio"/>
-		</jsp:include>
-	</div>
+	<div class="js-response-items-area"></div>
 	
 	<div>
 		<input type="radio" disabled/>
@@ -152,11 +148,7 @@
 		</label>
 	</form>
 	
-	<div class="js-response-items-area">
-		<jsp:include page="response_item_template.jsp">
-			<jsp:param name="type" value="checkbox"/>
-		</jsp:include>
-	</div>
+	<div class="js-response-items-area"></div>
 	
 	<div>
 		<input type="checkbox" disabled/>

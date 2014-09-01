@@ -88,3 +88,6 @@ l-block {
 	border-top: 4px dashed #ccc;
 	padding-bottom: 10px
 }
+.icon-remove {
+	cursor: pointer;
+}

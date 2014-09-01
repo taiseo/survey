@@ -30,19 +30,50 @@ function add_question(question){
 	var html = $('#' + question.type).html();
 	var compiled = _.template(html);
 	$('.js-questions-area').append(compiled(question));
-	return $('.question').last();
+	$qeustion = $('.question').last();
+	
+	if(question.responseItems){
+		_.each(question.responseItems, function(response_item){
+			console.log(response_item);
+			add_response_item($qeustion, response_item);
+		});
+	}
+	
+	return $qeustion;
 }
 
 function bind_add_response_item(){
 	$('.js-questions-area').on('click', '.js-add-reponse-item', function(){
-		var template_id = $(this).data('template-id');
+		var type = $(this).data('template-id');
 		var $question = $(this).parents('.question');
-		$question
-			.find('.js-response-items-area')
-			.append($('#' + template_id).html());
+		var response_item = {
+			id: null,
+			content: null,
+			type: type
+		}
+		
+		add_response_item($question, response_item);
 		save_response_items($question);
 	});
 	
+}
+
+function add_response_item($question, response_item){
+	var question_type = $question.find('.question-form [name="type"]').val();
+	var type;
+	if( ! response_item.type){
+		type = question_type + '-답항'; 
+		if(response_item.content == '$$$etc$$$'){
+			type = question_type + '기타-답항';
+		}
+	}else{
+		type = response_item.type;
+	}
+	
+	var compiled = _.template($('#' + type).html());
+	$question
+		.find('.js-response-items-area')
+		.append(compiled(response_item));
 }
 
 function bind_sortable(){
@@ -126,8 +157,10 @@ function delete_question($question){
 		var message;
 		if(deletedQuestion.content == '$$$pageBreaker$$$'){
 			message = '페이지 나누기를 삭제했습니다.';
+		}else if(deletedQuestion.content == null){
+			message = '질문 관련 정보를 삭제했습니다.';
 		}else{
-			message = deletedQuestion.content + ' 질문 관련 정보를 삭제했습니다.'|| ''
+			message = deletedQuestion.content + ' 질문 관련 정보를 삭제했습니다.';
 		}
 		mynoty(message, {type: 'warning'});
 		$question.remove();
@@ -203,7 +236,8 @@ function save_response_items($question){
 
 function delete_response_item($response_item){
 
-	var response_item_id = $response_item.find('[name=id]');
+	var response_item_id = $response_item.find('[name=id]').val();
+	
 	var params = {
 		id: response_item_id,
 		_method: 'DELETE'
