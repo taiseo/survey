@@ -4,14 +4,16 @@
 
 	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.ResponseItem">
 		<id column="id" jdbcType="NUMERIC" property="id" />
-		<result column="question_id" jdbcType="NUMERIC" property="quesetionId" />
+		<result column="question_id" jdbcType="NUMERIC" property="questionId" />
 		<result column="content" jdbcType="VARCHAR" property="content" />
 		<result column="order_no" jdbcType="NUMERIC" property="orderNo" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
-	<select id="list" resultMap="BaseResultMap">
+	<select id="list" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		SELECT * FROM SV_RESPONSE_ITEMS
+		WHERE QUESTION_ID = #{questionId,jdbcType=NUMERIC}
+		ORDER BY ORDER_NO
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">

@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freeneo.survey.domain.Question;
+import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
+import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 
 @Controller
@@ -36,6 +38,9 @@ public class SurveyController {
 
 	@Autowired
 	QuestionMapper questionMapper;
+	
+	@Autowired
+	ResponseItemMapper responseItemMapper;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
@@ -189,6 +194,12 @@ public class SurveyController {
 		}
 	
 		List<Question> questions = questionMapper.list(id);
+		
+		for(Question question : questions){
+			List<ResponseItem> responseItems = responseItemMapper.list(question.getId());
+			question.setResponseItems(responseItems);
+		}
+		
 		logger.debug("questions = {}", questions);
 		
 		ObjectMapper objectMapper = new ObjectMapper();

@@ -1,5 +1,7 @@
 package com.freeneo.survey.domain;
 
+import java.util.List;
+
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
@@ -13,6 +15,7 @@ public class Question {
 	private String type;
 	private int orderNo;
 	private String datetime;
+	private List<ResponseItem> responseItems;
 	
 	public Long getId() {
 		return id;
@@ -68,6 +71,14 @@ public class Question {
 
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public List<ResponseItem> getResponseItems() {
+		return responseItems;
+	}
+
+	public void setResponseItems(List<ResponseItem> responseItems) {
+		this.responseItems = responseItems;
 	}
 
 	@Override
