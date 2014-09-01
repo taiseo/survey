@@ -1,7 +1,11 @@
 package com.freeneo.survey.domain;
 
+import java.util.HashMap;
+
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+
+import com.google.gson.Gson;
 
 @AutoProperty
 public class ResponseItem {
@@ -11,6 +15,8 @@ public class ResponseItem {
 	private String content;
 	private int orderNo;
 	private String datetime;
+	private int min;
+	private int max;
 	
 	public Long getId() {
 		return id;
@@ -50,6 +56,30 @@ public class ResponseItem {
 
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public int getMin() {
+		return min;
+	}
+
+	public void setMin(int min) {
+		this.min = min;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
+	public void setMinMax(){
+		Gson gson = new Gson();
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> minMax = gson.fromJson(this.content, HashMap.class);
+		this.min = Integer.parseInt(minMax.get("min"));
+		this.max = Integer.parseInt(minMax.get("max"));
 	}
 
 	@Override

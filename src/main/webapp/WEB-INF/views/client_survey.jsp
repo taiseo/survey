@@ -14,21 +14,28 @@
 			${survey.description }
 		</div>
 		<c:forEach items="${survey.questions}" var="question">
+			<c:set var="question" value="${question }" scope="request"/>
 			<c:choose>
 				<c:when test="${question.type == '페이지-나누기'}">
 					<%= "</div>" %>
-					<%= "<div class='questions-block' style='display: none'>" %>
+					<%= "<div class='questions-block'>" %>
 				</c:when>
 				<c:when test="${question.type == '주관식1'}">
-					<c:set var="question" value="${question }" scope="request"/>
-					<jsp:include page="include/client_short_answer_question.jsp"/>
+					<jsp:include page="include/client_answer_question.jsp"/>
 				</c:when>
-				<c:otherwise>
-					<h2>
-						${question.content }
-						<small>${question.contentDetail }</small>
-					</h2>
-				</c:otherwise>
+				<c:when test="${question.type == '주관식2'}">
+					<jsp:include page="include/client_answer_question.jsp"/>
+				</c:when>
+				<c:when test="${question.type == '객관식1'}">
+					<jsp:include page="include/client_choice_question.jsp"/>
+				</c:when>
+				<c:when test="${question.type == '객관식2'}">
+					<jsp:include page="include/client_choice_question.jsp"/>
+				</c:when>
+				<c:when test="${question.type == '점수범위'}">
+					<jsp:include page="include/client_number_range_question.jsp"/>
+				</c:when>
+				
 			</c:choose>
 		</c:forEach>
 	</div>

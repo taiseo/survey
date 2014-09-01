@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
@@ -49,6 +48,9 @@ public class ClientController {
 		int pageBreakerCount = 0;
 		for(Question question : questions){
 			List<ResponseItem> responseItems = responseItemMapper.list(question.getId());
+			if(question.getType().equals("점수범위")){
+				responseItems.get(0).setMinMax();
+			}
 			question.setResponseItems(responseItems);
 			if(question.getContent().equals("$$$pageBreaker$$$")){
 				pageBreakerCount++;

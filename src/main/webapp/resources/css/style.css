@@ -91,3 +91,7 @@ l-block {
 .icon-remove {
 	cursor: pointer;
 }
+.question h2,
+.client-question h2 {
+	font-size: 1.4em;
+}
