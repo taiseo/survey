@@ -84,9 +84,11 @@ public class SurveyController {
 		
 		logger.debug("survey = {}", survey);
 		
-		Long id = surveyMapper.insert(survey);
+		surveyMapper.insert(survey);
 		
-		return "redirect:/surveys/detail/" + id;
+		logger.debug("insertedSurvey = {}", survey);
+		
+		return "redirect:/surveys/detail/" + survey.getId();
 	}
 	
 	@RequestMapping(value="/update/{id}", method=RequestMethod.GET)

@@ -61,7 +61,7 @@ public class LoginController {
 		user = userService.getUser(user);
 		
 		if(user != null){
-			logger.debug("로그인한 사용자 : " + Util.getPrintr(user));
+			logger.debug("로그인한 사용자 = {} ", user);
 			session.setAttribute("user", user);
 			return "redirect:/surveys";
 		}

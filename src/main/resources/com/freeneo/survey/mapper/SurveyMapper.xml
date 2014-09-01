@@ -27,7 +27,7 @@
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">
 		<selectKey keyProperty="id" order="BEFORE" resultType="long">
-			SELECT seq_sv_surveys.nextval from DUAL; 
+			SELECT seq_sv_surveys.nextval from DUAL 
 		</selectKey>
 		
 		INSERT INTO sv_surveys 
