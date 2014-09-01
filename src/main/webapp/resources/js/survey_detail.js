@@ -123,11 +123,13 @@ function delete_question($question){
 	};
 	
 	$.post(survey.context_path + '/questions', params, function(deletedQuestion){
-		
-		// TODO 페이지 나누기 제거 메시지 손보기
-		
-		var content = deletedQuestion.content || '';
-		mynoty(content + ' 질문 관련 정보를 삭제했습니다.', {type: 'warning'});
+		var message;
+		if(deletedQuestion.content == '$$$pageBreaker$$$'){
+			message = '페이지 나누기를 삭제했습니다.';
+		}else{
+			message = deletedQuestion.content + ' 질문 관련 정보를 삭제했습니다.'|| ''
+		}
+		mynoty(message, {type: 'warning'});
 		$question.remove();
 	});
 }
