@@ -240,8 +240,12 @@
 
 	<div class="page-breaker"></div>
 
-	<input type="hidden" name="id" />
-	<input type="hidden" name="content" value="$$$page-breaker$$$" />
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="id" />
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		<input type="hidden" name="type" value="페이지-나누기" />
+		<input type="hidden" name="content" value="$$$pageBreaker$$$" />
+	</form>
 	
 	<p class="text-right">
 		<input class="btn  js-remove-question" type="button" value="제거" />

@@ -88,9 +88,15 @@ function save_question($question){
 	// 순서를 정한다.
 	question_obj.orderNo = $question.index('.question');
 	
-	$.post(survey.context_path + '/questions', question_obj, function(insertedQuestion){
-		$question_form.find('[name=id]').val(insertedQuestion.id);
-		mynoty(insertedQuestion.content + ' 질문 관련 정보를 저장했습니다.');
+	$.post(survey.context_path + '/questions', question_obj, function(inserted_question){
+		var inserted_question_content = inserted_question.content + ' 질문';
+		if(inserted_question.content == '$$$pageBreaker$$$'){
+			inserted_question_content = '페이지 나누기';
+		}
+		
+		$question_form.find('[name=id]').val(inserted_question.id);
+		
+		mynoty(inserted_question_content + ' 관련 정보를 저장했습니다.');
 	}, 'json');
 }
 
