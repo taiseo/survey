@@ -27,7 +27,7 @@
 				<a class="brand" href="<%=request.getContextPath()%>" onclick="return false;">${survey.title }</a>
 				<ul class="nav">
 					<c:forEach var="page" begin="1" end="${pages }">
-						<li><a href="#${page}">${page }p</a></li>
+						<li class="${page == 1 ? 'active' : '' }"><a href="#${page}" onclick="return false;">${page }p</a></li>
 					</c:forEach>
 				</ul>
 			</div>

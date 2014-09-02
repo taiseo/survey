@@ -17,7 +17,7 @@
 			<c:choose>
 				<c:when test="${question.type == '페이지-나누기'}">
 					<%= "</div>" %>
-					<%= "<div class='questions-block'>" %>
+					<%= "<div class='questions-block' style='display: none'>" %>
 				</c:when>
 				<c:when test="${question.type == '주관식1'}">
 					<jsp:include page="include/client_answer_question.jsp"/>
@@ -46,3 +46,4 @@
 </div>
 
 <jsp:include page="include/footer.jsp" />
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/client_script.js"></script>
