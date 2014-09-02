@@ -12,9 +12,10 @@
 		<small>${question.contentDetail }</small>
 	</h2>
 	<div class="response-items  clearfix">
-		<c:forEach var="point" begin="${question.responseItems[0].min}" end="${question.responseItems[0].max}">
+		<c:forEach var="point" begin="1" end="${question.responseItems[0].max - question.responseItems[0].min + 1}">
 			<label class="pull-left" style="margin-right: 1em">
-				<input type="radio" name="content" value="${point }"/> ${point }
+				<input type="radio" name="content" value="${question.responseItems[0].min + point -1 }"/> 
+				${question.responseItems[0].min + point -1 }
 			</label>
 		</c:forEach>
 	</div>
