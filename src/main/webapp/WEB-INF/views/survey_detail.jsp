@@ -20,6 +20,11 @@
 	
 	<jsp:include page="include/question_buttons.jsp" />
 	
+	<p class="text-center">
+		<a href="<%=request.getContextPath() %>/surveys" style="margin-top: 3em" 
+			class="btn  btn-primary  btn-large">작성 완료</a>
+	</p>
+	
 </div>
 
 <jsp:include page="include/question_template.jsp" />
