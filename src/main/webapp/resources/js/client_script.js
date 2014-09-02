@@ -1,20 +1,36 @@
 $(document).ready(function(){
 	bind_page_button();
 	bind_save();
+	bind_etc_response();
 });
 
+function bind_etc_response(){
+	$('.js-etc').keyup(function(){
+		$(this).prev().val($(this).val());
+	});
+}
+
 function bind_save(){
-	$('.client-question input, .client-question textarea').on('click, blur', function(){
-		// TODO 기타 답변 처리. 기타 답변에서 keyup마다 etc의 value를 변경하는 것으로.
-		$question = $(this).parents('.client-question');
-		var params = {
-			'questionId': $question.data('id'),
-			'respondent': $('.client').data('client'),
-			'response': get_content($question)
-		};
-		$.post(survey.context_path + '/responses', params, function(data){
-			console.log(data);
-		});
+	$('.client-question input[type=text], .client-question textarea').on('blur', function(){
+		save(this);
+	});
+	$('.client-question input[type=radio], .client-question input[type=checkbox]').on('click', function(){
+		save(this);
+	});
+}
+
+function save(input_obj){
+	$question = $(input_obj).parents('.client-question');
+	var params = {
+		'questionId': $question.data('id'),
+		'respondent': $('.client').data('client'),
+		'response': get_content($question)
+	};
+	if(params.response == '$$$etc$$$'){
+		return false;
+	}
+	$.post(survey.context_path + '/responses', params, function(data){
+		console.log(data);
 	});
 }
 
