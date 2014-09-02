@@ -30,9 +30,9 @@ public class ResponseController {
 		
 		logger.debug("response = {}", response);
 		
-		List<Response> responses = responseMapper.selectByQuestionIdAndRespondent(response);
-		if(responses.size() > 0){
-			response = update(response);
+		Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
+		if(selectedResponse != null){
+			response = update(selectedResponse);
 		}else{
 			responseMapper.insert(response);
 		}
@@ -68,6 +68,7 @@ public class ResponseController {
 	@RequestMapping(method=RequestMethod.PUT)
 	public Response update(Response response){
 		
+		responseMapper.update(response);
 		logger.debug("response = {}", response);
 		
 		return response;

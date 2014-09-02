@@ -39,10 +39,7 @@ function save(input_obj){
 		}
 	}
 	
-	
-	$.post(url, params, function(data){
-		console.log(data);
-	});
+	$.post(url, params);
 }
 
 function get_content($question){
