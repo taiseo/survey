@@ -20,7 +20,11 @@ function bind_save(){
 }
 
 function save(input_obj){
-	$question = $(input_obj).parents('.client-question');
+	var $question = $(input_obj).parents('.client-question');
+	var url = survey.context_path + '/responses';
+	if($question.data('type') == '객관식2'){
+		var url = survey.context_path + '/responses/multiple';
+	}
 	var params = {
 		'questionId': $question.data('id'),
 		'respondent': $('.client').data('client'),
@@ -29,7 +33,14 @@ function save(input_obj){
 	if(params.response == '$$$etc$$$'){
 		return false;
 	}
-	$.post(survey.context_path + '/responses', params, function(data){
+	if(_.isArray(params.response)){
+		if(_.indexOf(params.response, '$$$etc$$$') > -1){
+			return false;
+		}
+	}
+	
+	
+	$.post(url, params, function(data){
 		console.log(data);
 	});
 }

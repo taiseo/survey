@@ -11,4 +11,5 @@ public interface ResponseMapper {
 	public void insert(Response response);
 	public void update(Response response);
 	public void delete(Long id);
+	public void deleteByQuestionId(Long questionId);
 }

@@ -58,4 +58,9 @@
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
 
+	<delete id="deleteByQuestionId" parameterType="java.lang.Long">
+		DELETE FROM SV_RESPONSES
+		WHERE question_id = #{questionId,jdbcType=NUMERIC}
+	</delete>
+
 </mapper>
