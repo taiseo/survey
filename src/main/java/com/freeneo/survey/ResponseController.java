@@ -28,6 +28,8 @@ public class ResponseController {
 	@ResponseBody
 	public Response insert(Response response){
 		
+		// TODO 개시한 설문일 때만 저장
+		
 		logger.debug("response = {}", response);
 		
 		Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
@@ -47,6 +49,8 @@ public class ResponseController {
 			@RequestParam(value="response[]") String[] response,
 			@RequestParam(value="respondent") String respondent
 			){
+		
+		// TODO 개시한 설문일 때만 저장
 		
 		logger.debug("response = {}", response);
 		

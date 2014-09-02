@@ -38,9 +38,20 @@
 			</c:choose>
 		</c:forEach>
 	</div>
+
+	<div class="complete-page" style="display: none">
+		<div class="hero-unit">
+			<h1>감사합니다</h1>
+			<p>설문을 완료했습니다.</p>
+			<a class="btn  btn-large  js-rewrite">
+				다시 작성하기
+		    </a>
+		</div>
+	</div>
 	<p class="text-center">
-		<input type="button" value="이전 페이지" class="btn  js-prev" style="display: none" />
-		<input type="button" value="다음 페이지" class="btn  js-next" />
+		<input type="button" value="이전 페이지" class="btn  js-prev  js-button" style="display: none" />
+		<input type="button" value="다음 페이지" class="btn  js-next  js-button" />
+		<input type="button" value="작성 완료" class="btn  btn-primary  btn-large  js-complete  js-button" style="display: none" />
 	</p>
 
 </div>

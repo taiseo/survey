@@ -2,7 +2,26 @@ $(document).ready(function(){
 	bind_page_button();
 	bind_save();
 	bind_etc_response();
+	bind_complete();
+	bind_rewrite();
 });
+
+function bind_rewrite(){
+	$('.js-rewrite').click(function(){
+		$('.complete-page').hide();
+		$('.questions-block').first().show();
+		$('.js-button').hide();
+		$('.js-next').show();
+	});
+}
+
+function bind_complete(){
+	$('.js-complete').click(function(){
+		$('.questions-block').slideUp();
+		$('.complete-page').slideDown();
+		$('.js-button').hide();
+	});
+}
 
 function bind_etc_response(){
 	$('.js-etc').keyup(function(){
@@ -109,6 +128,9 @@ function show_page(keyword){
 	}
 	if(page_no == ($('.questions-block').length) ){
 		$('.js-next').hide();
+		$('.js-complete').show();
+	}else{
+		$('.js-complete').hide();
 	}
 	$('.nav li').removeClass('active');
 	$('.nav li:nth-child(' + page_no + ')').addClass('active');
