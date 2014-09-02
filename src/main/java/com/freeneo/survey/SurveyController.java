@@ -26,6 +26,7 @@ import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.service.SurveyService;
 
 @Controller
 @RequestMapping(value="/surveys")
@@ -36,6 +37,9 @@ public class SurveyController {
 	@Autowired
 	SurveyMapper surveyMapper;
 
+	@Autowired
+	SurveyService surveyService;
+	
 	@Autowired
 	QuestionMapper questionMapper;
 	
@@ -217,5 +221,17 @@ public class SurveyController {
 		model.addAttribute("questionsString", questionsString);
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
 		return "survey_detail";
+	}
+	
+	@RequestMapping(value="/status/{id}", method=RequestMethod.GET)
+	public String status(
+			@PathVariable(value="id") Long id,
+			Model model
+			){
+		Survey survey = surveyService.getFullSurvey(id);
+		model.addAttribute("survey", survey);
+		
+		
+		return "survey_status";
 	}
 }
