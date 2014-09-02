@@ -7,7 +7,7 @@ import com.freeneo.survey.domain.ResponseItem;
 public interface ResponseItemMapper {
 	public List<ResponseItem> list(Long questionId);
 	public ResponseItem select(Long id);
-	public Long insert(ResponseItem response);
-	public Long update(ResponseItem response);
+	public Long insert(ResponseItem responseItem);
+	public Long update(ResponseItem responseItem);
 	public Long delete(Long id);
 }
