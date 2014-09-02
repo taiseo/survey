@@ -20,13 +20,22 @@
 		FROM SV_RESPONSES
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
+
+	<select id="selectByQuestionIdAndRespondent" 
+		parameterType="com.freeneo.survey.domain.Response" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSES
+		WHERE respondent = #{respondent,jdbcType=VARCHAR}
+			AND question_id = #{questionId,jdbcType=NUMERIC}
+	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Response">
 		<selectKey keyProperty="id" order="BEFORE" resultType="long">
 			SELECT seq_SV_RESPONSES.nextval from DUAL 
 		</selectKey>
 		INSERT INTO SV_RESPONSES 
-			(id, question_id, respondent, response)
+			(id, question_id, respondent, response, datetime)
 		VALUES (
 			#{id}, 
 			#{questionId,jdbcType=NUMERIC},

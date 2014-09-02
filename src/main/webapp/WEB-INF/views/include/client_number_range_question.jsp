@@ -3,7 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="question" scope="request" type="com.freeneo.survey.domain.Question"/>
-<div class="client-question" data-id="${question.id }">
+<div class="client-question" data-id="${question.id }" data-type="${question.type }">
 	<h2>
 		${question.content }
 		(${question.responseItems[0].min}

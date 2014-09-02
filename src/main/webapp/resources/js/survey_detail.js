@@ -124,7 +124,7 @@ function bind_remove(){
 }
 
 function bind_save(){
-	$('.js-questions-area').on('blur', '.question-form input', function(){
+	$('.js-questions-area').on('blur', '.question-form input, .question-form textarea', function(){
 		var $question = $(this).parents('.question');
 		save_question($question);
 	});

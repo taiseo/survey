@@ -7,7 +7,7 @@ import org.pojomatic.annotations.AutoProperty;
 public class Response {
 
 	private Long id;
-	private Long qeustionId;
+	private Long questionId;
 	private String respondent;
 	private String response;
 	private String datetime;
@@ -20,12 +20,12 @@ public class Response {
 		this.id = id;
 	}
 
-	public Long getQeustionId() {
-		return qeustionId;
+	public Long getQuestionId() {
+		return questionId;
 	}
 
-	public void setQeustionId(Long qeustionId) {
-		this.qeustionId = qeustionId;
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
 	}
 
 	public String getRespondent() {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="question" scope="request" type="com.freeneo.survey.domain.Question"/>
-<div class="client-question" data-id="${question.id }">
+<div class="client-question" data-id="${question.id }" data-type="${question.type }">
 	<h2>
 		${question.content }
 		<small>${question.contentDetail }</small>

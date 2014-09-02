@@ -27,6 +27,7 @@ public class ResponseItemController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public ResponseItem insert(ResponseItem responseItem){
+		
 		responseItemMapper.insert(responseItem);
 		logger.debug("insertedResponseItem = {}", responseItem);
 		return responseItem;
