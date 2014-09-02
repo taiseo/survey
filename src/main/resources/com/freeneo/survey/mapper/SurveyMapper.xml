@@ -11,6 +11,7 @@
 		<result column="target" jdbcType="VARCHAR" property="target" />
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
@@ -31,7 +32,7 @@
 		</selectKey>
 		
 		INSERT INTO sv_surveys 
-			(id, title, description, start_date, end_date, target, writer, part, datetime)
+			(id, title, description, start_date, end_date, target, writer, part, status, datetime)
 		VALUES (
 			#{id}, 
 			#{title,jdbcType=VARCHAR},
@@ -41,6 +42,7 @@
 			#{target,jdbcType=VARCHAR},
 			#{writer,jdbcType=VARCHAR}, 
 			#{part,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
 			SYSDATE
 		)
 	</insert>
@@ -53,6 +55,7 @@
 			end_date = #{endDate,jdbcType=VARCHAR}, 
 			target = #{target,jdbcType=VARCHAR},
 			writer = #{writer,jdbcType=VARCHAR}, 
+			status = #{status,jdbcType=VARCHAR},
 			part = #{part,jdbcType=VARCHAR}
 		WHERE ID = #{id,jdbcType=NUMERIC}
 	</update>

@@ -47,6 +47,8 @@ public class SurveyController {
 		
 		List<Survey> list = surveyMapper.list();
 		
+		logger.debug("surveys = {}", list);
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pageTitle", "설문 목록");
 		return "survey_list";

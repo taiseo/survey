@@ -37,6 +37,7 @@ create table sv_surveys
   target        VARCHAR2(30),
   writer        VARCHAR2(30),
   part          VARCHAR2(30),
+  status        VARCHAR2(30) default '대기',
   datetime      DATE,
   constraint pk_sv_surveys primary key (id)
 );

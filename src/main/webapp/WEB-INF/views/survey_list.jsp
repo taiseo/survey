@@ -23,6 +23,7 @@
 				<th>작성자</th>
 				<th>부서</th>
 				<th>입력일시</th>
+				<th>상태</th>
 				<th>기능</th>
 			</tr>
 		</thead>
@@ -40,12 +41,13 @@
 						<td>${survey.writer }</td>
 						<td>${survey.part }</td>
 						<td>${survey.datetime }</td>
+						<td>${survey.status }</td>
 						<td>
 							<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
-							수정
+								수정
 							</a>
 							<a class="btn  btn-info" href="<%=request.getContextPath()%>/survey/${survey.id}">
-							미리보기
+								미리보기
 							</a>
 						</td>
 					</tr>

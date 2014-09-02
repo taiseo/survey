@@ -16,6 +16,7 @@ public class Survey {
 	private String target;
 	private String writer;
 	private String part;
+	private String status;
 	private String datetime;
 	private List<Question> questions; 
 
@@ -81,6 +82,14 @@ public class Survey {
 
 	public void setPart(String part) {
 		this.part = part;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getDatetime() {
