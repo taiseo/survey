@@ -218,5 +218,4 @@ public class SurveyController {
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
 		return "survey_detail";
 	}
-
 }

@@ -49,6 +49,9 @@
 							<a class="btn  btn-info" href="<%=request.getContextPath()%>/survey/${survey.id}">
 								미리보기
 							</a>
+							<a class="btn" href="<%=request.getContextPath()%>/surveys/status/${survey.id}">
+								결과
+							</a>
 						</td>
 					</tr>
 				</c:forEach>
