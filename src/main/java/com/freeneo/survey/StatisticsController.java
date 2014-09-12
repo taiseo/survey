@@ -29,20 +29,11 @@ public class StatisticsController {
 
 	private static final Logger logger = LoggerFactory.getLogger(StatisticsController.class);
 	
-	@Autowired
-	ResponseMapper responseMapper;
-	
-	@Autowired
-	ResponseItemMapper responseItemMapper;
-	
-	@Autowired
-	SurveyMapper surveyMapper;
-	
-	@Autowired
-	SurveyService surveyService;
-	
-	@Autowired
-	QuestionMapper questionMapper;
+	@Autowired ResponseMapper responseMapper;
+	@Autowired ResponseItemMapper responseItemMapper;
+	@Autowired SurveyMapper surveyMapper;
+	@Autowired SurveyService surveyService;
+	@Autowired QuestionMapper questionMapper;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
@@ -59,6 +50,7 @@ public class StatisticsController {
 				question.setResponses(questionMapper.selectResponses(question.getId()));
 			}else if(question.getType().equals("점수범위")){
 				question.setResponses(questionMapper.selectResponses(question.getId()));
+				question.setPointResponseCount();
 			}else{
 				// 나머지는 객관식
 				for(ResponseItem responseItem : question.getResponseItems()){
@@ -66,6 +58,8 @@ public class StatisticsController {
 				}
 			}
 		}
+		
+		logger.debug("survey = {}", survey);
 		
 		model.addAttribute("survey", survey);
         model.addAttribute("pageTitle", "통계");

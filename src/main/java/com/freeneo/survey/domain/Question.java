@@ -1,6 +1,7 @@
 package com.freeneo.survey.domain;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
@@ -16,6 +17,7 @@ public class Question {
 	private int orderNo;
 	private String datetime;
 	private List<ResponseItem> responseItems;
+	private TreeMap<Integer, Long> pointResponseCount;
 	private Long questionRespondentCount;
 	private String[] responses;
 	
@@ -83,6 +85,14 @@ public class Question {
 		this.responseItems = responseItems;
 	}
 
+	public TreeMap<Integer, Long> getPointResponseCount() {
+		return pointResponseCount;
+	}
+
+	public void setPointResponseCount(TreeMap<Integer, Long> pointResponseCount) {
+		this.pointResponseCount = pointResponseCount;
+	}
+
 	public Long getQuestionRespondentCount() {
 		return questionRespondentCount;
 	}
@@ -97,6 +107,38 @@ public class Question {
 
 	public void setResponses(String[] responses) {
 		this.responses = responses;
+	}
+	
+	public Long getResponseCount(int responsePoint){
+		Long count = 0L;
+		
+		if(this.responses != null){
+			for(int i = 0; i < responses.length; i++){
+				if(Integer.parseInt(responses[i]) == responsePoint){
+					count++;
+				}
+			}
+		}
+		
+		return count;
+	}
+	
+	public void setPointResponseCount(){
+		if( ! this.type.equals("점수범위")){
+			return;
+		}
+		if(this.responseItems == null){
+			return;
+		}
+		int min = this.responseItems.get(0).getMin();
+		int max = this.responseItems.get(0).getMax();
+		
+		TreeMap<Integer, Long> pointResponseCount = new TreeMap<Integer, Long>();
+		for(int i = min; i < max; i++){
+			pointResponseCount.put(i, getResponseCount(i));
+		}
+		
+		setPointResponseCount(pointResponseCount);
 	}
 
 	@Override
