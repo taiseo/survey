@@ -61,9 +61,9 @@
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
 
-	<delete id="deleteByQuestionId" parameterType="java.lang.Long">
+	<delete id="deleteByQuestionIdAndRespondent" parameterType="com.freeneo.survey.domain.Response">
 		DELETE FROM SV_RESPONSES
-		WHERE question_id = #{questionId,jdbcType=NUMERIC}
+		WHERE question_id = #{questionId,jdbcType=NUMERIC} AND respondent = #{respondent,jdbcType=VARCHAR}
 	</delete>
 
 </mapper>

@@ -57,7 +57,10 @@ public class ResponseController {
 		
 		logger.debug("response = {}", response);
 		
-		responseMapper.deleteByQuestionId(questionId);
+		Response tempResponse = new Response();
+		tempResponse.setQuestionId(questionId);
+		tempResponse.setRespondent(respondent);
+		responseMapper.deleteByQuestionIdAndRespondent(tempResponse);
 		
 		List<Response> responses = new ArrayList<Response>();
 		for(String res : response){
