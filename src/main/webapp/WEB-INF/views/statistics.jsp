@@ -39,6 +39,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${question.responseItems }" var="responseItem">
+						<c:if test="${responseItem.content != '$$$etc$$$' }">
 						<tr>
 							<th>${responseItem.content }</th>
 							<td>${responseItem.responseItemCount }</td>
@@ -50,6 +51,30 @@
 								</c:if>
 							</td>
 						</tr>
+						</c:if>
+						
+						<c:if test="${responseItem.content == '$$$etc$$$' }">
+						<tr>
+							<th>기타</th>
+							<td>${fn:length(question.etcResponses) }</td>
+							<td>
+								<c:if test="${fn:length(question.etcResponses) > 0 }">
+									<fmt:formatNumber 
+										value="${fn:length(question.etcResponses) / survey.respondentCount * 100}"
+										pattern=".00" />%
+								</c:if>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<ul>
+								<c:forEach items="${question.etcResponses }" var="etc">
+									<li>${etc }</li>
+								</c:forEach>
+								</ul>
+							</td>
+						</tr>
+						</c:if>
 					</c:forEach>
 					</tbody>
 				</table>

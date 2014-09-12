@@ -5,10 +5,14 @@ import java.util.TreeMap;
 
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @AutoProperty
 public class Question {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(Question.class);
+	
 	private Long id;
 	private Long surveyId;
 	private String content;
@@ -17,9 +21,11 @@ public class Question {
 	private int orderNo;
 	private String datetime;
 	private List<ResponseItem> responseItems;
+	private List<String> etcResponses;
 	private TreeMap<Integer, Long> pointResponseCount;
 	private Long questionRespondentCount;
 	private String[] responses;
+	
 	
 	public Long getId() {
 		return id;
@@ -93,6 +99,14 @@ public class Question {
 		this.pointResponseCount = pointResponseCount;
 	}
 
+	public List<String> getEtcResponses() {
+		return etcResponses;
+	}
+
+	public void setEtcResponses(List<String> etcResponses) {
+		this.etcResponses = etcResponses;
+	}
+
 	public Long getQuestionRespondentCount() {
 		return questionRespondentCount;
 	}
@@ -123,24 +137,6 @@ public class Question {
 		return count;
 	}
 	
-	public void setPointResponseCount(){
-		if( ! this.type.equals("점수범위")){
-			return;
-		}
-		if(this.responseItems == null){
-			return;
-		}
-		int min = this.responseItems.get(0).getMin();
-		int max = this.responseItems.get(0).getMax();
-		
-		TreeMap<Integer, Long> pointResponseCount = new TreeMap<Integer, Long>();
-		for(int i = min; i < max; i++){
-			pointResponseCount.put(i, getResponseCount(i));
-		}
-		
-		setPointResponseCount(pointResponseCount);
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		return Pojomatic.equals(this, o);

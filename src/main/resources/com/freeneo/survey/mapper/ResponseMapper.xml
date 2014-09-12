@@ -22,6 +22,13 @@
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
 
+	<select id="selectByQuestionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSES
+		WHERE question_id = #{questionId,jdbcType=NUMERIC}
+	</select>
+
 	<select id="selectByQuestionIdAndRespondent" 
 		parameterType="com.freeneo.survey.domain.Response" resultMap="BaseResultMap">
 		SELECT

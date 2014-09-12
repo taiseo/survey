@@ -6,6 +6,7 @@ import com.freeneo.survey.domain.Response;
 
 public interface ResponseMapper {
 	public List<Response> list();
+	public List<Response> selectByQuestionId(Long questionId);
 	public Response select(Long id);
 	public Response selectByQuestionIdAndRespondent(Response response);
 	public void insert(Response response);

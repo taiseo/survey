@@ -1,13 +1,13 @@
 package com.freeneo.survey;
 
 import com.freeneo.survey.domain.Question;
-import com.freeneo.survey.domain.Response;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.service.QuestionService;
 import com.freeneo.survey.service.SurveyService;
 
 import org.slf4j.Logger;
@@ -18,10 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping(value="/statistics")
@@ -34,6 +30,7 @@ public class StatisticsController {
 	@Autowired SurveyMapper surveyMapper;
 	@Autowired SurveyService surveyService;
 	@Autowired QuestionMapper questionMapper;
+	@Autowired QuestionService questionService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
@@ -50,12 +47,13 @@ public class StatisticsController {
 				question.setResponses(questionMapper.selectResponses(question.getId()));
 			}else if(question.getType().equals("점수범위")){
 				question.setResponses(questionMapper.selectResponses(question.getId()));
-				question.setPointResponseCount();
+				questionService.setPointResponseCount(question);
 			}else{
 				// 나머지는 객관식
 				for(ResponseItem responseItem : question.getResponseItems()){
 					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
 				}
+				questionService.setEtcResponses(question);
 			}
 		}
 		
