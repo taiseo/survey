@@ -82,6 +82,7 @@ create sequence seq_sv_response_items start with 1 increment by 1 maxvalue 99999
 create table sv_responses
 (
   id              NUMBER NOT NULL,
+  survey_id       NUMBER NOT NULL,
   question_id     NUMBER NOT NULL,
   respondent      VARCHAR2(300),
   response        VARCHAR2(1000),

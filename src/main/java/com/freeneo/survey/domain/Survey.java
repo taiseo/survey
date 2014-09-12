@@ -18,7 +18,8 @@ public class Survey {
 	private String part;
 	private String status;
 	private String datetime;
-	private List<Question> questions; 
+	private List<Question> questions;
+	private Long respondentCount;
 
 	public Long getId() {
 		return id;
@@ -106,6 +107,14 @@ public class Survey {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public Long getRespondentCount() {
+		return respondentCount;
+	}
+
+	public void setRespondentCount(Long respondentCount) {
+		this.respondentCount = respondentCount;
 	}
 
 	@Override

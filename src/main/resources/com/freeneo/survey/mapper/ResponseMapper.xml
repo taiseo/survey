@@ -4,6 +4,7 @@
 
 	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Response">
 		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="survey_id" jdbcType="NUMERIC" property="surveyId" />
 		<result column="question_id" jdbcType="NUMERIC" property="questionId" />
 		<result column="respondent" jdbcType="VARCHAR" property="respondent" />
 		<result column="response" jdbcType="VARCHAR" property="response" />
@@ -35,9 +36,10 @@
 			SELECT seq_SV_RESPONSES.nextval from DUAL 
 		</selectKey>
 		INSERT INTO SV_RESPONSES 
-			(id, question_id, respondent, response, datetime)
+			(id, survey_id, question_id, respondent, response, datetime)
 		VALUES (
 			#{id}, 
+			#{surveyId,jdbcType=NUMERIC},
 			#{questionId,jdbcType=NUMERIC},
 			#{respondent,jdbcType=VARCHAR},
 			#{response,jdbcType=VARCHAR},
@@ -47,6 +49,7 @@
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Response">
 		UPDATE SV_RESPONSES SET
+			survey_id = #{surveyId,jdbcType=NUMERIC},
 			question_id = #{questionId,jdbcType=NUMERIC},
 			respondent = #{respondent,jdbcType=VARCHAR},
 			response = #{response,jdbcType=VARCHAR} 

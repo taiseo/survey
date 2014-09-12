@@ -16,7 +16,7 @@
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM SV_SURVEYS
+		SELECT S.* FROM SV_SURVEYS S
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -24,6 +24,13 @@
 		*
 		FROM SV_SURVEYS
 		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectRespondentCount" parameterType="java.lang.Long" resultType="Long">
+		SELECT 
+		COUNT(DISTINCT(RESPONDENT)) 
+		FROM SV_RESPONSES 
+		WHERE SURVEY_ID = #{id,jdbcType=NUMERIC}
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">

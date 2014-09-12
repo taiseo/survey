@@ -45,6 +45,7 @@ function save(input_obj){
 		var url = survey.context_path + '/responses/multiple';
 	}
 	var params = {
+		'surveyId': $('.client').data('survey-id'),
 		'questionId': $question.data('id'),
 		'respondent': $('.client').data('client'),
 		'response': get_content($question)

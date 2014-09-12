@@ -7,7 +7,7 @@
 		<h1>${pageTitle }</h1>
 	</div>
 
-    통계 페이지
+    총 응답자 : ${survey.respondentCount }
 
 </div>
 <jsp:include page="include/footer.jsp" />

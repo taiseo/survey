@@ -7,6 +7,7 @@ import org.pojomatic.annotations.AutoProperty;
 public class Response {
 
 	private Long id;
+	private Long surveyId;
 	private Long questionId;
 	private String respondent;
 	private String response;
@@ -18,6 +19,14 @@ public class Response {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getSurveyId() {
+		return surveyId;
+	}
+
+	public void setSurveyId(Long surveyId) {
+		this.surveyId = surveyId;
 	}
 
 	public Long getQuestionId() {

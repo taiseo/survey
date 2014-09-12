@@ -45,6 +45,7 @@ public class ResponseController {
 	@RequestMapping(value="/multiple", method=RequestMethod.POST)
 	@ResponseBody
 	public List<Response> insert(
+			@RequestParam(value="surveyId") Long surveyId,
 			@RequestParam(value="questionId") Long questionId,
 			@RequestParam(value="response[]") String[] response,
 			@RequestParam(value="respondent") String respondent
@@ -59,6 +60,7 @@ public class ResponseController {
 		List<Response> responses = new ArrayList<Response>();
 		for(String res : response){
 			Response responseToInsert = new Response();
+			responseToInsert.setSurveyId(surveyId);
 			responseToInsert.setQuestionId(questionId);
 			responseToInsert.setResponse(res);
 			responseToInsert.setRespondent(respondent);
