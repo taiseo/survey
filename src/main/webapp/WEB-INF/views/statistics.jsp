@@ -29,7 +29,11 @@
 				</ul>
 			</c:if>
 			<c:if test="${fn:contains(question.type, '객관식')}">
-				<table class="table">
+				<table class="table  table-striped">
+				<colgroup>
+					<col style="width: 50%" />
+					<col style="width: 25%" />
+				</colgroup>
 				<thead>
 					<tr>
 						<th>답항</th>
@@ -55,7 +59,11 @@
 						
 						<c:if test="${responseItem.content == '$$$etc$$$' }">
 						<tr>
-							<th>기타</th>
+							<th>
+								<a href="#" onclick="$(this).parents('tr').next().slideToggle(); return false;">
+									기타
+								</a>
+							</th>
 							<td>${fn:length(question.etcResponses) }</td>
 							<td>
 								<c:if test="${fn:length(question.etcResponses) > 0 }">
@@ -65,7 +73,7 @@
 								</c:if>
 							</td>
 						</tr>
-						<tr>
+						<tr style="display: none">
 							<td colspan="3">
 								<ul>
 								<c:forEach items="${question.etcResponses }" var="etc">
@@ -74,13 +82,20 @@
 								</ul>
 							</td>
 						</tr>
+						
+						<%-- striped 어긋남 방지용 --%>
+						<tr style="display: none"></tr>
 						</c:if>
 					</c:forEach>
 					</tbody>
 				</table>
 			</c:if>
 			<c:if test="${question.type == '점수범위'}">
-				<table class="table">
+				<table class="table  table-striped">
+				<colgroup>
+					<col style="width: 50%" />
+					<col style="width: 25%" />
+				</colgroup>
 				<thead>
 				<tr>
 					<th>점수</th>
@@ -108,7 +123,7 @@
 				</table>
 			</c:if>
     	</c:if>
-    	
+    	<hr />
     </c:forEach>
 
 </div>
