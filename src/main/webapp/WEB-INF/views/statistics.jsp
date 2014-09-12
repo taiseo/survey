@@ -4,10 +4,20 @@
 <div class="limit-width  center-block">
 	
 	<div class="page-header">
-		<h1>${pageTitle }</h1>
+		<h1>${pageTitle } <small>${survey.respondentCount }명 응답</small></h1>
 	</div>
 
-    총 응답자 : ${survey.respondentCount }
+    <ul>
+    <c:forEach items="${questions }" var="question">
+    	<c:if test="${question.type != '페이지-나누기' }">
+    	<li>
+    		${question.content } 
+    		<small>${question.contentDetail }</small>
+    		${question.questionRespondentCount }
+    	</li>
+    	</c:if>
+    </c:forEach>
+    </ul>
 
 </div>
 <jsp:include page="include/footer.jsp" />

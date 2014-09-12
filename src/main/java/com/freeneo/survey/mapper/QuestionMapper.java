@@ -10,4 +10,5 @@ public interface QuestionMapper {
 	public void insert(Question question);
 	public void update(Question question);
 	public void delete(Long id);
+	public Long selectRespondentCount(Long id);
 }

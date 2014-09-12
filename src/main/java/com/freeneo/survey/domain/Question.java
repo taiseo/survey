@@ -16,6 +16,7 @@ public class Question {
 	private int orderNo;
 	private String datetime;
 	private List<ResponseItem> responseItems;
+	private Long questionRespondentCount;
 	
 	public Long getId() {
 		return id;
@@ -79,6 +80,14 @@ public class Question {
 
 	public void setResponseItems(List<ResponseItem> responseItems) {
 		this.responseItems = responseItems;
+	}
+
+	public Long getQuestionRespondentCount() {
+		return questionRespondentCount;
+	}
+
+	public void setQuestionRespondentCount(Long questionRespondentCount) {
+		this.questionRespondentCount = questionRespondentCount;
 	}
 
 	@Override

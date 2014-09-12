@@ -24,6 +24,10 @@
 		FROM SV_QUESTIONS
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</select>
+
+	<select id="selectRespondentCount" parameterType="java.lang.Long" resultType="Long">
+		select count(distinct(respondent)) from sv_responses where question_id = #{id,jdbcType=NUMERIC}
+	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Question" keyColumn="id">
 		<selectKey keyProperty="id" order="BEFORE" resultType="long">

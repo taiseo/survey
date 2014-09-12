@@ -44,6 +44,9 @@ public class StatisticsController {
 		survey.setRespondentCount(surveyMapper.selectRespondentCount(id));
 		List<Question> questions = questionMapper.list(survey.getId());
 		
+		for(Question question : questions){
+			question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
+		}
 		
 		model.addAttribute("survey", survey);
 		model.addAttribute("questions", questions);
