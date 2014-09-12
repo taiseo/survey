@@ -2,10 +2,13 @@ package com.freeneo.survey;
 
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Response;
+import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.mapper.QuestionMapper;
+import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.service.SurveyService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +33,13 @@ public class StatisticsController {
 	ResponseMapper responseMapper;
 	
 	@Autowired
+	ResponseItemMapper responseItemMapper;
+	
+	@Autowired
 	SurveyMapper surveyMapper;
+	
+	@Autowired
+	SurveyService surveyService;
 	
 	@Autowired
 	QuestionMapper questionMapper;
@@ -40,20 +49,27 @@ public class StatisticsController {
 			@PathVariable(value="id") Long id,
 			Model model){
 		
-		Survey survey = surveyMapper.select(id);
+		Survey survey = surveyService.getFullSurvey(id);
 		survey.setRespondentCount(surveyMapper.selectRespondentCount(id));
-		List<Question> questions = questionMapper.list(survey.getId());
 		
-		for(Question question : questions){
+		for(Question question : survey.getQuestions()){
 			question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
+			
+			if(question.getType().contains("주관식")){
+				question.setResponses(questionMapper.selectResponses(question.getId()));
+			}else if(question.getType().equals("점수범위")){
+				question.setResponses(questionMapper.selectResponses(question.getId()));
+			}else{
+				// 나머지는 객관식
+				for(ResponseItem responseItem : question.getResponseItems()){
+					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
+				}
+			}
 		}
 		
 		model.addAttribute("survey", survey);
-		model.addAttribute("questions", questions);
         model.addAttribute("pageTitle", "통계");
         
-//        responseMapper.
-
         return "statistics";
     }
 }

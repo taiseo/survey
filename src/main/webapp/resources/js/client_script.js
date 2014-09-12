@@ -50,6 +50,12 @@ function save(input_obj){
 		'respondent': $('.client').data('client'),
 		'response': get_content($question)
 	};
+	
+	// 응답이 빈 값이면 저장하지 않는다.
+	if($.trim(params.response) == ''){
+		return false;
+	}
+	
 	if(params.response == '$$$etc$$$'){
 		return false;
 	}

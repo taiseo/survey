@@ -17,6 +17,7 @@ public class Question {
 	private String datetime;
 	private List<ResponseItem> responseItems;
 	private Long questionRespondentCount;
+	private String[] responses;
 	
 	public Long getId() {
 		return id;
@@ -88,6 +89,14 @@ public class Question {
 
 	public void setQuestionRespondentCount(Long questionRespondentCount) {
 		this.questionRespondentCount = questionRespondentCount;
+	}
+
+	public String[] getResponses() {
+		return responses;
+	}
+
+	public void setResponses(String[] responses) {
+		this.responses = responses;
 	}
 
 	@Override

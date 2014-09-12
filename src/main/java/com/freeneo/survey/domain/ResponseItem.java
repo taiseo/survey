@@ -17,6 +17,7 @@ public class ResponseItem {
 	private String datetime;
 	private int min;
 	private int max;
+	private Long responseItemCount;
 	
 	public Long getId() {
 		return id;
@@ -80,6 +81,14 @@ public class ResponseItem {
 		HashMap<String, String> minMax = gson.fromJson(this.content, HashMap.class);
 		this.min = Integer.parseInt(minMax.get("min"));
 		this.max = Integer.parseInt(minMax.get("max"));
+	}
+
+	public Long getResponseItemCount() {
+		return responseItemCount;
+	}
+
+	public void setResponseItemCount(Long responseItemCount) {
+		this.responseItemCount = responseItemCount;
 	}
 
 	@Override

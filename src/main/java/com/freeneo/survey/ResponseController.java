@@ -32,11 +32,13 @@ public class ResponseController {
 		
 		logger.debug("response = {}", response);
 		
-		Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
-		if(selectedResponse != null){
-			response = update(selectedResponse);
-		}else{
-			responseMapper.insert(response);
+		if( ! response.getResponse().equals("")){
+			Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
+			if(selectedResponse != null){
+				response = update(selectedResponse);
+			}else{
+				responseMapper.insert(response);
+			}
 		}
 		
 		return response;
