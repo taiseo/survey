@@ -234,4 +234,12 @@ public class SurveyController {
 		
 		return "survey_status";
 	}
+	
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+	public String delete(
+			@PathVariable(value="id") Long id
+			){
+		surveyMapper.delete(id);
+		return "redirect:/surveys";
+	}
 }

@@ -52,6 +52,10 @@
 							<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
 								결과
 							</a>
+							<a class="btn  btn-danger" href="<%=request.getContextPath()%>/surveys/delete/${survey.id}"
+								onclick="return confirm('정말로 삭제할까요?')">
+								삭제
+							</a>
 						</td>
 					</tr>
 				</c:forEach>
