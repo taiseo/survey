@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapperCrm.CustomerMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Customer">
+		<id column="cst_no" jdbcType="VARCHAR" property="cstNo" />
+		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
+		<result column="hp" jdbcType="VARCHAR" property="hp" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM TBCR_1000
+		ORDER BY cst_nm
+	</select>
+
+</mapper>

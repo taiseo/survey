@@ -9,11 +9,14 @@ import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -29,7 +32,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.freeneo.survey.CheckLoginInterceptor;
 
-@MapperScan("com.freeneo.survey.mapper")
 @ComponentScan(basePackages = {"com.freeneo.survey"})
 @EnableWebMvc
 @Configuration
@@ -60,6 +62,14 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		return sessionFactory.getObject();
+	}
+	
+	@Bean
+	public MapperScannerConfigurer mapper(){
+		MapperScannerConfigurer mapper = new MapperScannerConfigurer();
+		mapper.setBasePackage("com.freeneo.survey.mapper");
+		mapper.setSqlSessionFactoryBeanName("sqlSessionFactory");
+		return mapper;
 	}
 	
 	@Bean
