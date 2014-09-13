@@ -28,37 +28,37 @@
 			</tr>
 		</thead>
 		<tbody>
-				<c:forEach var="survey" items="${list}">
-					<tr>
-						<td>
-							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
-							${survey.title }
-							</a>
-						</td>
-						<td>${survey.startDate }</td>
-						<td>${survey.endDate }</td>
-						<td>${survey.target }</td>
-						<td>${survey.writer }</td>
-						<td>${survey.part }</td>
-						<td>${survey.datetime }</td>
-						<td>${survey.status }</td>
-						<td>
-							<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
-								수정
-							</a>
-							<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
-								미리보기
-							</a>
-							<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
-								결과
-							</a>
-							<a class="btn  btn-danger" href="<%=request.getContextPath()%>/surveys/delete/${survey.id}"
-								onclick="return confirm('정말로 삭제할까요?')">
-								삭제
-							</a>
-						</td>
-					</tr>
-				</c:forEach>
+			<c:forEach var="survey" items="${list}">
+				<tr>
+					<td>
+						<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
+						${survey.title }
+						</a>
+					</td>
+					<td>${survey.startDate }</td>
+					<td>${survey.endDate }</td>
+					<td>${survey.target }</td>
+					<td>${survey.writer }</td>
+					<td>${survey.part }</td>
+					<td>${survey.datetime }</td>
+					<td>${survey.status }</td>
+					<td>
+						<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
+							수정
+						</a>
+						<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
+							미리보기
+						</a>
+						<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
+							결과
+						</a>
+						<a class="btn  btn-danger" href="<%=request.getContextPath()%>/surveys/delete/${survey.id}"
+							onclick="return confirm('정말로 삭제할까요?')">
+							삭제
+						</a>
+					</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>	
 </div>
