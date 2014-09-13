@@ -34,7 +34,6 @@ import com.freeneo.survey.CheckLoginInterceptor;
 
 @ComponentScan(basePackages = {"com.freeneo.survey"})
 @EnableWebMvc
-@Configuration
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(AppConfig.class);
@@ -64,13 +63,37 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return sessionFactory.getObject();
 	}
 	
+	
+	
+	
+	
 	@Bean
-	public MapperScannerConfigurer mapper(){
-		MapperScannerConfigurer mapper = new MapperScannerConfigurer();
-		mapper.setBasePackage("com.freeneo.survey.mapper");
-		mapper.setSqlSessionFactoryBeanName("sqlSessionFactory");
-		return mapper;
-	}
+    public DataSource crmDataSource() {
+        InitialContext cxt;
+        DataSource ds = null;
+        try {
+            cxt = new InitialContext();
+            ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/crm");
+        } catch (NamingException e) {
+            logger.error(e.getMessage());
+        }
+        return ds;
+    }
+    
+    @Bean
+    public PlatformTransactionManager crmTransactionManager() {
+        return new DataSourceTransactionManager(crmDataSource());
+    }
+
+    @Bean
+    public SqlSessionFactory crmSqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(crmDataSource());
+        return sessionFactory.getObject();
+    }
+
+    
+    
 	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver(){
