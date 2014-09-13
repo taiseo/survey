@@ -16,7 +16,7 @@
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
-		SELECT S.* FROM SV_SURVEYS S
+		SELECT S.* FROM SV_SURVEYS S ORDER BY ID DESC
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
