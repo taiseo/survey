@@ -34,6 +34,7 @@ import com.freeneo.survey.CheckLoginInterceptor;
 
 @ComponentScan(basePackages = {"com.freeneo.survey"})
 @EnableWebMvc
+@Configuration
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 	static Logger logger = LoggerFactory.getLogger(AppConfig.class);

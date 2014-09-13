@@ -6,4 +6,5 @@ import com.freeneo.survey.domain.Customer;
 
 public interface CustomerMapper {
 	public List<Customer> list();  
+	public void insert(Customer customer);  
 }

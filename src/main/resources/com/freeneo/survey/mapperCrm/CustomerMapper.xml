@@ -12,7 +12,15 @@
 		SELECT
 		*
 		FROM TBCR_1000
-		ORDER BY cst_nm
 	</select>
+
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">
+		INSERT INTO TBCR_1000 (cst_no, cst_nm, hp)
+		VALUES (
+			#{cstNo,jdbcType=VARCHAR}, 
+			#{cstNm,jdbcType=VARCHAR},
+			#{hp,jdbcType=VARCHAR}
+		)
+	</insert>
 
 </mapper>
