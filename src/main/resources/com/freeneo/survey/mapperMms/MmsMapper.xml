@@ -2,23 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.freeneo.survey.mapperMms.MmsMapper">
 
-	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Mms">
-	
-		INSERT ALL
-			<foreach item="mms" index="index" collection="mmsList">
-				INTO MMS_MSG (MSGKEY, SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE)
-				VALUES ( 
-					MMS_MSG_SEQ.NEXTVAL,
-					#{subject,jdbcType=VARCHAR}, 
-					#{phone,jdbcType=VARCHAR}, 
-					#{callback,jdbcType=VARCHAR}, 
-					'0',
-					SYSDATE, 
-					#{msg,jdbcType=VARCHAR} 
-					'0'
-				)
-			</foreach>
-		SELECT * FROM DUAL
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Mms">
+		INSERT INTO MMS_MSG (MSGKEY, SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE)
+			VALUES (
+				MMS_MSG_SEQ.NEXTVAL,
+				#{subject,jdbcType=VARCHAR}, 
+				#{phone,jdbcType=VARCHAR}, 
+				#{callback,jdbcType=VARCHAR}, 
+				'0',
+				SYSDATE, 
+				#{msg,jdbcType=VARCHAR},
+				'0'
+			)
 	</insert>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.freeneo.survey.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freeneo.survey.SurveyController;
 import com.freeneo.survey.domain.Customer;
+import com.freeneo.survey.domain.Mms;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
@@ -21,6 +23,7 @@ import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
+import com.freeneo.survey.mapperMms.MmsMapper;
 
 @Service
 public class SurveyService {
@@ -39,6 +42,8 @@ public class SurveyService {
 	ResponseItemMapper responseItemMapper;
 	@Autowired
 	TargetMapper targetMapper;
+	@Autowired
+	MmsMapper mmsMapper;
 
 	public Survey getFullSurvey(Long id) {
 		Survey survey = surveyMapper.select(id);
@@ -104,8 +109,29 @@ public class SurveyService {
 		targetMapper.insertAll(surveyId, customers);
 	}
 
-	public void sendSMS(Long id) {
-		//TODO sms db 입력
-		logger.debug("SMS 발송");
+	public void sendMms(Survey survey) throws JsonParseException, JsonMappingException, IOException {
+		
+		List<Customer> customers = customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches());
+		
+		logger.debug("customers = {}", customers);
+		
+		List<Mms> mmsList = new ArrayList<Mms>();
+		
+		for(Customer customer : customers){
+			Mms mms = new Mms();
+			mms.setSubject(survey.getMsgSubject());
+			mms.setPhone(customer.getHp());
+			mms.setCallback("0000");
+			mms.setMsg(survey.getMsg());
+			mmsList.add(mms);
+		}
+		
+		logger.debug("mmsList = {}", mmsList);
+		
+		for(Mms mms : mmsList){
+			mmsMapper.insert(mms);
+		}
+		
+		updateTargets(survey.getId(), customers);
 	}
 }

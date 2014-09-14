@@ -23,6 +23,13 @@
 		AND
 		cst_no = #{cstNo,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="listBySurveyId" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targers
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMBER}
+	</select>
 
 	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
 		INSERT ALL
