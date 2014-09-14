@@ -122,7 +122,7 @@ public class SurveyService {
 			mms.setSubject(survey.getMsgSubject());
 			mms.setPhone(customer.getHp());
 			mms.setCallback("0000");
-			mms.setMsg(survey.getMsg());
+			mms.setMsg(survey.getMsg() + " http://192.168.0.5:8080/survey/survey/" + survey.getId());
 			mmsList.add(mms);
 		}
 		
