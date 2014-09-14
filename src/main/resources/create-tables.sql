@@ -31,6 +31,8 @@ create table sv_surveys
 (
   id            NUMBER NOT NULL,
   title         VARCHAR2(500),
+  msg_subject   VARCHAR2(120),
+  msg           VARCHAR2(4000),
   description   VARCHAR2(3000),
   start_date         VARCHAR2(10),
   end_date           VARCHAR2(10),

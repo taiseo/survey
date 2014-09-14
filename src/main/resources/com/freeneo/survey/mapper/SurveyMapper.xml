@@ -5,6 +5,8 @@
 	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Survey">
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="msg_subject" jdbcType="VARCHAR" property="msgSubject" />
+		<result column="msg" jdbcType="VARCHAR" property="msg" />
 		<result column="description" jdbcType="VARCHAR" property="description" />
 		<result column="start_date" jdbcType="VARCHAR" property="startDate" />
 		<result column="end_date" jdbcType="VARCHAR" property="endDate" />
@@ -47,10 +49,12 @@
 		</selectKey>
 		
 		INSERT INTO sv_surveys 
-			(id, title, description, start_date, end_date, target_category1, target_category2, target_branches, writer, part, status, datetime)
+			(id, title, msg_subject, msg, description, start_date, end_date, target_category1, target_category2, target_branches, writer, part, status, datetime)
 		VALUES (
 			#{id}, 
 			#{title,jdbcType=VARCHAR},
+			#{msgSubject,jdbcType=VARCHAR},
+			#{msg,jdbcType=VARCHAR},
 			#{description,jdbcType=VARCHAR},
 			#{startDate,jdbcType=VARCHAR}, 
 			#{endDate,jdbcType=VARCHAR}, 
@@ -67,6 +71,8 @@
 	<update id="update" parameterType="com.freeneo.survey.domain.Survey">
 		UPDATE sv_surveys SET
 			title = #{title,jdbcType=VARCHAR},
+			msg_subject = #{msgSubject,jdbcType=VARCHAR},
+			msg = #{msg,jdbcType=VARCHAR},
 			description = #{description,jdbcType=VARCHAR},
 			start_date = #{startDate,jdbcType=VARCHAR}, 
 			end_date = #{endDate,jdbcType=VARCHAR}, 

@@ -18,6 +18,11 @@
        <property name="basePackage" value="com.freeneo.survey.mapperCrm"/>
        <property name="sqlSessionFactoryBeanName" value="crmSqlSessionFactory"  />
     </bean>
+    
+    <bean id="mmsMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapperMms"/>
+       <property name="sqlSessionFactoryBeanName" value="mmsSqlSessionFactory"  />
+    </bean>
 
     <!-- 
         Load the rest of our configuration via our base configuration class

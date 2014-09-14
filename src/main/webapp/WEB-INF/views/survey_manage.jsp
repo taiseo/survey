@@ -19,6 +19,14 @@
 					<td><form:input cssClass="input-block-level" path="title"/></td>
 				</tr>
 				<tr>
+					<th><form:label path="msgSubject">MMS 제목</form:label></th>
+					<td><form:input cssClass="input-block-level" path="msgSubject"/></td>
+				</tr>
+				<tr>
+					<th><form:label path="msg">MMS 내용</form:label></th>
+					<td><form:input cssClass="input-block-level" path="msg"/></td>
+				</tr>
+				<tr>
 					<th><form:label path="description">내용</form:label></th>
 					<td><form:textarea rows="10" cssClass="wysiwyg  input-block-level" path="description"/></td>
 				</tr>

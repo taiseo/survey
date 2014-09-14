@@ -92,6 +92,35 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         sessionFactory.setDataSource(crmDataSource());
         return sessionFactory.getObject();
     }
+    
+    
+    
+    
+    
+    @Bean
+    public DataSource mmsDataSource() {
+        InitialContext cxt;
+        DataSource ds = null;
+        try {
+            cxt = new InitialContext();
+            ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/mms");
+        } catch (NamingException e) {
+            logger.error(e.getMessage());
+        }
+        return ds;
+    }
+    
+    @Bean
+    public PlatformTransactionManager mmsTransactionManager() {
+        return new DataSourceTransactionManager(mmsDataSource());
+    }
+    
+    @Bean
+    public SqlSessionFactory mmsSqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(mmsDataSource());
+        return sessionFactory.getObject();
+    }
 
     
     

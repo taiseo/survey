@@ -10,6 +10,8 @@ public class Survey {
 
 	private Long id;
 	private String title;
+	private String msgSubject;
+	private String msg;
 	private String description;
 	private String startDate;
 	private String endDate;
@@ -37,6 +39,22 @@ public class Survey {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getMsgSubject() {
+		return msgSubject;
+	}
+
+	public void setMsgSubject(String msgSubject) {
+		this.msgSubject = msgSubject;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	public String getDescription() {
