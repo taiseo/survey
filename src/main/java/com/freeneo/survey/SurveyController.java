@@ -1,8 +1,11 @@
 package com.freeneo.survey;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,6 +48,16 @@ public class SurveyController {
 	
 	@Autowired
 	ResponseItemMapper responseItemMapper;
+	
+	HashMap<String, String> statusMap;
+	
+	SurveyController(){
+		this.statusMap = new HashMap<String, String>();
+		statusMap.put("standby", "대기");
+		statusMap.put("approval", "승인");
+		statusMap.put("sending", "발송");
+		statusMap.put("close", "종료");
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
@@ -125,6 +138,11 @@ public class SurveyController {
 			logger.debug("survey={}" ,survey);
 		}
 		
+		if( ! survey.getStatus().equals("대기")){
+			model.addAttribute("msg", "대기중인 설문만 수정할 수 있습니다.");
+			return list(model);
+		}
+		
 		// admin이 아닌데, 남의 것을 수정하려고 하면
 		logger.debug("currentUser.userLevel={}", currentUser.getUserLevel());
 		logger.debug("currentUser.username={}", currentUser.getUsername());
@@ -153,34 +171,31 @@ public class SurveyController {
 			){
 
 		User currentUser = (User) session.getAttribute("user");
-		Survey oldSurvey = surveyMapper.select(id);
+		Survey survey = surveyMapper.select(id);
+		
+		logger.debug("old survey = {}", survey);
 		
 		// admin이 아닌데, 남의 것을 수정하려고 하면
-		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(oldSurvey.getWriter())){
+		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model);
 		}
 		
-		Survey newSurvey = new Survey();
-		newSurvey.setId(id);
-		newSurvey.setTitle(title);
-		newSurvey.setDescription(description);
-		newSurvey.setStartDate(startDate);
-		newSurvey.setEndDate(endDate);
-		newSurvey.setTarget(target);
-		newSurvey.setWriter(oldSurvey.getWriter());
-		newSurvey.setPart(oldSurvey.getPart());
+		survey.setTitle(title);
+		survey.setDescription(description);
+		survey.setStartDate(startDate);
+		survey.setEndDate(endDate);
+		survey.setTarget(target);
 		
 		if(title.equals("") || endDate.equals("")){
 			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일)을 모두 입력해 주세요.");
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
-			return updatePage(id, model, session, newSurvey);
+			return updatePage(id, model, session, survey);
 		}
 		
-		logger.debug("oldSurvey = {}", oldSurvey);
-		logger.debug("newSurvey = {}", newSurvey);
+		logger.debug("new survey = {}", survey);
 		
-		surveyMapper.update(newSurvey);
+		surveyMapper.update(survey);
 		
 		return "redirect:/surveys/detail/" + id;
 	}
@@ -240,6 +255,22 @@ public class SurveyController {
 			@PathVariable(value="id") Long id
 			){
 		surveyMapper.delete(id);
+		return "redirect:/surveys";
+	}
+
+	@RequestMapping(value="/update-status/{id}/{status}", method=RequestMethod.GET)
+	public String updateStatus(
+			@PathVariable(value="id") Long id,
+			@PathVariable(value="status") String status
+			) throws UnsupportedEncodingException{
+		
+		Survey survey = surveyMapper.select(id);
+		survey.setId(id);
+		survey.setStatus(statusMap.get(status));
+		logger.debug("survey to update = {}", survey);
+		
+		surveyMapper.update(survey);
+		
 		return "redirect:/surveys";
 	}
 }

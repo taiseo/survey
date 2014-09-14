@@ -42,23 +42,31 @@
 					<td>${survey.writer }</td>
 					<td>${survey.part }</td>
 					<td>${survey.datetime }</td>
-					<td>${survey.status }</td>
 					<td>
-						<%-- 설문 상태는 대기 -> 승인 -> 발송 -> 종료 다. --%>
+						${survey.status }
+						<c:if test="${survey.status == '승인' and  sessionScope.user.userLevel == 'admin'}">
+							<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
+								취소
+							</a>
+						</c:if>
+					</td>
+					<td>
+						<%-- 설문 상태는 대기(standby) -> 승인(approval) -> 발송(sending) -> 종료(close) 다. --%>
+						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
 							<c:when test="${(survey.status == '대기' or survey.status == null) 
 									and sessionScope.user.userLevel == 'admin'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/승인">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval">
 									승인
 								</a>
 							</c:when>
 							<c:when test="${survey.status == '승인'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/발송">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending">
 									발송
 								</a>
 							</c:when>
 							<c:when test="${survey.status == '발송'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/종료">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/close">
 									종료
 								</a>
 							</c:when>
@@ -75,7 +83,7 @@
 							수정
 						</a>
 						<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
-							미리보기
+							보기
 						</a>
 						<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
 							결과
