@@ -6,14 +6,14 @@
 <c:if test="${fn:length(branches) > 0 }">
 	<c:forEach items="${branches }" var="branch">
 		<label>
-			<input type="checkbox" name="지사명[]" value="${branch }"/>
+			<input type="checkbox" class="js-branch" value="${branch }"/>
 			${branch }
 		</label>
 	</c:forEach>
 </c:if>
 <c:if test="${fn:length(branches) == 0 }">
-	지사가 없음	
+	지사가 없음
 </c:if>
-
+<input type="hidden" name="targetBranches" />
 
 

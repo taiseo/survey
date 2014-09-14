@@ -34,15 +34,15 @@
 					<th>대상</th>
 					<td>
 						<div class="row  js-category">
-							<div class="js-대분류  span4">
-								<select name="대분류">
+							<div class="js-target-category1  span4">
+								<select name="targetCategory1">
 									<option>목적외사업</option>
 									<option>농지은행</option>
 									<option>유지관리</option>
 								</select>
 							</div>
-							<div class="js-소분류  span4" style="display: none"></div>
-							<div class="js-지사명  span4" style="display: none"></div>
+							<div class="js-target-category2  span4" style="display: none"></div>
+							<div class="js-branches  span4" style="display: none"></div>
 						</div>
 					</td>
 				</tr>
@@ -54,8 +54,8 @@
 	</form:form>
 </div>
 
-<script type="text/template" id="소분류">
-	<select name="소분류">
+<script type="text/template" id="target-category2">
+	<select name="targetCategory2">
 		<option>농지연금</option>
 		<option>농지은행</option>
 		<option>경영이양직불</option>

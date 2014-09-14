@@ -1,28 +1,29 @@
 $(document).ready(function(){
 	bind_target_select();
+	bind_set_branches();
 });
 
 function bind_target_select(){
-	$('.js-category').on('change, click', '[name="대분류"]', function(){
-		if($('[name="대분류"]').val() == '농지은행'){
-			$('.js-소분류').html($('#소분류').html()).show();
+	$('.js-category').on('change, click', '[name="targetCategory1"]', function(){
+		if($('[name="targetCategory1"]').val() == '농지은행'){
+			$('.js-target-category2').html($('#target-category2').html()).show();
 		}else{
-			$('.js-소분류').html('').hide();
+			$('.js-target-category2').html('').hide();
 		}
 		load_branch();
 	});
 	
-	$('.js-category').on('change, click', '[name="소분류"]', function(){
+	$('.js-category').on('change, click', '[name="targetCategory2"]', function(){
 		load_branch();
 	});
 }
 
 function load_branch(){
 	var $select_el, category;
-	if($('[name="소분류"]').length > 0){
-		$select_el = $('[name="소분류"]'); 
+	if($('[name="targetCategory2"]').length > 0){
+		$select_el = $('[name="targetCategory2"]'); 
 	}else{
-		$select_el = $('[name="대분류"]');
+		$select_el = $('[name="targetCategory1"]');
 	}
 	
 	category = $select_el.val();
@@ -31,6 +32,17 @@ function load_branch(){
 	$.post(survey.context_path + '/customers/branch-list', {
 		category: category
 	}, function(html){
-		$('.js-지사명').html(html).show();
+		$('.js-branches').html(html).show();
+	});
+}
+
+function bind_set_branches(){
+	$('.js-category').on('click, change', '.js-branch', function(){
+		var branches = [];
+		$('.js-branch:checked').each(function(index, branch){
+			console.log($(branch).val());
+			branches.push($(branch).val());
+		});
+		$('[name=targetBranches]').val($.toJSON(branches));
 	});
 }

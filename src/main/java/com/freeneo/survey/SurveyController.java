@@ -30,7 +30,6 @@ import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
-import com.freeneo.survey.util.Util;
 
 @Controller
 @RequestMapping(value="/surveys")
@@ -103,26 +102,15 @@ public class SurveyController {
 	
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insertAction(
-			@RequestParam(value="title") String title,
-			@RequestParam(value="description") String description,
-			@RequestParam(value="startDate") String startDate,
-			@RequestParam(value="endDate") String endDate,
-			@RequestParam(value="target") String target,
+			Survey survey,
 			Model model,
 			HttpSession session
 			){
 		
-		if(title.equals("") || endDate.equals("")){
+		if(survey.getTitle().equals("") || survey.getEndDate().equals("")){
 			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일)을 모두 입력해 주세요.");
 			return insertPage(model);
 		}
-		
-		Survey survey = new Survey();
-		survey.setTitle(title);
-		survey.setDescription(description);
-		survey.setStartDate(startDate);
-		survey.setEndDate(endDate);
-		survey.setTarget(target);
 		
 		User currentUser = (User) session.getAttribute("user");
 		survey.setWriter(currentUser.getUsername());
@@ -144,16 +132,17 @@ public class SurveyController {
 			HttpSession session,
 			Survey survey
 			){
-
+		
 		User currentUser = (User) session.getAttribute("user");
 		logger.debug("survey={}" ,survey);
+		
 		if(survey.getTitle() == null){
 			logger.debug("DB에 있는 survey를 가져옴.");
 			survey = surveyMapper.select(id);
-			logger.debug("survey={}" ,survey);
+			logger.debug("survey in db={}" ,survey);
 		}
 		
-		if( ! survey.getStatus().equals("대기")){
+		if( survey.getStatus() != null && ! survey.getStatus().equals("대기")){
 			model.addAttribute("msg", "대기중인 설문만 수정할 수 있습니다.");
 			return list(model, session);
 		}
@@ -179,60 +168,53 @@ public class SurveyController {
 	
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
 	public String updateAction(
-			@PathVariable(value="id") Long id,
-			@RequestParam(value="title") String title,
-			@RequestParam(value="description") String description,
-			@RequestParam(value="startDate") String startDate,
-			@RequestParam(value="endDate") String endDate,
-			@RequestParam(value="대분류",required=true) String 대분류,
-			@RequestParam(value="소분류",required=false,defaultValue="") String 소분류,
-			@RequestParam(value="지사명[]",required=true) String[] 지사명,
+			Survey survey,
 			Model model,
 			HttpSession session
 			){
 
 		User currentUser = (User) session.getAttribute("user");
-		Survey survey = surveyMapper.select(id);
+		Survey oldSurvey = surveyMapper.select(survey.getId());
 		
-		logger.debug("old survey = {}", survey);
+		logger.debug("old survey = {}", oldSurvey);
 		
 		// admin이 아닌데, 남의 것을 수정하려고 하면
-		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
+		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(oldSurvey.getWriter())){
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model, session);
 		}
 		
-		String target = makeTargetString(대분류, 소분류, 지사명);
-		
-		logger.debug("target = {}", target);
-		
-		survey.setTitle(title);
-		survey.setDescription(description);
-		survey.setStartDate(startDate);
-		survey.setEndDate(endDate);
-		survey.setTarget(target);
-		
-		if(title.equals("") || endDate.equals("")){
-			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일)을 모두 입력해 주세요.");
+		if(survey.getTitle().equals("") || survey.getEndDate().equals("") || survey.getTargetBranches() == null || survey.getTargetBranches().equals("") ){
+			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일, 대상에서 지사)을 모두 입력해 주세요.");
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
-			return updatePage(id, model, session, survey);
+			return updatePage(survey.getId(), model, session, survey);
+		}
+		
+		if(oldSurvey.getWriter() == null){
+			survey.setWriter(currentUser.getUsername());
+		}else{
+			survey.setWriter(oldSurvey.getWriter());
+		}
+		
+		if(oldSurvey.getPart() == null){
+			survey.setPart(currentUser.getPart());
+		}else{
+			survey.setPart(oldSurvey.getPart());
+		}
+		
+		if(oldSurvey.getStatus() == null){
+			survey.setStatus("대기");
+		}else{
+			survey.setStatus(oldSurvey.getStatus());
 		}
 		
 		logger.debug("new survey = {}", survey);
 		
 		surveyMapper.update(survey);
 		
-		return "redirect:/surveys/detail/" + id;
+		return "redirect:/surveys/detail/" + survey.getId();
 	}
 	
-	private String makeTargetString(String 대분류, String 소분류, String[] 지사명) {
-		if(소분류.equals("")){
-			return 대분류 + "$$$" + Util.implode(지사명, "|||"); 
-		}else{
-			return 소분류 + "$$$" + Util.implode(지사명, "|||");
-		}
-	}
-
 	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
 	public String detailPage(
 			@PathVariable(value="id") Long id,

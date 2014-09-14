@@ -13,7 +13,9 @@ public class Survey {
 	private String description;
 	private String startDate;
 	private String endDate;
-	private String target;
+	private String targetCategory1;
+	private String targetCategory2;
+	private String targetBranches;
 	private String writer;
 	private String part;
 	private String status;
@@ -61,12 +63,28 @@ public class Survey {
 		this.endDate = endDate;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getTargetCategory1() {
+		return targetCategory1;
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTargetCategory1(String targetCategory1) {
+		this.targetCategory1 = targetCategory1;
+	}
+
+	public String getTargetCategory2() {
+		return targetCategory2;
+	}
+
+	public void setTargetCategory2(String targetCategory2) {
+		this.targetCategory2 = targetCategory2;
+	}
+
+	public String getTargetBranches() {
+		return targetBranches;
+	}
+
+	public void setTargetBranches(String targetBranches) {
+		this.targetBranches = targetBranches;
 	}
 
 	public String getWriter() {

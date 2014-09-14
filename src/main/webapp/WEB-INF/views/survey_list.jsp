@@ -38,7 +38,11 @@
 					</td>
 					<td>${survey.startDate }</td>
 					<td>${survey.endDate }</td>
-					<td>${survey.target }</td>
+					<td>
+						${survey.targetCategory1 }
+						${survey.targetCategory2 }
+						${survey.targetBranches }
+					</td>
 					<td>${survey.writer }</td>
 					<td>${survey.part }</td>
 					<td>${survey.datetime }</td>

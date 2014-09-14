@@ -8,7 +8,9 @@
 		<result column="description" jdbcType="VARCHAR" property="description" />
 		<result column="start_date" jdbcType="VARCHAR" property="startDate" />
 		<result column="end_date" jdbcType="VARCHAR" property="endDate" />
-		<result column="target" jdbcType="VARCHAR" property="target" />
+		<result column="target_category1" jdbcType="VARCHAR" property="targetCategory1" />
+		<result column="target_category2" jdbcType="VARCHAR" property="targetCategory2" />
+		<result column="target_branches" jdbcType="VARCHAR" property="targetBranches" />
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
 		<result column="status" jdbcType="VARCHAR" property="status" />
@@ -45,14 +47,16 @@
 		</selectKey>
 		
 		INSERT INTO sv_surveys 
-			(id, title, description, start_date, end_date, target, writer, part, status, datetime)
+			(id, title, description, start_date, end_date, target_category1, target_category2, target_branches, writer, part, status, datetime)
 		VALUES (
 			#{id}, 
 			#{title,jdbcType=VARCHAR},
 			#{description,jdbcType=VARCHAR},
 			#{startDate,jdbcType=VARCHAR}, 
 			#{endDate,jdbcType=VARCHAR}, 
-			#{target,jdbcType=VARCHAR},
+			#{targetCategory1,jdbcType=VARCHAR},
+			#{targetCategory2,jdbcType=VARCHAR},
+			#{targetBranches,jdbcType=VARCHAR},
 			#{writer,jdbcType=VARCHAR}, 
 			#{part,jdbcType=VARCHAR},
 			#{status,jdbcType=VARCHAR},
@@ -66,7 +70,9 @@
 			description = #{description,jdbcType=VARCHAR},
 			start_date = #{startDate,jdbcType=VARCHAR}, 
 			end_date = #{endDate,jdbcType=VARCHAR}, 
-			target = #{target,jdbcType=VARCHAR},
+			target_category1 = #{targetCategory1,jdbcType=VARCHAR},
+			target_category2 = #{targetCategory2,jdbcType=VARCHAR},
+			target_branches = #{targetBranches,jdbcType=VARCHAR},
 			writer = #{writer,jdbcType=VARCHAR}, 
 			status = #{status,jdbcType=VARCHAR},
 			part = #{part,jdbcType=VARCHAR}
