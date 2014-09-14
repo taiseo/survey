@@ -103,4 +103,9 @@ public class SurveyService {
 		targetMapper.delete(surveyId);
 		targetMapper.insertAll(surveyId, customers);
 	}
+
+	public void sendSMS(Long id) {
+		//TODO sms db 입력
+		logger.debug("SMS 발송");
+	}
 }

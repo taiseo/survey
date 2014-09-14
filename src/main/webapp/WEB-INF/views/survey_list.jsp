@@ -32,9 +32,16 @@
 			<c:forEach var="survey" items="${list}">
 				<tr>
 					<td>
+					<c:if test="${survey.status == '대기'}">
 						<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
-						${survey.title }
+							${survey.title }
 						</a>
+					</c:if>
+					<c:if test="${survey.status != '대기'}">
+						<a href="<%=request.getContextPath()%>/survey/${survey.id}">
+							${survey.title }
+						</a>
+					</c:if>
 					</td>
 					<td>${survey.startDate }</td>
 					<td>${survey.endDate }</td>
@@ -65,7 +72,8 @@
 								</a>
 							</c:when>
 							<c:when test="${survey.status == '승인'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending"
+									onclick="return confirm('한 번 발송하면 돌이킬 수 없습니다. 정말로 발송할까요?')">
 									발송
 								</a>
 							</c:when>

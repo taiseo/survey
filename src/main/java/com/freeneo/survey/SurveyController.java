@@ -303,6 +303,10 @@ public class SurveyController {
 		survey.setStatus(status);
 		logger.debug("survey to update = {}", survey);
 		
+		if(status.equals("발송")){
+			surveyService.sendSMS(survey.getId());
+		}
+		
 		surveyMapper.update(survey);
 		
 		return "redirect:/surveys";
