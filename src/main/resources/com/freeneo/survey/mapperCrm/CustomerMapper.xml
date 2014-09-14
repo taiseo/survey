@@ -13,6 +13,17 @@
 		*
 		FROM TBCR_1000
 	</select>
+	
+	<select id="projectList" resultType="String">
+		select distinct(ptcp_tit) 
+		from tbcr_1040
+	</select>
+
+	<select id="branchList" parameterType="String" resultType="String">
+		select distinct(etc_01) 
+		from tbcr_1040
+		where ptcp_tit like #{category,jdbcType=VARCHAR}
+	</select>
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">
 		INSERT INTO TBCR_1000 (cst_no, cst_nm, hp)

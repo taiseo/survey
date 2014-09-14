@@ -29,6 +29,7 @@ import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
 
 @Controller
@@ -48,6 +49,9 @@ public class SurveyController {
 	
 	@Autowired
 	ResponseItemMapper responseItemMapper;
+	
+	@Autowired
+	CustomerMapper customerMapper;
 	
 	HashMap<String, String> statusMap;
 	
@@ -79,6 +83,9 @@ public class SurveyController {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, +7);
 		survey.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
+		
+		List<String> projects = customerMapper.projectList();
+		logger.debug("projects = {}", projects);
 		
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
@@ -152,6 +159,10 @@ public class SurveyController {
 			return list(model);
 		}
 		
+		List<String> projects = customerMapper.projectList();
+		logger.debug("projects = {}", projects);
+		
+		model.addAttribute("projects", projects);
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "PUT");

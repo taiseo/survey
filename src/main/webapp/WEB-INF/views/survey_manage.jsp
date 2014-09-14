@@ -10,6 +10,9 @@
 	
 	<form:form method="${httpMethod }" modelAttribute="survey">
 		<table class="table  table-striped">
+			<colgroup>
+				<col style="width: 10%"/>
+			</colgroup>
 			<tbody>
 				<tr>
 					<th><form:label path="title">제목</form:label></th>
@@ -30,12 +33,17 @@
 				<tr>
 					<th>대상</th>
 					<td>
-						<form:select path="target">
-							<form:option value="그룹1" />
-							<form:option value="그룹2" />
-							<form:option value="그룹3" />
-							<form:option value="그룹4" />
-						</form:select>
+						<div class="row  js-category">
+							<div class="js-대분류  span4">
+								<select name="대분류">
+									<option>목적외사업</option>
+									<option>농지은행</option>
+									<option>유지관리</option>
+								</select>
+							</div>
+							<div class="js-소분류  span4" style="display: none"></div>
+							<div class="js-지사명  span4" style="display: none"></div>
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -46,5 +54,14 @@
 	</form:form>
 </div>
 
+<script type="text/template" id="소분류">
+	<select name="소분류">
+		<option>농지연금</option>
+		<option>농지은행</option>
+		<option>경영이양직불</option>
+	</select>
+</script>
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/survey_manage.js"></script>
