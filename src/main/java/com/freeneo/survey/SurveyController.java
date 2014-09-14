@@ -1,7 +1,6 @@
 package com.freeneo.survey;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,10 +64,18 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model){
+	public String list(Model model, HttpSession session){
 		
-		List<Survey> list = surveyMapper.list();
+		User user = (User) session.getAttribute("user");
 		
+		List<Survey> list;
+		
+		if( ! user.getUserLevel().equals("admin")){
+			list = surveyMapper.myList(user.getUsername());
+		}else{
+			list = surveyMapper.list();
+		}
+
 		logger.debug("surveys = {}", list);
 		
 		model.addAttribute("list", list);
@@ -148,7 +155,7 @@ public class SurveyController {
 		
 		if( ! survey.getStatus().equals("대기")){
 			model.addAttribute("msg", "대기중인 설문만 수정할 수 있습니다.");
-			return list(model);
+			return list(model, session);
 		}
 		
 		// admin이 아닌데, 남의 것을 수정하려고 하면
@@ -157,7 +164,7 @@ public class SurveyController {
 		logger.debug("survey.writer={}", survey.getWriter());
 		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
-			return list(model);
+			return list(model, session);
 		}
 		
 		List<String> projects = customerMapper.projectList();
@@ -192,7 +199,7 @@ public class SurveyController {
 		// admin이 아닌데, 남의 것을 수정하려고 하면
 		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
-			return list(model);
+			return list(model, session);
 		}
 		
 		String target = makeTargetString(대분류, 소분류, 지사명);
@@ -237,7 +244,7 @@ public class SurveyController {
 		Survey survey = surveyMapper.select(id);
 		if( ! currentUser.getUserLevel().equals("admin") && ! currentUser.getUsername().equals(survey.getWriter())){
 			model.addAttribute("error_msg", "남의 것을 편집할 수는 없습니다.");
-			return list(model);
+			return list(model, session);
 		}
 	
 		List<Question> questions = questionMapper.list(id);
