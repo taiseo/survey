@@ -264,9 +264,12 @@ public class SurveyController {
 			@PathVariable(value="status") String status
 			) throws UnsupportedEncodingException{
 		
+		status = statusMap.get(status);
+		logger.debug("status = {}", status);
+		
 		Survey survey = surveyMapper.select(id);
 		survey.setId(id);
-		survey.setStatus(statusMap.get(status));
+		survey.setStatus(status);
 		logger.debug("survey to update = {}", survey);
 		
 		surveyMapper.update(survey);
