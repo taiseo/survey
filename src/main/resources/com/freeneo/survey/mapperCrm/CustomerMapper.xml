@@ -13,24 +13,41 @@
 		*
 		FROM TBCR_1000
 	</select>
-	
+
 	<select id="projectList" resultType="String">
-		select distinct(ptcp_tit) 
+		select distinct(ptcp_tit)
 		from tbcr_1040
 	</select>
 
 	<select id="branchList" parameterType="String" resultType="String">
-		select distinct(etc_01) 
+		select distinct(etc_01)
 		from tbcr_1040
-		where ptcp_tit like #{category,jdbcType=VARCHAR}
+		where ptcp_tit like
+		#{category,jdbcType=VARCHAR}
+	</select>
+
+	<select id="customerList" parameterType="map"
+		resultMap="BaseResultMap">
+		select * from (
+		select distinct c.cst_no, c.cst_nm, c.hp from tbcr_1000 c, tbcr_1040
+		where
+		c.cst_no = tbcr_1040.cst_no
+		and tbcr_1040.ptcp_tit like #{category,jdbcType=VARCHAR}
+		and tbcr_1040.etc_01 in
+		<foreach item="item" index="index" collection="branchList" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by DBMS_RANDOM.RANDOM
+		) where rownum &lt;= 30
 	</select>
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">
-		INSERT INTO TBCR_1000 (cst_no, cst_nm, hp)
+		INSERT INTO TBCR_1000 (cst_no,
+		cst_nm, hp)
 		VALUES (
-			#{cstNo,jdbcType=VARCHAR}, 
-			#{cstNm,jdbcType=VARCHAR},
-			#{hp,jdbcType=VARCHAR}
+		#{cstNo,jdbcType=VARCHAR},
+		#{cstNm,jdbcType=VARCHAR},
+		#{hp,jdbcType=VARCHAR}
 		)
 	</insert>
 

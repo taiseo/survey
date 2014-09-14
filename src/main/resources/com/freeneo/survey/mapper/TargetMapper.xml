@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.TargetMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.User">
+		<id column="survey_id" jdbcType="NUMERIC" property="surveyId" />
+		<result column="cst_no" jdbcType="VARCHAR" property="cstNo" />
+		<result column="response_yn" jdbcType="VARCHAR" property="responseYn" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+	</select>
+
+	<select id="select" parameterType="com.freeneo.survey.domain.Target"
+		resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_target
+		WHERE survey_id = #{surveyId,jdbcType=VARCHAR}
+		AND
+		cst_no = #{cstNo,jdbcType=VARCHAR}
+	</select>
+
+	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
+		INSERT ALL
+			<foreach item="customer" index="index" collection="customers">
+				INTO SV_TARGETS (SURVEY_ID, CST_NO, RESPONSE_YN)
+				VALUES (
+					#{surveyId,jdbcType=NUMERIC},
+					#{customer.cstNo,jdbcType=VARCHAR},
+					'N'
+				)
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM sv_target
+		WHERE survey_id = #{survey_id,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>

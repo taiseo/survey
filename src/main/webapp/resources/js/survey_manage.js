@@ -32,17 +32,12 @@ function load_branch(){
 	}, function(html){
 		$('.js-target-branches').html(html).show();
 		check_seleted_branches();
+		fillTargetBranches();
 	});
 }
 
 function bind_set_branches(){
-	$('.js-category').on('click, change', '.js-branch', function(){
-		var branches = [];
-		$('.js-branch:checked').each(function(index, branch){
-			branches.push($(branch).val());
-		});
-		$('[name=targetBranches]').val($.toJSON(branches));
-	});
+	$('.js-category').on('click, change', '.js-branch', fillTargetBranches);
 }
 
 function attr_disabled_cat2(){
@@ -65,4 +60,13 @@ function check_seleted_branches(){
 	_.each(survey.selected_branches, function(branch){
 		$('.js-branch[value="' + branch + '"]').attr('checked', true);
 	});
+	
+}
+
+function fillTargetBranches(){
+	var branches = [];
+	$('.js-branch:checked').each(function(index, branch){
+		branches.push($(branch).val());
+	});
+	$('[name=targetBranches]').val($.toJSON(branches));
 }

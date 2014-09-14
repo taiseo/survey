@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.freeneo.survey.domain.Customer;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
@@ -32,6 +33,7 @@ import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
 
@@ -55,6 +57,9 @@ public class SurveyController {
 	
 	@Autowired
 	CustomerMapper customerMapper;
+	
+	@Autowired
+	TargetMapper targetMapper;
 	
 	HashMap<String, String> statusMap;
 	
@@ -87,8 +92,10 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value="/insert", method=RequestMethod.GET)
-	public String insertPage(Model model){
-		Survey survey = new Survey();
+	public String insertPage(Model model, Survey survey){
+		if(survey == null){
+			survey = new Survey();
+		}
 
 		survey.setStartDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		Calendar cal = Calendar.getInstance();
@@ -106,11 +113,12 @@ public class SurveyController {
 			Survey survey,
 			Model model,
 			HttpSession session
-			){
+			) throws JsonParseException, JsonMappingException, IOException{
 		
-		if(survey.getTitle().equals("") || survey.getEndDate().equals("")){
-			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일)을 모두 입력해 주세요.");
-			return insertPage(model);
+		if(survey.getTitle().equals("") || survey.getEndDate().equals("") || survey.getTargetBranches() == null || survey.getTargetBranches().equals("[]") ){
+			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일, 대상에서 지사)을 모두 입력해 주세요.");
+			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 입력페이지로 감.");
+			return insertPage(model, survey);
 		}
 		
 		User currentUser = (User) session.getAttribute("user");
@@ -120,6 +128,9 @@ public class SurveyController {
 		logger.debug("survey = {}", survey);
 		
 		surveyMapper.insert(survey);
+		
+		List<Customer> customers = surveyService.customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches());
+		surveyService.insertTargets(survey.getId(), customers);
 		
 		logger.debug("insertedSurvey = {}", survey);
 		
@@ -157,33 +168,15 @@ public class SurveyController {
 			return list(model, session);
 		}
 		
-		List<String> projects = customerMapper.projectList();
-		logger.debug("projects = {}", projects);
-		
-		List<String> branches = makeBranchList(survey.getTargetBranches());
+		List<String> branches = surveyService.makeBranchList(survey.getTargetBranches());
 		
 		model.addAttribute("branches", branches);
-		model.addAttribute("projects", projects);
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "PUT");
 		return "survey_manage";
 	}
 	
-	private List<String> makeBranchList(String targetBranches) throws JsonParseException, JsonMappingException, IOException {
-		if(targetBranches == null){
-			return null;
-		}
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		
-		List<String> branches = objectMapper.readValue(targetBranches, objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
-		
-		logger.debug("branches = {}", branches);
-		
-		return branches;
-	}
-
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
 	public String updateAction(
 			Survey survey,
@@ -202,7 +195,7 @@ public class SurveyController {
 			return list(model, session);
 		}
 		
-		if(survey.getTitle().equals("") || survey.getEndDate().equals("") || survey.getTargetBranches() == null || survey.getTargetBranches().equals("") ){
+		if(survey.getTitle().equals("") || survey.getEndDate().equals("") || survey.getTargetBranches() == null || survey.getTargetBranches().equals("[]") ){
 			model.addAttribute("error_msg", "필수 항목(제목, 게시종료일, 대상에서 지사)을 모두 입력해 주세요.");
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
 			return updatePage(survey.getId(), model, session, survey);
@@ -229,6 +222,11 @@ public class SurveyController {
 		logger.debug("new survey = {}", survey);
 		
 		surveyMapper.update(survey);
+		
+		List<Customer> customers = surveyService.customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches());
+		surveyService.insertTargets(survey.getId(), customers);
+		
+		logger.debug("customers = {}", customers);
 		
 		return "redirect:/surveys/detail/" + survey.getId();
 	}
