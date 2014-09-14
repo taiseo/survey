@@ -24,6 +24,7 @@
 				<th>부서</th>
 				<th>입력일시</th>
 				<th>상태</th>
+				<th>진행</th>
 				<th>기능</th>
 			</tr>
 		</thead>
@@ -42,6 +43,33 @@
 					<td>${survey.part }</td>
 					<td>${survey.datetime }</td>
 					<td>${survey.status }</td>
+					<td>
+						<%-- 설문 상태는 대기 -> 승인 -> 발송 -> 종료 다. --%>
+						<c:choose>
+							<c:when test="${(survey.status == '대기' or survey.status == null) 
+									and sessionScope.user.userLevel == 'admin'}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/승인">
+									승인
+								</a>
+							</c:when>
+							<c:when test="${survey.status == '승인'}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/발송">
+									발송
+								</a>
+							</c:when>
+							<c:when test="${survey.status == '발송'}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/updateStatus/${survey.id}/종료">
+									종료
+								</a>
+							</c:when>
+							<c:when test="${survey.status == '종료'}">
+								<input class="btn" type="button" disabled value="종료" />
+							</c:when>
+							<c:otherwise>
+								<input class="btn" type="button" disabled value="승인" />
+							</c:otherwise>
+						</c:choose>
+					</td>
 					<td>
 						<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 							수정
