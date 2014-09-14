@@ -224,7 +224,7 @@ public class SurveyController {
 		surveyMapper.update(survey);
 		
 		List<Customer> customers = surveyService.customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches());
-		surveyService.insertTargets(survey.getId(), customers);
+		surveyService.updateTargets(survey.getId(), customers);
 		
 		logger.debug("customers = {}", customers);
 		

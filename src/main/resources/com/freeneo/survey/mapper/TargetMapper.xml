@@ -38,8 +38,8 @@
 	</insert>
 
 	<delete id="delete" parameterType="java.lang.Long">
-		DELETE FROM sv_target
-		WHERE survey_id = #{survey_id,jdbcType=NUMERIC}
+		DELETE FROM sv_targets
+		WHERE survey_id = #{surveyId,jdbcType=NUMERIC}
 	</delete>
 
 </mapper>

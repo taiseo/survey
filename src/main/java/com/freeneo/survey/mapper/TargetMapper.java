@@ -11,4 +11,5 @@ public interface TargetMapper {
 	public List<Target> list();
 	public Target select(Long surveyId, String cstNo);
 	public void insertAll(@Param("surveyId") Long surveyId, @Param("customers") List<Customer> customers);
+	public void delete(Long surveyId);
 }

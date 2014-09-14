@@ -98,4 +98,9 @@ public class SurveyService {
 	public void insertTargets(Long surveyId, List<Customer> customers) {
 		targetMapper.insertAll(surveyId, customers);
 	}
+
+	public void updateTargets(Long surveyId, List<Customer> customers) {
+		targetMapper.delete(surveyId);
+		targetMapper.insertAll(surveyId, customers);
+	}
 }
