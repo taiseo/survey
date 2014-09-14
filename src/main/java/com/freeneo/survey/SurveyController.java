@@ -1,7 +1,9 @@
 package com.freeneo.survey;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
@@ -91,9 +95,6 @@ public class SurveyController {
 		cal.add(Calendar.DATE, +7);
 		survey.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
 		
-		List<String> projects = customerMapper.projectList();
-		logger.debug("projects = {}", projects);
-		
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
@@ -131,7 +132,7 @@ public class SurveyController {
 			Model model,
 			HttpSession session,
 			Survey survey
-			){
+			) throws JsonParseException, JsonMappingException, IOException{
 		
 		User currentUser = (User) session.getAttribute("user");
 		logger.debug("survey={}" ,survey);
@@ -159,6 +160,9 @@ public class SurveyController {
 		List<String> projects = customerMapper.projectList();
 		logger.debug("projects = {}", projects);
 		
+		List<String> branches = makeBranchList(survey.getTargetBranches());
+		
+		model.addAttribute("branches", branches);
 		model.addAttribute("projects", projects);
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
@@ -166,12 +170,26 @@ public class SurveyController {
 		return "survey_manage";
 	}
 	
+	private List<String> makeBranchList(String targetBranches) throws JsonParseException, JsonMappingException, IOException {
+		if(targetBranches == null){
+			return null;
+		}
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<String> branches = objectMapper.readValue(targetBranches, objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
+		
+		logger.debug("branches = {}", branches);
+		
+		return branches;
+	}
+
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
 	public String updateAction(
 			Survey survey,
 			Model model,
 			HttpSession session
-			){
+			) throws JsonParseException, JsonMappingException, IOException{
 
 		User currentUser = (User) session.getAttribute("user");
 		Survey oldSurvey = surveyMapper.select(survey.getId());

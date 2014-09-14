@@ -35,14 +35,22 @@
 					<td>
 						<div class="row  js-category">
 							<div class="js-target-category1  span4">
-								<select name="targetCategory1">
-									<option>목적외사업</option>
-									<option>농지은행</option>
-									<option>유지관리</option>
-								</select>
+								<form:select path="targetCategory1">
+									<form:option value="목적외사업" />
+									<form:option value="농지은행" />
+									<form:option value="유지관리" />
+								</form:select>
 							</div>
-							<div class="js-target-category2  span4" style="display: none"></div>
-							<div class="js-branches  span4" style="display: none"></div>
+							<div class="js-target-category2  span4" style="display: none">
+								<form:select path="targetCategory2">
+									<form:option value="농지연금" />
+									<form:option value="농지은행" />
+									<form:option value="경영이양직불" />
+								</form:select>
+							</div>
+							<div class="js-target-branches  span4">
+								<jsp:include page="include/branch_list.jsp" />
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -54,14 +62,10 @@
 	</form:form>
 </div>
 
-<script type="text/template" id="target-category2">
-	<select name="targetCategory2">
-		<option>농지연금</option>
-		<option>농지은행</option>
-		<option>경영이양직불</option>
-	</select>
-</script>
 
+<script type="text/javascript">
+	survey.selected_branches = ${survey.targetBranches };
+</script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/survey_manage.js"></script>
