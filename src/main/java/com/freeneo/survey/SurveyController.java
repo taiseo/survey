@@ -31,6 +31,7 @@ import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
+import com.freeneo.survey.util.Util;
 
 @Controller
 @RequestMapping(value="/surveys")
@@ -176,7 +177,9 @@ public class SurveyController {
 			@RequestParam(value="description") String description,
 			@RequestParam(value="startDate") String startDate,
 			@RequestParam(value="endDate") String endDate,
-			@RequestParam(value="target") String target,
+			@RequestParam(value="대분류",required=true) String 대분류,
+			@RequestParam(value="소분류",required=false,defaultValue="") String 소분류,
+			@RequestParam(value="지사명[]",required=true) String[] 지사명,
 			Model model,
 			HttpSession session
 			){
@@ -191,6 +194,10 @@ public class SurveyController {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model);
 		}
+		
+		String target = makeTargetString(대분류, 소분류, 지사명);
+		
+		logger.debug("target = {}", target);
 		
 		survey.setTitle(title);
 		survey.setDescription(description);
@@ -211,6 +218,14 @@ public class SurveyController {
 		return "redirect:/surveys/detail/" + id;
 	}
 	
+	private String makeTargetString(String 대분류, String 소분류, String[] 지사명) {
+		if(소분류.equals("")){
+			return 대분류 + "$$$" + Util.implode(지사명, "|||"); 
+		}else{
+			return 소분류 + "$$$" + Util.implode(지사명, "|||");
+		}
+	}
+
 	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
 	public String detailPage(
 			@PathVariable(value="id") Long id,
@@ -287,4 +302,6 @@ public class SurveyController {
 		
 		return "redirect:/surveys";
 	}
+	
+	
 }

@@ -34,7 +34,7 @@ create table sv_surveys
   description   VARCHAR2(3000),
   start_date    VARCHAR2(10),
   end_date      VARCHAR2(10),
-  target        VARCHAR2(30),
+  target        VARCHAR2(3000),
   writer        VARCHAR2(30),
   part          VARCHAR2(30),
   status        VARCHAR2(30) default '대기',
