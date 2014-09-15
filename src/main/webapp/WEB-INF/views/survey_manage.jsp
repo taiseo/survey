@@ -39,7 +39,10 @@
 					</td>
 				</tr>
 				<tr>
-					<th>대상</th>
+					<th>
+						대상
+						<div class="js-target-count"></div>
+					</th>
 					<td>
 						<div class="row  js-category">
 							<div class="js-target-category1  span4">
@@ -58,6 +61,18 @@
 							</div>
 							<div class="js-target-branches  span4">
 								<jsp:include page="include/branch_list.jsp" />
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>대상 추출 방법</th>
+					<td>
+						<div class="row">
+							<div class="span12">
+								<form:input path="limit" cssClass="span1  js-number" 
+										cssStyle="text-align: right"/>명씩 
+								랜덤으로 추출합니다.
 							</div>
 						</div>
 					</td>

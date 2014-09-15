@@ -6,6 +6,7 @@ $(document).ready(function(){
 });
 
 function bind_target_select(){
+	
 	$('.js-category').on('change, click', '[name="targetCategory1"]', function(){
 		attr_disabled_cat2();
 		load_branch();
@@ -14,6 +15,9 @@ function bind_target_select(){
 	$('.js-category').on('change, click', '[name="targetCategory2"]', function(){
 		load_branch();
 	});
+
+	// 지사를 클릭할 때마다 대상 수를 세서 갱신
+	$('.js-category').on('change, click', '.js-branch', write_target_count);
 }
 
 function load_branch(){
@@ -32,12 +36,13 @@ function load_branch(){
 	}, function(html){
 		$('.js-target-branches').html(html).show();
 		check_seleted_branches();
-		fillTargetBranches();
+		fill_target_branches();
+		write_target_count();
 	});
 }
 
 function bind_set_branches(){
-	$('.js-category').on('click, change', '.js-branch', fillTargetBranches);
+	$('.js-category').on('click, change', '.js-branch', fill_target_branches);
 }
 
 function attr_disabled_cat2(){
@@ -63,10 +68,27 @@ function check_seleted_branches(){
 	
 }
 
-function fillTargetBranches(){
+function fill_target_branches(){
 	var branches = [];
 	$('.js-branch:checked').each(function(index, branch){
 		branches.push($(branch).val());
 	});
 	$('[name=targetBranches]').val($.toJSON(branches));
+}
+
+function write_target_count(){
+	var params = {
+		targetCategory1: $('[name=targetCategory1]').val(),
+		targetCategory2: $('[name=targetCategory2]').val(),
+		targetBranches: $('[name=targetBranches]').val(),
+		limit: ( $('#limit').val() || 30 )
+	};
+	
+	if(params.targetBranches == '[]'){
+		return;
+	}
+	
+	$.post(survey.context_path + '/surveys/target-count', params, function(data){
+		$('.js-target-count').html(data);
+	});
 }

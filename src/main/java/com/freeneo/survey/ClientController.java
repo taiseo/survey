@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.freeneo.survey.domain.Question;
-import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;

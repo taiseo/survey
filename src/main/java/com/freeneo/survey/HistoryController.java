@@ -20,7 +20,7 @@ public class HistoryController {
 	public String history(
 			Model model){
 		
-		List<String> branchList = customerMapper.branchList();
+		List<String> branchList = customerMapper.branchList(null);
 		
 		model.addAttribute("branchList", branchList);
 		model.addAttribute("pageTitle", "운영 및 통계 내역");

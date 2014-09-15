@@ -18,6 +18,7 @@ public class Survey {
 	private String targetCategory1;
 	private String targetCategory2;
 	private String targetBranches;
+	private int limit;
 	private String writer;
 	private String part;
 	private String status;
@@ -103,6 +104,14 @@ public class Survey {
 
 	public void setTargetBranches(String targetBranches) {
 		this.targetBranches = targetBranches;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
 	public String getWriter() {

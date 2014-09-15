@@ -32,16 +32,13 @@
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-		select distinct c.cst_no, c.cst_nm, c.hp from tbcr_1000 c, tbcr_1040
-		where
-		c.cst_no = tbcr_1040.cst_no
-		and tbcr_1040.ptcp_tit like #{category,jdbcType=VARCHAR}
-		and tbcr_1040.etc_01 in
-		<foreach item="item" index="index" collection="branchList" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		order by DBMS_RANDOM.RANDOM
-		) where rownum &lt;= 30
+			select distinct c.cst_no, c.cst_nm, c.hp from tbcr_1000 c, tbcr_1040
+			where
+				c.cst_no = tbcr_1040.cst_no
+				and tbcr_1040.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and tbcr_1040.etc_01 like #{branch,jdbcType=VARCHAR}
+			order by DBMS_RANDOM.RANDOM
+		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
 	</select>
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">

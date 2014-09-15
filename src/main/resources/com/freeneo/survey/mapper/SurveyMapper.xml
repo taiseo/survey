@@ -13,6 +13,7 @@
 		<result column="target_category1" jdbcType="VARCHAR" property="targetCategory1" />
 		<result column="target_category2" jdbcType="VARCHAR" property="targetCategory2" />
 		<result column="target_branches" jdbcType="VARCHAR" property="targetBranches" />
+		<result column="limit" jdbcType="NUMERIC" property="limit" />
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
 		<result column="status" jdbcType="VARCHAR" property="status" />
@@ -49,7 +50,9 @@
 		</selectKey>
 		
 		INSERT INTO sv_surveys 
-			(id, title, msg_subject, msg, description, start_date, end_date, target_category1, target_category2, target_branches, writer, part, status, datetime)
+			(id, title, msg_subject, msg, description, start_date, end_date, 
+			target_category1, target_category2, target_branches, limit, 
+			writer, part, status, datetime)
 		VALUES (
 			#{id}, 
 			#{title,jdbcType=VARCHAR},
@@ -61,6 +64,7 @@
 			#{targetCategory1,jdbcType=VARCHAR},
 			#{targetCategory2,jdbcType=VARCHAR},
 			#{targetBranches,jdbcType=VARCHAR},
+			#{limit,jdbcType=NUMERIC},
 			#{writer,jdbcType=VARCHAR}, 
 			#{part,jdbcType=VARCHAR},
 			#{status,jdbcType=VARCHAR},
@@ -70,6 +74,7 @@
 
 	<update id="update" parameterType="com.freeneo.survey.domain.Survey">
 		UPDATE sv_surveys SET
+		
 			title = #{title,jdbcType=VARCHAR},
 			msg_subject = #{msgSubject,jdbcType=VARCHAR},
 			msg = #{msg,jdbcType=VARCHAR},
@@ -79,9 +84,11 @@
 			target_category1 = #{targetCategory1,jdbcType=VARCHAR},
 			target_category2 = #{targetCategory2,jdbcType=VARCHAR},
 			target_branches = #{targetBranches,jdbcType=VARCHAR},
+			limit = #{limit,jdbcType=VARCHAR},
 			writer = #{writer,jdbcType=VARCHAR}, 
 			status = #{status,jdbcType=VARCHAR},
 			part = #{part,jdbcType=VARCHAR}
+			
 		WHERE ID = #{id,jdbcType=NUMERIC}
 	</update>
 

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.freeneo.survey.SurveyController;
 import com.freeneo.survey.domain.Customer;
 import com.freeneo.survey.domain.Mms;
 import com.freeneo.survey.domain.Question;
@@ -32,10 +31,8 @@ public class SurveyService {
 
 	@Autowired
 	SurveyMapper surveyMapper;
-
 	@Autowired
 	CustomerMapper customerMapper;
-
 	@Autowired
 	QuestionMapper questionMapper;
 	@Autowired
@@ -62,7 +59,7 @@ public class SurveyService {
 	}
 
 	public List<Customer> customerList(String targetCategory1,
-			String targetCategory2, String targetBranches)
+			String targetCategory2, String targetBranches, int limit)
 			throws JsonParseException, JsonMappingException, IOException {
 		String category = null;
 		if (targetCategory2 == null) {
@@ -73,9 +70,13 @@ public class SurveyService {
 
 		List<String> branchList = makeBranchList(targetBranches);
 
-		List<Customer> customers = customerMapper.customerList(category,
-				branchList);
-
+		List<Customer> customers = new ArrayList<Customer>();
+		for(String branch : branchList){
+			customers.addAll(customerMapper.customerList(category, branch, limit));
+			logger.debug("customers = {}", customers);
+		}
+		
+		
 		return customers;
 	}
 
@@ -111,7 +112,7 @@ public class SurveyService {
 
 	public void sendMms(Survey survey) throws JsonParseException, JsonMappingException, IOException {
 		
-		List<Customer> customers = customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches());
+		List<Customer> customers = customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches(), survey.getLimit());
 		
 		logger.debug("customers = {}", customers);
 		

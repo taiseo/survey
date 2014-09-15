@@ -133,7 +133,7 @@ public class Question {
 				}
 			}
 		}
-		
+		logger.debug("responseCount = {}", count);
 		return count;
 	}
 	

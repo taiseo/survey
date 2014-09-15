@@ -1,9 +1,7 @@
 package com.freeneo.survey;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -119,7 +118,7 @@ public class SurveyController {
 				|| survey.getTargetBranches() == null
 				|| survey.getTargetBranches().equals("[]")
 				|| survey.getMsgSubject().equals("")
-				|| survey.getMsg().equals("") ) {
+				|| survey.getMsg().equals("")) {
 			model.addAttribute("error_msg",
 					"필수 항목(제목, 게시종료일, 지사, MMS 제목, MMS 내용)을 모두 입력해 주세요.");
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 입력페이지로 감.");
@@ -152,6 +151,8 @@ public class SurveyController {
 			survey = surveyMapper.select(id);
 			logger.debug("survey in db={}", survey);
 		}
+		
+		logger.debug("survey={}", survey);
 
 		if (survey.getStatus() != null && !survey.getStatus().equals("대기")) {
 			model.addAttribute("msg", "대기중인 설문만 수정할 수 있습니다.");
@@ -198,7 +199,7 @@ public class SurveyController {
 				|| survey.getTargetBranches() == null
 				|| survey.getTargetBranches().equals("[]")
 				|| survey.getMsgSubject().equals("")
-				|| survey.getMsg().equals("") ) {
+				|| survey.getMsg().equals("")) {
 			model.addAttribute("error_msg",
 					"필수 항목(제목, 게시종료일, 지사, MMS 제목, MMS 내용)을 모두 입력해 주세요.");
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
@@ -303,4 +304,18 @@ public class SurveyController {
 		return "redirect:/surveys";
 	}
 
+	@RequestMapping(value = "/target-count", method = RequestMethod.POST)
+	@ResponseBody
+	public String targetCount(
+			@RequestParam(value = "targetCategory1") String targetCategory1,
+			@RequestParam(value = "targetCategory2", required = false, defaultValue = "") String targetCategory2,
+			@RequestParam(value = "targetBranches") String targetBranches,
+			@RequestParam(value = "limit") int limit, Model model)
+			throws JsonParseException, JsonMappingException, IOException {
+
+		List<Customer> customers = surveyService.customerList(targetCategory1,
+				targetCategory2, targetBranches, limit);
+
+		return "(" + customers.size() + "명)";
+	}
 }
