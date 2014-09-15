@@ -10,6 +10,7 @@ public interface CustomerMapper {
 	public List<Customer> list();
 	public void insert(Customer customer);
 	public List<String> projectList();
+	public List<String> branchList();
 	public List<String> branchList(String category);
 	public List<Customer> customerList(@Param("category") String category, @Param("branchList") List<String> branchList);
 }

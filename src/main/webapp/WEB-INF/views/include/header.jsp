@@ -43,7 +43,7 @@
 					<li><a href="<%=request.getContextPath()%>/surveys">설문관리</a></li>
 					<c:if test="${sessionScope.user.userLevel == 'admin'}">
 						<li><a href="<%=request.getContextPath()%>/customers">캠페인(타겟)</a></li>
-						<li><a href="<%=request.getContextPath()%>/statistics">결과 및 통계</a></li>
+						<li><a href="<%=request.getContextPath()%>/history">결과 및 통계</a></li>
 						<li><a href="<%=request.getContextPath()%>/users">사용자관리</a></li>
 					</c:if>
 					<c:if test="${sessionScope.user.userLevel != 'admin' }">

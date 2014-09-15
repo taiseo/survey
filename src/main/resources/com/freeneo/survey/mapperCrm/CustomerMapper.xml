@@ -22,8 +22,11 @@
 	<select id="branchList" parameterType="String" resultType="String">
 		select distinct(etc_01)
 		from tbcr_1040
-		where ptcp_tit like
-		#{category,jdbcType=VARCHAR}
+		<if test="category != null">
+			where ptcp_tit like
+			#{category,jdbcType=VARCHAR}
+		</if>
+		ORDER BY etc_01 ASC
 	</select>
 
 	<select id="customerList" parameterType="map"
