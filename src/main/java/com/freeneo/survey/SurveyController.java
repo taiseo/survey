@@ -28,6 +28,7 @@ import com.freeneo.survey.domain.Customer;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.Target;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
@@ -317,5 +318,21 @@ public class SurveyController {
 				targetCategory2, targetBranches, limit);
 
 		return "(" + customers.size() + "명)";
+	}
+
+	@RequestMapping(value = "/targets/{surveyId}", method = RequestMethod.GET)
+	public String targets(
+			@PathVariable(value = "surveyId") Long surveyId,
+			Model model) {
+		
+		Survey survey = surveyMapper.select(surveyId);
+		List<Target> targets = targetMapper.selectBySurveyId(surveyId);
+		
+		
+		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
+		model.addAttribute("survey", survey);
+		model.addAttribute("targets", targets);
+		
+		return "target_list";
 	}
 }

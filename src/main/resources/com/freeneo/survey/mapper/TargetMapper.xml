@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.freeneo.survey.mapper.TargetMapper">
 
-	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.User">
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Target">
 		<id column="survey_id" jdbcType="NUMERIC" property="surveyId" />
 		<result column="cst_no" jdbcType="VARCHAR" property="cstNo" />
 		<result column="response_yn" jdbcType="VARCHAR" property="responseYn" />
@@ -12,6 +12,13 @@
 		SELECT
 		*
 		FROM sv_targets
+	</select>
+
+	<select id="selectBySurveyId" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
 	</select>
 
 	<select id="select" parameterType="com.freeneo.survey.domain.Target"
@@ -28,7 +35,7 @@
 		SELECT
 		*
 		FROM sv_targers
-		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMBER}
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
 	</select>
 
 	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">

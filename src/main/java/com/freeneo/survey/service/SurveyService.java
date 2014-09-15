@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.freeneo.survey.domain.Target;
 import com.freeneo.survey.domain.Customer;
 import com.freeneo.survey.domain.Mms;
 import com.freeneo.survey.domain.Question;
@@ -135,4 +136,5 @@ public class SurveyService {
 		
 		updateTargets(survey.getId(), customers);
 	}
+
 }

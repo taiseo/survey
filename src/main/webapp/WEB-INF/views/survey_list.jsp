@@ -32,16 +32,23 @@
 			<c:forEach var="survey" items="${list}">
 				<tr>
 					<td>
-					<c:if test="${survey.status == '대기'}">
-						<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
-							${survey.title }
-						</a>
-					</c:if>
-					<c:if test="${survey.status != '대기'}">
-						<a href="<%=request.getContextPath()%>/survey/${survey.id}">
-							${survey.title }
-						</a>
-					</c:if>
+						<c:if test="${survey.status == '대기'}">
+							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
+								${survey.title }
+							</a>
+						</c:if>
+						<c:if test="${survey.status != '대기'}">
+							<a href="<%=request.getContextPath()%>/survey/${survey.id}">
+								${survey.title }
+							</a>
+						</c:if>
+						<c:if test="${survey.status == '발송' or survey.status == '종료'}">
+							<small>
+								<a href="<%=request.getContextPath()%>/surveys/targets/${survey.id}">
+									(대상 보기)
+								</a>
+							</small>
+						</c:if>
 					</td>
 					<td>${survey.startDate }</td>
 					<td>${survey.endDate }</td>
