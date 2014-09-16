@@ -18,7 +18,7 @@ public class Survey {
 	private String targetCategory1;
 	private String targetCategory2;
 	private String targetBranches;
-	private int limit;
+	private int limit = 30;
 	private String writer;
 	private String part;
 	private String status;

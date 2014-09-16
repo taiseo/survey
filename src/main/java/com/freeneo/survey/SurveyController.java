@@ -104,7 +104,7 @@ public class SurveyController {
 		cal.add(Calendar.DATE, +7);
 		survey.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(cal
 				.getTime()));
-
+		
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
@@ -127,6 +127,7 @@ public class SurveyController {
 		}
 
 		User currentUser = (User) session.getAttribute("user");
+		survey.setStatus("대기");
 		survey.setWriter(currentUser.getUsername());
 		survey.setPart(currentUser.getPart());
 
