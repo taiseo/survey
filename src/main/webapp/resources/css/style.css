@@ -95,13 +95,3 @@ l-block {
 .client-question h2 {
 	font-size: 1.4em;
 }
-
-.graph-wrapper {
-	width: 100px;
-	text-align: left;
-}
-
-.inline-block {
-	display: inline-block;
-	*display: inline;
-}
