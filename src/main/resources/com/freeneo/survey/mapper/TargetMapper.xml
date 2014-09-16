@@ -5,7 +5,11 @@
 	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Target">
 		<id column="survey_id" jdbcType="NUMERIC" property="surveyId" />
 		<result column="cst_no" jdbcType="VARCHAR" property="cstNo" />
-		<result column="response_yn" jdbcType="VARCHAR" property="responseYn" />
+		<result column="ptcp_tit" jdbcType="VARCHAR" property="ptcpTit" />
+		<result column="ptcp_dttm" jdbcType="VARCHAR" property="ptcpDttm" />
+		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
+		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
+		<result column="hp" jdbcType="VARCHAR" property="hp" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">

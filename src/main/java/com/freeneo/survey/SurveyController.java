@@ -36,6 +36,7 @@ import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
+import com.freeneo.survey.util.Util;
 
 @Controller
 @RequestMapping(value = "/surveys")
@@ -359,6 +360,9 @@ public class SurveyController {
 		Survey survey = surveyMapper.select(surveyId);
 		List<Target> targets = targetMapper.selectBySurveyId(surveyId);
 		
+		for (Target target : targets){
+			target.setPtcpDttm(Util.formating(target.getPtcpDttm(), "####-##-##"));			
+		}		
 		
 		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
 		model.addAttribute("survey", survey);
