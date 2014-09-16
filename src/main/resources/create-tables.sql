@@ -24,7 +24,7 @@ insert into sv_users
     '최고관리자',
     '010-0000-0000',
     'email@email.com',
-    'admin'
+    '시스템 관리자'
   );
 
 create table sv_surveys

@@ -32,7 +32,7 @@
 			<td>${user.email}</td>
 			<td>${user.userLevel}</td>
 			<td>
-				<c:if test="${user.username != 'admin' }">
+				<c:if test="${user.userLevel != '시스템 관리자' }">
 					<a href="<%=request.getContextPath() %>/users/delete/${user.id}" 
 						onclick="return confirm('${user.name} 님을 정말로 삭제할까요?')"
 						class="btn btn-danger">

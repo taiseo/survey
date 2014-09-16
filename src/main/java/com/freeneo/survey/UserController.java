@@ -31,7 +31,7 @@ public class UserController {
 	public String users(Model model, HttpSession session) {
 		
 		User currentUser = (User) session.getAttribute("user");
-		if( ! currentUser.getUserLevel().equals("admin")){
+		if( ! currentUser.getUserLevel().equals("시스템 관리자")){
 			return "redirect:/";
 		}
 		
@@ -53,7 +53,7 @@ public class UserController {
 		User currentUser = (User) session.getAttribute("user");
 		
 		// 최고관리자가 아닌데 남의 정보를 변경하려 들면 첫 화면으로 보내 버린다.
-		if( ! currentUser.getUserLevel().equals("admin") && currentUser.getId() != id){
+		if( ! currentUser.getUserLevel().equals("시스템 관리자") && currentUser.getId() != id){
 			return "redirect:/";
 		}
 		
@@ -95,14 +95,14 @@ public class UserController {
 		logger.debug("예전 정보 : " + oldUser);
 		
 		// 남의 정보는 최고관리자만 변경 가능
-		if( ! currentUser.getUserLevel().equals("admin") && oldUser.getId() != currentUser.getId()){
+		if( ! currentUser.getUserLevel().equals("시스템 관리자") && oldUser.getId() != currentUser.getId()){
 			return "redirect:/";
 		}
 		
 		// 암호 변경 시도가 있는 경우
 		if( ! password.equals("") || ! passwordConfirm.equals("")){
 			String oldPasswordHashed = DigestUtils.sha1Hex(oldPassword + "!@#$asdf");
-			if( ! currentUser.getUserLevel().equals("admin") && ! oldUser.getPassword().equals(oldPasswordHashed)){
+			if( ! currentUser.getUserLevel().equals("시스템 관리자") && ! oldUser.getPassword().equals(oldPasswordHashed)){
 				// 관리자가 아닌 경우엔 기존 비밀번호 검사
 				model.addAttribute("error_msg", "기존 비밀번호가 틀렸습니다.");
 				model.addAttribute("user", newUser);
@@ -128,7 +128,7 @@ public class UserController {
 			session.setAttribute("user", newUser);
 		}
 		
-		if(currentUser.getUserLevel().equals("admin")){
+		if(currentUser.getUserLevel().equals("시스템 관리자")){
 			return "redirect:/users/";
 		}else{
 			model.addAttribute("success_msg", "정보를 수정했습니다.");
@@ -206,8 +206,8 @@ public class UserController {
 		User user = new User();
 		user.setId(id);
 		user = userService.getUserById(user);
-		if(user.getUsername().equals("admin")){
-			model.addAttribute("error_msg", "admin은 삭제할 수 없습니다.");
+		if(user.getUsername().equals("시스템 관리자")){
+			model.addAttribute("error_msg", "시스템 관리자는 삭제할 수 없습니다.");
 			return users(model, session);
 		}
 		userService.deleteUser(user);

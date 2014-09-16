@@ -79,7 +79,7 @@ public class SurveyController {
 
 		List<Survey> list;
 
-		if (!user.getUserLevel().equals("admin")) {
+		if (!user.getUserLevel().equals("시스템 관리자")) {
 			list = surveyMapper.myList(user.getUsername());
 		} else {
 			list = surveyMapper.list();
@@ -161,11 +161,11 @@ public class SurveyController {
 			return list(model, session);
 		}
 
-		// admin이 아닌데, 남의 것을 수정하려고 하면
+		// 시스템 관리자가 아닌데, 남의 것을 수정하려고 하면
 		logger.debug("currentUser.userLevel={}", currentUser.getUserLevel());
 		logger.debug("currentUser.username={}", currentUser.getUsername());
 		logger.debug("survey.writer={}", survey.getWriter());
-		if (!currentUser.getUserLevel().equals("admin")
+		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(survey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model, session);
@@ -190,8 +190,8 @@ public class SurveyController {
 
 		logger.debug("old survey = {}", oldSurvey);
 
-		// admin이 아닌데, 남의 것을 수정하려고 하면
-		if (!currentUser.getUserLevel().equals("admin")
+		// 시스템 관리자가 아닌데, 남의 것을 수정하려고 하면
+		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(oldSurvey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model, session);
@@ -239,7 +239,7 @@ public class SurveyController {
 
 		User currentUser = (User) session.getAttribute("user");
 		Survey survey = surveyMapper.select(id);
-		if (!currentUser.getUserLevel().equals("admin")
+		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(survey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것을 편집할 수는 없습니다.");
 			return list(model, session);

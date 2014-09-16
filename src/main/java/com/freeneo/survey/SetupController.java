@@ -64,7 +64,7 @@ public class SetupController {
 		
 		User currentUser = (User) session.getAttribute("user");
 		
-		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "admin"){
+		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "시스템 관리자"){
 			return "You cannot handle setup";
 		}
 		
@@ -79,7 +79,7 @@ public class SetupController {
 		
 		User currentUser = (User) session.getAttribute("user");
 		
-		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "admin"){
+		if( ! Util.isLocal(request) && currentUser.getUserLevel() != "시스템 관리자"){
 			return "You cannot handle setup";
 		}
 		

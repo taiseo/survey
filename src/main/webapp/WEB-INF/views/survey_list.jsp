@@ -62,7 +62,7 @@
 					<td>${survey.datetime }</td>
 					<td>
 						${survey.status }
-						<c:if test="${survey.status == '승인' and  sessionScope.user.userLevel == 'admin'}">
+						<c:if test="${survey.status == '승인' and  sessionScope.user.userLevel == '시스템 관리자'}">
 							<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
 								취소
 							</a>
@@ -73,7 +73,7 @@
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
 							<c:when test="${(survey.status == '대기' or survey.status == null) 
-									and sessionScope.user.userLevel == 'admin'}">
+									and sessionScope.user.userLevel == '시스템 관리자'}">
 								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval">
 									승인
 								</a>
