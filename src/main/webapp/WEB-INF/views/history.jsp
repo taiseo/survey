@@ -17,7 +17,7 @@
 		<tbody>
 		<tr>
 			<th>기간</th>
-			<td colspan="2">
+			<td>
 				<input class="datepicker  span2" type="text" name="startDate" value="${startDate }"/>
 				~
 				<input class="datepicker  span2" type="text" name="endDate" value="${endDate }"/>
@@ -32,8 +32,6 @@
 						<option value="${branch }">${branch }</option>
 					</c:forEach>
 				</select>
-			</td>
-			<td>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_branch()" />
 			</td>
 		</tr>
@@ -53,8 +51,6 @@
 						<option value="${user.username }" class="js-part-${user.part }">${user.name }</option>
 					</c:forEach>
 				</select>
-			</td>
-			<td>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_user()" />
 			</td>
 		</tr>

@@ -95,3 +95,7 @@ l-block {
 .client-question h2 {
 	font-size: 1.4em;
 }
+
+td * {
+	vertical-align: top;
+}
