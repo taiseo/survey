@@ -92,6 +92,10 @@ public class SurveyController {
 		} else {
 			list = surveyMapper.list();
 		}
+		
+		for (Survey survey : list){
+			survey.setDatetime(Util.formating(survey.getDatetime(), "##########<br/>#########"));
+		}
 
 		logger.debug("surveys = {}", list);
 

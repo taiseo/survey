@@ -16,16 +16,16 @@
 	<table class="table  table-striped">
 		<thead>
 			<tr>
-				<th>제목</th>
-				<th>설문시작일</th>
-				<th>종료일</th>
-				<th>대상</th>
-				<th>작성자</th>
-				<th>부서</th>
-				<th>입력일시</th>
-				<th>상태</th>
-				<th>진행</th>
-				<th>기능</th>
+				<th nowrap="nowrap">제목</th>
+				<th nowrap="nowrap">설문시작일</th>
+				<th nowrap="nowrap">종료일</th>
+				<th nowrap="nowrap">대상</th>
+				<th nowrap="nowrap">작성자</th>
+				<th nowrap="nowrap">부서</th>
+				<th nowrap="nowrap">입력일시</th>
+				<th nowrap="nowrap">상태</th>
+				<th nowrap="nowrap">진행</th>
+				<th nowrap="nowrap">기능</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -50,17 +50,17 @@
 							</small>
 						</c:if>
 					</td>
-					<td>${survey.startDate }</td>
-					<td>${survey.endDate }</td>
+					<td nowrap="nowrap">${survey.startDate }</td>
+					<td nowrap="nowrap">${survey.endDate }</td>
 					<td>
 						${survey.targetCategory1 }
 						${survey.targetCategory2 }
 						${survey.targetBranches }
 					</td>
-					<td>${survey.writer }</td>
-					<td>${survey.part }</td>
-					<td>${survey.datetime }</td>
-					<td>
+					<td nowrap="nowrap">${survey.writer }</td>
+					<td nowrap="nowrap">${survey.part }</td>
+					<td nowrap="nowrap">${survey.datetime }</td>
+					<td nowrap="nowrap">
 						${survey.status }
 						<c:if test="${survey.status == '승인' and  sessionScope.user.userLevel == '시스템 관리자'}">
 							<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
@@ -113,13 +113,16 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
-					<td>
+					<td nowrap="nowrap">
 						<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 							수정
 						</a>
 						<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
 							보기
 						</a>
+						
+						<br />
+						
 						<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
 							결과
 						</a>
