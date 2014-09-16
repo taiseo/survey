@@ -58,7 +58,7 @@
 							<td>
 								<div class="progress">
 									<div class="bar" 
-										style="width: <fmt:formatNumber value="${responseItem.responseItemCount / survey.respondentCount * 100}" />%"></div>
+										style="width: <fmt:formatNumber value="${responseItem.responseItemCount / survey.respondentCount * 100}" pattern="." />%"></div>
 								</div>
 							</td>
 						</tr>
@@ -128,7 +128,7 @@
 						<td>
 							<div class="progress">
 								<div class="bar" 
-									style="width: <fmt:formatNumber value="${point.value / survey.respondentCount * 100}" />%"></div>
+									style="width: <fmt:formatNumber value="${point.value / survey.respondentCount * 100}" pattern="." />%"></div>
 							</div>
 						</td>
 					</tr>
