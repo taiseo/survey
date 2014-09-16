@@ -6,6 +6,9 @@
 		<id column="cst_no" jdbcType="VARCHAR" property="cstNo" />
 		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
 		<result column="hp" jdbcType="VARCHAR" property="hp" />
+		<result column="ptcp_tit" jdbcType="VARCHAR" property="ptcpTit" />
+		<result column="ptcp_dttm" jdbcType="VARCHAR" property="ptcpDttm" />
+		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -32,11 +35,11 @@
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp from tbcr_1000 c, tbcr_1040
+			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, tbcr_1040 d
 			where
-				c.cst_no = tbcr_1040.cst_no
-				and tbcr_1040.ptcp_tit like #{category,jdbcType=VARCHAR}
-				and tbcr_1040.etc_01 like #{branch,jdbcType=VARCHAR}
+				c.cst_no = d.cst_no
+				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and d.etc_01 like #{branch,jdbcType=VARCHAR}
 			order by DBMS_RANDOM.RANDOM
 		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
 	</select>
