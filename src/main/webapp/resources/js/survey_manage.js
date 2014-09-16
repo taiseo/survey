@@ -85,6 +85,7 @@ function write_target_count(){
 	};
 	
 	if(params.targetBranches == '[]'){
+		$('.js-target-count').html('');
 		return;
 	}
 	
