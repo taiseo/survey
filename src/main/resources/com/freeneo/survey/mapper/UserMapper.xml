@@ -19,6 +19,12 @@
 		FROM sv_users
 	</select>
 
+	<select id="partList" resultType="String">
+		SELECT
+		distinct(part)
+		FROM sv_users
+	</select>
+
 	<select id="select" parameterType="com.freeneo.survey.domain.User"
 		resultMap="BaseResultMap">
 		SELECT
