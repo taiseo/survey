@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
-import com.freeneo.survey.mapper.HistoryMapper;
 import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 
