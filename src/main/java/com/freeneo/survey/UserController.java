@@ -143,7 +143,7 @@ public class UserController {
 			) {
 
 		User user = new User();
-		user.setUserLevel("normal");
+		user.setUserLevel("일반");
 		model.addAttribute("pageCommand", "insert");
 		model.addAttribute("pageTitle", "사용자 입력");
 		model.addAttribute("user", user);
