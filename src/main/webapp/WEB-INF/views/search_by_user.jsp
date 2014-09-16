@@ -22,7 +22,9 @@
 				<td>${userHistory.surveyCount }</td>
 				<td>${userHistory.sendCount }</td>
 				<td>${userHistory.respondentCount }</td>
-				<td>${userHistory.responseRatio }</td>
+				<td>
+					<fmt:formatNumber value="${userHistory.responseRatio }" pattern="0.00"/>%
+				</td>
 				<td>
 					<a href="#" onclick="alert('제작중'); return false;">(보기)</a>
 				</td>

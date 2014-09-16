@@ -25,6 +25,7 @@
 				<th>입력일시</th>
 				<th>상태</th>
 				<th>진행</th>
+				<th>응답자</th>
 				<th>기능</th>
 			</tr>
 		</thead>
@@ -112,6 +113,9 @@
 								<input class="btn" type="button" disabled value="승인대기" />
 							</c:otherwise>
 						</c:choose>
+					</td>
+					<td>
+						${survey.respondentCount }
 					</td>
 					<td>
 						<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">

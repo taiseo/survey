@@ -42,7 +42,7 @@ public class HistoryService {
 		userHistory.setSurveyCount(surveyCount);
 		userHistory.setSendCount(sendCount);
 		userHistory.setRespondentCount(respondentCount);
-		userHistory.setResponseRatio(sendCount == 0 ? 0 : respondentCount/sendCount);
+		userHistory.setResponseRatio(sendCount == 0 ? 0 : (double)respondentCount/(double)sendCount*100.0);
 		userHistory.setUser(user);
 		
 		return userHistory;

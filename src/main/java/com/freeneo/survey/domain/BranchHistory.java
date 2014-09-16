@@ -9,7 +9,7 @@ public class BranchHistory {
 	private String branchName;
 	private int sendCount;
 	private int respondentCount;
-	private float responseRatio;
+	private double responseRatio;
 	
 	public String getBranchName() {
 		return branchName;
@@ -30,10 +30,10 @@ public class BranchHistory {
 		this.respondentCount = respondentCount;
 	}
 
-	public float getResponseRatio() {
+	public double getResponseRatio() {
 		return responseRatio;
 	}
-	public void setResponseRatio(float responseRatio) {
+	public void setResponseRatio(double responseRatio) {
 		this.responseRatio = responseRatio;
 	}
 	@Override

@@ -9,7 +9,7 @@ public class UserHistory {
 	private int surveyCount;
 	private int sendCount;
 	private int respondentCount;
-	private float responseRatio;
+	private double responseRatio;
 	
 	public User getUser() {
 		return user;
@@ -37,11 +37,11 @@ public class UserHistory {
 	}
 	
 	
-	public float getResponseRatio() {
+	public double getResponseRatio() {
 		return responseRatio;
 	}
-	public void setResponseRatio(float responseRatio) {
-		this.responseRatio = responseRatio;
+	public void setResponseRatio(double d) {
+		this.responseRatio = d;
 	}
 	@Override
 	public boolean equals(Object o) {
