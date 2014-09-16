@@ -361,7 +361,7 @@ public class SurveyController {
 		List<Target> targets = targetMapper.selectBySurveyId(surveyId);
 		
 		for (Target target : targets){
-			target.setPtcpDttm(Util.formating(target.getPtcpDttm(), "####-##-## ##:##:##"));			
+			target.setPtcpDttm(Util.formating(target.getPtcpDttm(), "####-##-##"));			
 		}		
 		
 		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
