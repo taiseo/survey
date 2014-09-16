@@ -53,6 +53,16 @@
 										value="${responseItem.responseItemCount / survey.respondentCount * 100}"
 										pattern=".00" />%
 								</c:if>
+								
+								<span class="inline-block  graph-wrapper">
+									<span class="inline-block" 
+										style="width: 
+											<fmt:formatNumber 
+												value="${responseItem.responseItemCount / survey.respondentCount * 100}"
+												pattern="." 
+											/>%; background: #ddd"
+									></span>
+								</span>
 							</td>
 						</tr>
 						</c:if>
@@ -116,6 +126,15 @@
 									value="${point.value / survey.respondentCount * 100}"
 									pattern=".00" />%
 							</c:if>
+							<span class="inline-block  graph-wrapper">
+								<span class="inline-block" 
+									style="width: 
+										<fmt:formatNumber 
+											value="${point.value / survey.respondentCount * 100}"
+											pattern="." 
+										/>%; background: #ddd"
+								></span>
+							</span>
 						</td>
 					</tr>
 				</c:forEach>
