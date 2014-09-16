@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
+import com.freeneo.survey.mapper.HistoryMapper;
 import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 
@@ -45,5 +47,25 @@ public class HistoryController {
 		model.addAttribute("pageTitle", "운영 및 통계 내역");
 		
 		return "history";
+	}
+	
+	@RequestMapping(value="/search-by-branch", method=RequestMethod.POST)
+	public String searchByBranch(
+			@RequestParam(value="branch") String branch,
+			Model model
+			){
+		
+		
+		
+		return "search_by_branch";
+	}
+
+	@RequestMapping(value="/search-by-user", method=RequestMethod.POST)
+	public String searchByUser(
+			@RequestParam(value="part") String part,
+			@RequestParam(value="user") String user,
+			Model model
+			){
+		return "search_by_user";
 	}
 }

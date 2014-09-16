@@ -9,8 +9,7 @@
 		<h1>${pageTitle}</h1>
 	</div>
 
-	<form class="base-margin" method="post">
-	
+	<form class="base-margin" onsubmit="return false;">
 		<table class="table  table-striped">
 		<colgroup>
 			<col style="width: 15%"/>
@@ -18,7 +17,7 @@
 		<tbody>
 		<tr>
 			<th>기간</th>
-			<td>
+			<td colspan="2">
 				<input class="datepicker  span2" type="text" name="startDate" value="${startDate }"/>
 				~
 				<input class="datepicker  span2" type="text" name="endDate" value="${endDate }"/>
@@ -33,6 +32,9 @@
 						<option value="${branch }">${branch }</option>
 					</c:forEach>
 				</select>
+			</td>
+			<td>
+				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_branch()" />
 			</td>
 		</tr>
 		<tr>
@@ -52,16 +54,16 @@
 					</c:forEach>
 				</select>
 			</td>
-		</tr>
-		<tr>
-			<th></th>
 			<td>
-				<input type="submit" value="검색" />
+				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_user()" />
 			</td>
 		</tr>
 		</tbody>
 		</table>
 	</form>
+	
+	<div class="js-search-result"></div>
+	
 </div>
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/history.js"></script>
