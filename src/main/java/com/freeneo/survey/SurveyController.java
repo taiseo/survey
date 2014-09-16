@@ -66,8 +66,13 @@ public class SurveyController {
 
 	SurveyController() {
 		this.statusMap = new HashMap<String, String>();
-		statusMap.put("standby", "대기");
-		statusMap.put("approval", "승인");
+		statusMap.put("standby", "승인대기");
+		
+		// 승인1,2는 누가 먼저 하든 상관 없다.
+		statusMap.put("approval1", "승인자1만 승인");
+		statusMap.put("approval2", "승인자2만 승인");
+		
+		statusMap.put("approval_completed", "발송대기");
 		statusMap.put("sending", "발송");
 		statusMap.put("close", "종료");
 	}
@@ -76,10 +81,11 @@ public class SurveyController {
 	public String list(Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
+		logger.debug("user = {}", user);
 
 		List<Survey> list;
 
-		if (!user.getUserLevel().equals("시스템 관리자")) {
+		if (user.getUserLevel().equals("일반")) {
 			list = surveyMapper.myList(user.getUsername());
 		} else {
 			list = surveyMapper.list();
@@ -285,15 +291,35 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update-status/{id}/{status}", method = RequestMethod.GET)
-	public String updateStatus(@PathVariable(value = "id") Long id,
-			@PathVariable(value = "status") String status)
-			throws JsonParseException, JsonMappingException, IOException {
+	public String updateStatus(
+			@PathVariable(value = "id") Long id,
+			@PathVariable(value = "status") String status,
+			Model model,
+			HttpSession session
+			) throws JsonParseException, JsonMappingException, IOException {
 
 		status = statusMap.get(status);
 		logger.debug("status = {}", status);
+		
+		User user = (User) session.getAttribute("user");
+		if(user.getUserLevel().equals("일반") && status.contains("승인자")){
+			model.addAttribute("error_msg", "권한이 없습니다.");
+			return list(model, session);
+		}
 
 		Survey survey = surveyMapper.select(id);
 		survey.setId(id);
+		
+		// 둘 다 승인하는 시나리오
+		if(survey.getStatus().equals("승인자1만 승인") && status.equals("승인자2만 승인")){
+			status = "발송대기";
+		}
+		
+		// 둘 다 승인하는 시나리오
+		if(survey.getStatus().equals("승인자2만 승인") && status.equals("승인자1만 승인")){
+			status = "발송대기";
+		}
+		
 		survey.setStatus(status);
 		logger.debug("survey to update = {}", survey);
 

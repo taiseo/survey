@@ -91,6 +91,11 @@ public class UserController {
 		User oldUser = userService.getUserById(newUser);
 		User currentUser = (User) session.getAttribute("user");
 		
+		// 시스템 관리자가 아니면 등급 변경 불가
+		if( ! currentUser.getUserLevel().equals("시스템 관리자")){
+			newUser.setUserLevel(oldUser.getUserLevel());
+		}
+		
 		logger.debug("변경할 정보 : " + newUser);
 		logger.debug("예전 정보 : " + oldUser);
 		

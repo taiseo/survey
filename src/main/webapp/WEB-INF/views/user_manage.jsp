@@ -59,12 +59,18 @@
 				<tr>
 					<th><form:label path="userLevel">등급</form:label></th>
 					<td>
-						<form:select path="userLevel">
-							<form:option value="시스템 관리자">시스템 관리자</form:option>
-							<form:option value="승인자2">승인자2</form:option>
-							<form:option value="승인자1">승인자1</form:option>
-							<form:option value="일반">일반</form:option>
-						</form:select>
+						<c:if test="${sessionScope.user.userLevel == '시스템 관리자' }">
+							<form:select path="userLevel">
+								<form:option value="시스템 관리자">시스템 관리자</form:option>
+								<form:option value="승인자2">승인자2</form:option>
+								<form:option value="승인자1">승인자1</form:option>
+								<form:option value="일반">일반</form:option>
+							</form:select>
+						</c:if>
+						<c:if test="${sessionScope.user.userLevel != '시스템 관리자' }">
+							${user.userLevel }
+							<form:hidden path="userLevel"/>
+						</c:if>
 					</td>
 				</tr>
 				

@@ -72,13 +72,24 @@
 						<%-- 설문 상태는 대기(standby) -> 승인(approval) -> 발송(sending) -> 종료(close) 다. --%>
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
-							<c:when test="${(survey.status == '대기' or survey.status == null) 
-									and sessionScope.user.userLevel == '시스템 관리자'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval">
+							
+							<%--승인자1 입장 --%>
+							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자2만 승인') 
+									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자1' )}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval1">
 									승인
 								</a>
 							</c:when>
-							<c:when test="${survey.status == '승인'}">
+							
+							<%-- 승인자2 입장 --%>
+							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자1만 승인') 
+									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자2' )}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
+									승인
+								</a>
+							</c:when>
+							
+							<c:when test="${survey.status == '발송대기'}">
 								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending"
 									onclick="return confirm('한 번 발송하면 돌이킬 수 없습니다. 정말로 발송할까요?')">
 									발송
@@ -93,7 +104,7 @@
 								<input class="btn" type="button" disabled value="종료" />
 							</c:when>
 							<c:otherwise>
-								<input class="btn" type="button" disabled value="승인" />
+								<input class="btn" type="button" disabled value="승인대기" />
 							</c:otherwise>
 						</c:choose>
 					</td>
