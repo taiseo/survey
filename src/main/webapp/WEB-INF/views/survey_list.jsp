@@ -69,7 +69,7 @@
 						</c:if>
 					</td>
 					<td>
-						<%-- 설문 상태는 승인대기(standby) -> 승인자1만 승인(approval1) && 승인자2만 승인(approval2) -> 발송(sending) -> 종료(close) 다. --%>
+						<%-- 설문 상태는 임시저장(temporary) -> 승인대기(standby) -> 승인자1만 승인(approval1) && 승인자2만 승인(approval2) -> 발송(sending) -> 종료(close) 다. --%>
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
 							

@@ -66,6 +66,7 @@ public class SurveyController {
 
 	SurveyController() {
 		this.statusMap = new HashMap<String, String>();
+		statusMap.put("temporary", "임시저장"); // 승인요청 전 상태다
 		statusMap.put("standby", "승인대기");
 		
 		// 승인1,2는 누가 먼저 하든 상관 없다.
@@ -133,7 +134,7 @@ public class SurveyController {
 		}
 
 		User currentUser = (User) session.getAttribute("user");
-		survey.setStatus("승인대기");
+		survey.setStatus("임시저장");
 		survey.setWriter(currentUser.getUsername());
 		survey.setPart(currentUser.getPart());
 
@@ -162,8 +163,11 @@ public class SurveyController {
 		
 		logger.debug("survey={}", survey);
 
-		if (survey.getStatus() != null && !survey.getStatus().equals("승인대기")) {
-			model.addAttribute("msg", "승인대기중인 설문만 수정할 수 있습니다.");
+		if (survey.getStatus() != null 
+				&& ! survey.getStatus().equals("승인대기")
+				&& ! survey.getStatus().equals("임시저장")
+				) {
+			model.addAttribute("msg", "임시저장이거나 승인대기중인 설문만 수정할 수 있습니다.");
 			return list(model, session);
 		}
 
@@ -227,7 +231,7 @@ public class SurveyController {
 		}
 
 		if (oldSurvey.getStatus() == null) {
-			survey.setStatus("승인대기");
+			survey.setStatus("임시저장");
 		} else {
 			survey.setStatus(oldSurvey.getStatus());
 		}
