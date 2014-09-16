@@ -55,10 +55,10 @@
 										pattern=".00" />%
 								</c:if>
 							</td>
-							<td>
+							<td style="width: 100px">
 								<div class="progress">
 									<div class="bar" 
-										style="width: <fmt:formatNumber value="${responseItem.responseItemCount / survey.respondentCount * 100}" pattern="." />%"></div>
+										style="width: <fmt:formatNumber value="${responseItem.responseItemCount / survey.respondentCount * 100}" pattern=".0" />%"></div>
 								</div>
 							</td>
 						</tr>
@@ -78,6 +78,12 @@
 										value="${fn:length(question.etcResponses) / survey.respondentCount * 100}"
 										pattern=".00" />%
 								</c:if>
+							</td>
+							<td style="width: 100px">
+								<div class="progress">
+									<div class="bar" 
+										style="width: <fmt:formatNumber value="${fn:length(question.etcResponses) / survey.respondentCount * 100}" pattern=".0" />%"></div>
+								</div>
 							</td>
 						</tr>
 						<tr style="display: none">
@@ -125,10 +131,10 @@
 									pattern=".00" />%
 							</c:if>
 						</td>
-						<td>
+						<td style="width: 100px">
 							<div class="progress">
 								<div class="bar" 
-									style="width: <fmt:formatNumber value="${point.value / survey.respondentCount * 100}" pattern="." />%"></div>
+									style="width: <fmt:formatNumber value="${point.value / survey.respondentCount * 100}" pattern=".0" />%"></div>
 							</div>
 						</td>
 					</tr>
