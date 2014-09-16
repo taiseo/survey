@@ -8,7 +8,11 @@ public class Target {
 	
 	private Long surveyId;
 	private String cstNo;
-	private String responseYn;
+	private String ptcpTit;
+	private String ptcpDttm;
+	private String etc01;
+	private String cstNm;
+	private String hp;	
 	
 	public Long getSurveyId() {
 		return surveyId;
@@ -25,13 +29,45 @@ public class Target {
 	public void setCstNo(String cstNo) {
 		this.cstNo = cstNo;
 	}
-
-	public String getResponseYn() {
-		return responseYn;
+	
+	public String getPtcpTit() {
+		return ptcpTit;
 	}
 
-	public void setResponseYn(String responseYn) {
-		this.responseYn = responseYn;
+	public void setPtcpTit(String ptcpTit) {
+		this.ptcpTit = ptcpTit;
+	}
+
+	public String getPtcpDttm() {
+		return ptcpDttm;
+	}
+
+	public void setPtcpDttm(String ptcpDttm) {
+		this.ptcpDttm = ptcpDttm;
+	}
+
+	public String getEtc01() {
+		return etc01;
+	}
+
+	public void setEtc01(String etc01) {
+		this.etc01 = etc01;
+	}
+
+	public String getCstNm() {
+		return cstNm;
+	}
+
+	public void setCstNm(String cstNm) {
+		this.cstNm = cstNm;
+	}
+
+	public String getHp() {
+		return hp;
+	}
+
+	public void setHp(String hp) {
+		this.hp = hp;
 	}
 
 	@Override

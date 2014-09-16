@@ -41,11 +41,15 @@
 	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
 		INSERT ALL
 			<foreach item="customer" index="index" collection="customers">
-				INTO SV_TARGETS (SURVEY_ID, CST_NO, RESPONSE_YN)
+				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP)
 				VALUES (
 					#{surveyId,jdbcType=NUMERIC},
 					#{customer.cstNo,jdbcType=VARCHAR},
-					'N'
+					#{customer.ptcpTit,jdbcType=VARCHAR},
+					#{customer.ptcpDttm,jdbcType=VARCHAR},
+					#{customer.etc01,jdbcType=VARCHAR},
+					#{customer.cstNm,jdbcType=VARCHAR},
+					#{customer.hp,jdbcType=VARCHAR}
 				)
 			</foreach>
 		SELECT * FROM DUAL
