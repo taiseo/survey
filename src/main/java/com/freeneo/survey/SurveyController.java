@@ -133,7 +133,7 @@ public class SurveyController {
 		}
 
 		User currentUser = (User) session.getAttribute("user");
-		survey.setStatus("대기");
+		survey.setStatus("승인대기");
 		survey.setWriter(currentUser.getUsername());
 		survey.setPart(currentUser.getPart());
 
@@ -162,8 +162,8 @@ public class SurveyController {
 		
 		logger.debug("survey={}", survey);
 
-		if (survey.getStatus() != null && !survey.getStatus().equals("대기")) {
-			model.addAttribute("msg", "대기중인 설문만 수정할 수 있습니다.");
+		if (survey.getStatus() != null && !survey.getStatus().equals("승인대기")) {
+			model.addAttribute("msg", "승인대기중인 설문만 수정할 수 있습니다.");
 			return list(model, session);
 		}
 
@@ -227,7 +227,7 @@ public class SurveyController {
 		}
 
 		if (oldSurvey.getStatus() == null) {
-			survey.setStatus("대기");
+			survey.setStatus("승인대기");
 		} else {
 			survey.setStatus(oldSurvey.getStatus());
 		}
