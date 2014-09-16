@@ -134,7 +134,7 @@ public class SurveyService {
 		}
 		
 		updateTargets(survey.getId(), customers);
-		survey.setSenderCount(customers.size());
+		survey.setSendCount(customers.size());
 		surveyMapper.update(survey);
 	}
 
