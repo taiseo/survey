@@ -101,7 +101,7 @@ create sequence seq_sv_responses start with 1 increment by 1 maxvalue 9999999999
 
 CREATE TABLE SV_CONFIG
 (
-  KEY_NAME     NUMBER NOT NULL,
+  KEY_NAME     VARCHAR2(100) NOT NULL,
   VALUE        VARCHAR2(1000),
   CONSTRAINT SV_CONFIG_PK PRIMARY KEY (KEY_NAME)
 );

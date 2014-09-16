@@ -45,10 +45,12 @@
 						<li><a href="<%=request.getContextPath()%>/customers">캠페인(타겟)</a></li>
 						<li><a href="<%=request.getContextPath()%>/history">결과 및 통계</a></li>
 						<li><a href="<%=request.getContextPath()%>/users">사용자관리</a></li>
+						<li><a href="<%=request.getContextPath()%>/config">환경설정</a></li>
 					</c:if>
 					<c:if test="${sessionScope.user.userLevel != 'admin' }">
 						<li><a href="<%=request.getContextPath()%>/users/${sessionScope.user.id}">내 정보</a></li>
 					</c:if>
+					
 				</ul>
 				<ul class="nav pull-right">
 					<li>

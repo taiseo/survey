@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.ConfigMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.ConfigItem">
+		<id column="KEY_NAME" jdbcType="VARCHAR" property="keyName" />
+		<result column="VALUE" jdbcType="VARCHAR" property="value" />
+	</resultMap>
+	
+	<select id="list" resultMap="BaseResultMap">
+		SELECT * FROM SV_CONFIG
+	</select>
+	
+	<select id="select" resultMap="BaseResultMap">
+		SELECT * FROM SV_CONFIG
+		WHERE KEY_NAME = #{keyName,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO SV_CONFIG (KEY_NAME, VALUE) VALUES
+		(
+			#{keyName,jdbcType=VARCHAR},
+			#{value,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE SV_CONFIG 
+		SET VALUE = #{value,jdbcType=VARCHAR}
+		WHERE KEY_NAME = #{keyName,jdbcType=VARCHAR}
+	</update>
+	
+	
+	
+</mapper>
+
