@@ -17,7 +17,7 @@
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
 		<result column="status" jdbcType="VARCHAR" property="status" />
-		<result column="sender_count" jdbcType="NUMERIC" property="senderCount" />
+		<result column="send_count" jdbcType="NUMERIC" property="senderCount" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
 	</resultMap>
 
@@ -53,7 +53,7 @@
 		INSERT INTO sv_surveys 
 			(id, title, msg_subject, msg, description, start_date, end_date, 
 			target_category1, target_category2, target_branches, limit, 
-			writer, part, status, sender_count, datetime)
+			writer, part, status, send_count, datetime)
 		VALUES (
 			#{id}, 
 			#{title,jdbcType=VARCHAR},
@@ -89,7 +89,7 @@
 			limit = #{limit,jdbcType=VARCHAR},
 			writer = #{writer,jdbcType=VARCHAR}, 
 			status = #{status,jdbcType=VARCHAR},
-			senderCount = #{status,jdbcType=NUMERIC},
+			send_count = #{status,jdbcType=NUMERIC},
 			part = #{part,jdbcType=VARCHAR}
 			
 		WHERE ID = #{id,jdbcType=NUMERIC}
