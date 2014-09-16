@@ -43,6 +43,7 @@ create table sv_surveys
   writer        VARCHAR2(30),
   part          VARCHAR2(30),
   status        VARCHAR2(30) default '승인대기',
+  sender_count  NUMBER default 0,
   datetime      DATE,
   constraint pk_sv_surveys primary key (id)
 );
