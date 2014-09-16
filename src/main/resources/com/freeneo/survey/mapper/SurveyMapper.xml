@@ -99,5 +99,9 @@
 		DELETE FROM sv_surveys
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
+	
+	<select id="selectByWriter" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS WHERE writer = #{writer,jdbcType=VARCHAR}
+	</select>
 
 </mapper>

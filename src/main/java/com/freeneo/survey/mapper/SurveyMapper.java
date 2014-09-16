@@ -12,5 +12,6 @@ public interface SurveyMapper {
 	public void insert(Survey survey);
 	public void update(Survey survey);
 	public void delete(Long id);
+	public List<Survey> selectByWriter(String writer);
 	
 }

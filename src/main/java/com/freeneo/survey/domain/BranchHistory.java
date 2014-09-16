@@ -9,6 +9,7 @@ public class BranchHistory {
 	private String branchName;
 	private int sendCount;
 	private int respondentCount;
+	private float responseRatio;
 	
 	public String getBranchName() {
 		return branchName;
@@ -29,6 +30,12 @@ public class BranchHistory {
 		this.respondentCount = respondentCount;
 	}
 
+	public float getResponseRatio() {
+		return responseRatio;
+	}
+	public void setResponseRatio(float responseRatio) {
+		this.responseRatio = responseRatio;
+	}
 	@Override
 	public boolean equals(Object o) {
 		return Pojomatic.equals(this, o);

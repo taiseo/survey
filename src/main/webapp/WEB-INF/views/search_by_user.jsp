@@ -15,16 +15,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="userHistoryList" var="userHistory">
+		<c:forEach items="${userHistoryList }" var="userHistory">
 			<tr>
 				<th>${userHistory.user.part }</th>
 				<td>${userHistory.user.name }</td>
 				<td>${userHistory.surveyCount }</td>
 				<td>${userHistory.sendCount }</td>
 				<td>${userHistory.respondentCount }</td>
-				<td>
-					<fmt:formatNumber value="${userHistory.respondentCount / userHistory.sendCount * 100}" pattern=".00" />%">
-				</td>
+				<td>${userHistory.responseRatio }</td>
 				<td>
 					<a href="#" onclick="alert('제작중'); return false;">(보기)</a>
 				</td>
