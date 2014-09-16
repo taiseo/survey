@@ -25,6 +25,7 @@ public class Survey {
 	private String datetime;
 	private List<Question> questions;
 	private Long respondentCount;
+	private int senderCount;
 
 	public Long getId() {
 		return id;
@@ -160,6 +161,14 @@ public class Survey {
 
 	public void setRespondentCount(Long respondentCount) {
 		this.respondentCount = respondentCount;
+	}
+
+	public int getSenderCount() {
+		return senderCount;
+	}
+
+	public void setSenderCount(int senderCount) {
+		this.senderCount = senderCount;
 	}
 
 	@Override

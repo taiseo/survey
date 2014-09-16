@@ -21,8 +21,21 @@
 	<jsp:include page="include/question_buttons.jsp" />
 	
 	<p class="text-center">
-		<a href="<%=request.getContextPath() %>/surveys" style="margin-top: 3em" 
-			class="btn  btn-primary  btn-large">작성 완료</a>
+		
+		<c:if test="${survey.status == '승인대기' }">
+			<a href="<%=request.getContextPath() %>/surveys" style="margin-top: 3em" 
+				class="btn  btn-primary  btn-large">저장</a>
+		</c:if>
+		
+		<c:if test="${survey.status == '임시저장' }">
+			<a href="<%=request.getContextPath() %>/surveys" style="margin-top: 3em" 
+				class="btn  btn-primary  btn-large">승인 요청 없이 저장</a>
+			
+			
+			<a href="<%=request.getContextPath() %>/surveys/update-status/${survey.id}/standby" style="margin-top: 3em"
+				oncick="confirm('승인 요청을 할까요?')"
+				class="btn  btn-primary  btn-large  pull-right">승인 요청</a>
+		</c:if>
 	</p>
 	
 </div>

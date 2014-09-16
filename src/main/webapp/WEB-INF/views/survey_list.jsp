@@ -32,12 +32,12 @@
 			<c:forEach var="survey" items="${list}">
 				<tr>
 					<td>
-						<c:if test="${survey.status == '승인대기'}">
+						<c:if test="${survey.status == '임시저장' or survey.status == '승인대기'}">
 							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 								${survey.title }
 							</a>
 						</c:if>
-						<c:if test="${survey.status != '승인대기'}">
+						<c:if test="${survey.status != '임시저장' and survey.status != '승인대기'}">
 							<a href="<%=request.getContextPath()%>/survey/${survey.id}">
 								${survey.title }
 							</a>
@@ -72,6 +72,11 @@
 						<%-- 설문 상태는 임시저장(temporary) -> 승인대기(standby) -> 승인자1만 승인(approval1) && 승인자2만 승인(approval2) -> 발송(sending) -> 종료(close) 다. --%>
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
+							<c:when test="${survey.status == '임시저장'}">
+								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
+									승인요청
+								</a>
+							</c:when>
 							
 							<%--승인자1 입장 --%>
 							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자2만 승인') 

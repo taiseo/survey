@@ -39,6 +39,7 @@
 						<th>답항</th>
 						<th>수</th>
 						<th>비율</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,6 +54,12 @@
 										value="${responseItem.responseItemCount / survey.respondentCount * 100}"
 										pattern=".00" />%
 								</c:if>
+							</td>
+							<td>
+								<div class="progress">
+									<div class="bar" 
+										style="width: <fmt:formatNumber value="${responseItem.responseItemCount / survey.respondentCount * 100}" pattern="." />%"></div>
+								</div>
 							</td>
 						</tr>
 						</c:if>
@@ -101,6 +108,7 @@
 					<th>점수</th>
 					<th>수</th>
 					<th>비율</th>
+					<th></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -116,6 +124,12 @@
 									value="${point.value / survey.respondentCount * 100}"
 									pattern=".00" />%
 							</c:if>
+						</td>
+						<td>
+							<div class="progress">
+								<div class="bar" 
+									style="width: <fmt:formatNumber value="${point.value / survey.respondentCount * 100}" pattern="." />%"></div>
+							</div>
 						</td>
 					</tr>
 				</c:forEach>
