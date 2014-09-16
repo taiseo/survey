@@ -66,7 +66,7 @@ public class UserController {
 		model.addAttribute("user", selectedUser);
 		model.addAttribute("httpMethod", "PUT");
 		
-		return "user_update";
+		return "user_manage";
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -149,7 +149,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("httpMethod", "POST");
 		
-		return "user_update";
+		return "user_manage";
 	}
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -187,7 +187,7 @@ public class UserController {
 			model.addAttribute("pageTitle", "사용자 입력");
 			model.addAttribute("pageCommand", "insert");
 			model.addAttribute("httpMethod", "POST");
-			return "user_update";
+			return "user_manage";
 		}
 		
 		newUser.setPasswordToHash();
