@@ -13,4 +13,5 @@ public interface UserMapper {
     int update(User user);
     int delete(User user);
 	List<String> partList();
+	List<User> listByPart(String part);
 }

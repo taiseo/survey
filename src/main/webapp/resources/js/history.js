@@ -7,8 +7,11 @@ function bind_name_by_part(){
 		if($(this).val() == ''){
 			$('[name=username] option').show();
 		}else{
-			$('[name=username] option').hide().blur();
+			$('[name=username]').val("");
+			$('[name=username] option').hide();
 			$('[name=username] option.js-part-' + $(this).val()).show();
+			$('[name=username] option.js-all').show();
+			
 		}
 	});
 }

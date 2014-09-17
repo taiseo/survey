@@ -65,6 +65,7 @@ public class HistoryController {
 		return "search_by_branch";
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping(value="/search-by-user", method=RequestMethod.POST)
 	public String searchByUser(
 			@RequestParam(value="part") String part,
@@ -72,8 +73,18 @@ public class HistoryController {
 			Model model
 			){
 		
-		List<User> users = null;
-		if(username.equals("") && part.equals("")){
+		List<User> users = new ArrayList<User>();
+		if( ! username.equals("")){
+			User user = new User();
+			user.setUsername(username);
+			user = userMapper.selectByUsername(user);
+			if(user != null){
+				users.add(user);
+			}
+		}else if( ! part.equals("")){
+			users = userMapper.listByPart(part);
+		}else{
+			// 둘 다 빈 값인 경우다.
 			users = userMapper.list();
 		}
 		
