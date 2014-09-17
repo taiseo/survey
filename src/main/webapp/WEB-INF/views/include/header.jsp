@@ -38,7 +38,9 @@
 		<!-- 관리자 -->
 		<div class="navbar  limit-width  center-block">
 			<div class="navbar-inner">
-				<a class="brand" href="<%=request.getContextPath()%>">고객 만족 설문</a>
+				<a class="brand" href="<%=request.getContextPath()%>">
+					<img style="height: 20px" src="<%=request.getContextPath() %>/resources/images/logo.gif" alt="한국농어촌공사" />
+				</a>
 				<ul class="nav">
 					<li><a href="<%=request.getContextPath()%>/surveys">설문관리</a></li>
 					<c:if test="${sessionScope.user.userLevel == '시스템 관리자'}">

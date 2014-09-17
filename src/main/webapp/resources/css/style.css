@@ -58,6 +58,11 @@ l-block {
 	border: 1px solid #ddd;
 }
 
+.login-logo {
+	padding: 20px;
+	text-align: center;
+}
+
 .question-buttons input {
 	margin-bottom: 5px;
 }

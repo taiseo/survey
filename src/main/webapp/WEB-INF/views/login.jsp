@@ -7,10 +7,14 @@
 	<form class="form-horizontal  login-form" method="post"
 		action="<%=request.getContextPath()%>/login">
 		
-		<img style="width: 400px; height: 150px;" 
-			class="l-block  base-spacing" src="http://lorempixel.com/400/150" alt="" />
+		<!-- <img style="width: 400px; height: 150px;" 
+			class="l-block  base-spacing" src="http://lorempixel.com/400/150" alt="" /> -->
+		<div class="login-logo">
+			<img class="l-block" 
+				src="<%=request.getContextPath() %>/resources/images/logo.gif" alt="한국농어촌공사" />
+		</div>
 		<div class="login-form-inner  base-padding">
-			<h1 class="page-title  text-center" style="margin-top: 0">고객만족 설문조사 프로그램</h1> 
+			<h1 class="page-title  text-center" style="margin-top: 0">고객만족 설문조사 시스템</h1> 
 			
 			<div class="base-margin">
 				<label for="username">아이디</label>
