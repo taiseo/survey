@@ -32,15 +32,14 @@ public class HistoryController {
 	@Autowired HistoryService historyService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String history(
-			Model model){
+	public String history(Model model){
 		
 		List<String> branchList = customerMapper.branchList(null);
 		
-		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -30);
-		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 		
 		List<User> userList = userMapper.list();
 		List<String> partList = userMapper.partList();
@@ -58,6 +57,8 @@ public class HistoryController {
 	
 	@RequestMapping(value="/search-by-branch", method=RequestMethod.POST)
 	public String searchByBranch(
+			@RequestParam(value="startDate", required=false, defaultValue="") String startDate,
+			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
 			@RequestParam(value="branch") String branch,
 			Model model
 			){
@@ -68,6 +69,8 @@ public class HistoryController {
 	@SuppressWarnings("null")
 	@RequestMapping(value="/search-by-user", method=RequestMethod.POST)
 	public String searchByUser(
+			@RequestParam(value="startDate", required=false, defaultValue="") String startDate,
+			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
 			@RequestParam(value="part") String part,
 			@RequestParam(value="username") String username,
 			Model model

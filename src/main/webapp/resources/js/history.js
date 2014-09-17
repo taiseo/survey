@@ -18,6 +18,8 @@ function bind_name_by_part(){
 
 function search_by_branch(){
 	var params = {
+		startDate: $('[name=startDate]').val(),
+		endDate: $('[name=endDate]').val(),
 		branch: $('[name=branch]').val()
 	}
 	
@@ -28,6 +30,8 @@ function search_by_branch(){
 
 function search_by_user(){
 	var params = {
+		startDate: $('[name=startDate]').val(),
+		endDate: $('[name=endDate]').val(),
 		part: $('[name=part]').val(),
 		username: $('[name=username]').val()
 	}
