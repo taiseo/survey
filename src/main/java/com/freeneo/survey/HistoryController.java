@@ -63,6 +63,12 @@ public class HistoryController {
 			Model model
 			){
 		
+		// TODO 아래 로직을 기반으로 통계를 낸다.
+		// 날짜 기반으로 survey를 고른다.
+		// 고른 survey의 targets를 etc_01로 걸러서 뽑아 온다. -> 문자발송값
+		// 회신은 targets의 응답자 기반으로 뽑는다. -> 설문 회신
+		// 회신율은 나누기로 계산한다.
+		
 		return "search_by_branch";
 	}
 
@@ -92,7 +98,8 @@ public class HistoryController {
 		
 		List<UserHistory> userHistoryList = new ArrayList<UserHistory>();
 		for(User user : users){
-			 userHistoryList.add(historyService.getUserHistory(user));
+			//TODO getUserHistory에서 날짜를 기반으로 고른다. 
+			userHistoryList.add(historyService.getUserHistory(user));
 		}
 		
 		logger.debug("userHistoryList = {}", userHistoryList);
