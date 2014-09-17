@@ -9,6 +9,7 @@ public class UserHistory {
 	private int surveyCount;
 	private int sendCount;
 	private int respondentCount;
+	private double responseRatio;
 	
 	public User getUser() {
 		return user;
@@ -35,6 +36,13 @@ public class UserHistory {
 		this.respondentCount = respondentCount;
 	}
 	
+	
+	public double getResponseRatio() {
+		return responseRatio;
+	}
+	public void setResponseRatio(double d) {
+		this.responseRatio = d;
+	}
 	@Override
 	public boolean equals(Object o) {
 		return Pojomatic.equals(this, o);

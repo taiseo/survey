@@ -81,5 +81,9 @@
 		DELETE FROM sv_users
 		WHERE id = #{id,jdbcType=NUMERIC}
 	</delete>
+	
+	<select id="listByPart" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_USERS WHERE PART = #{part,jdbcType=VARCHAR}
+	</select>
 
 </mapper>

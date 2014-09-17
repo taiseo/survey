@@ -15,18 +15,15 @@
 			<th>전체</th>
 			<td>${allSendCount }</td>
 			<td>${allRespondentCount }</td>
-			<<td>
-				<fmt:formatNumber value="${allRespondentCount / allSendCount * 100}" pattern=".00" />%">
-			</td>
+			<td>${allResponseRatio }</td>
+			<td></td>
 		</tr>
 		<c:forEach items="${branchHistoryList }" var="branchHistory">
 		<tr>
 			<th>${branchHistory.branchName }</th>
 			<td>${branchHistory.sendCount }</td>
 			<td>${branchHistory.respondentCount }</td>
-			<td>
-				<fmt:formatNumber value="${branchHistory.respondentCount / branchHistory.sendCount * 100}" pattern=".00" />%">
-			</td>
+			<td>${branchHistory.responseRatio }</td>
 			<td>
 				<form action="#" onclick="alert('제작중');return false">결과 보기</form>
 			</td>

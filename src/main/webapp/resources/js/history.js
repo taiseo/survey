@@ -7,29 +7,32 @@ function bind_name_by_part(){
 		if($(this).val() == ''){
 			$('[name=username] option').show();
 		}else{
-			$('[name=username] option').hide().blur();
+			$('[name=username]').val("");
+			$('[name=username] option').hide();
 			$('[name=username] option.js-part-' + $(this).val()).show();
+			$('[name=username] option.js-all').show();
+			
 		}
 	});
 }
 
 function search_by_branch(){
 	var params = {
-		branch: $('name=branch').val()
+		branch: $('[name=branch]').val()
 	}
 	
-	$.post(survey.context_path + '/history/search-by-branch', function(html){
+	$.post(survey.context_path + '/history/search-by-branch', params, function(html){
 		$('.js-search-result').html(html);
 	});
 }
 
 function search_by_user(){
 	var params = {
-		part: $('name=part').val(),
-		username: $('name=username').val()
+		part: $('[name=part]').val(),
+		username: $('[name=username]').val()
 	}
 	
-	$.post(survey.context_path + '/history/search-by-user', function(html){
+	$.post(survey.context_path + '/history/search-by-user', params, function(html){
 		$('.js-search-result').html(html);
 	});
 }

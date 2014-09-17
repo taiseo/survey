@@ -23,7 +23,7 @@
 				<input class="datepicker  span2" type="text" name="endDate" value="${endDate }"/>
 			</td>
 		</tr>
-		<tr>
+		<%-- <tr>
 			<th>지사별 검색</th>
 			<td>
 				<select name="branch">
@@ -34,7 +34,7 @@
 				</select>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_branch()" />
 			</td>
-		</tr>
+		</tr> --%>
 		<tr>
 			<th>사용자별 검색</th>
 			<td>
@@ -46,7 +46,7 @@
 				</select>
 				
 				<select name="username">
-					<option value="">전체 사용자</option>
+					<option value="" class="js-all">전체 사용자</option>
 					<c:forEach items="${userList }" var="user">
 						<option value="${user.username }" class="js-part-${user.part }">${user.name }</option>
 					</c:forEach>

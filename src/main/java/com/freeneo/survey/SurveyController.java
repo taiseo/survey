@@ -93,8 +93,9 @@ public class SurveyController {
 			list = surveyMapper.list();
 		}
 		
-		for (Survey survey : list){
+		for(Survey survey: list){
 			survey.setDatetime(Util.formating(survey.getDatetime(), "##########<br/>#########"));
+			survey.setRespondentCount(surveyMapper.selectRespondentCount(survey.getId()));
 		}
 
 		logger.debug("surveys = {}", list);
