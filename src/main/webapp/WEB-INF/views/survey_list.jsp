@@ -16,7 +16,7 @@
 	<table class="table  table-striped">
 		<thead>
 			<tr>
-<<<<<<< HEAD
+
 				<th nowrap="nowrap">제목</th>
 				<th nowrap="nowrap">설문시작일</th>
 				<th nowrap="nowrap">종료일</th>
@@ -27,19 +27,6 @@
 				<th nowrap="nowrap">상태</th>
 				<th nowrap="nowrap">진행</th>
 				<th nowrap="nowrap">기능</th>
-=======
-				<th>제목</th>
-				<th>설문시작일</th>
-				<th>종료일</th>
-				<th>대상</th>
-				<th>작성자</th>
-				<th>부서</th>
-				<th>입력일시</th>
-				<th>상태</th>
-				<th>진행</th>
-				<th>응답자</th>
-				<th>기능</th>
->>>>>>> branch 'master' of git@freeneo.com:repo/survey.git
 			</tr>
 		</thead>
 		<tbody>
