@@ -66,7 +66,6 @@ public class HistoryController {
 		return "search_by_branch";
 	}
 
-	@SuppressWarnings("null")
 	@RequestMapping(value="/search-by-user", method=RequestMethod.POST)
 	public String searchByUser(
 			@RequestParam(value="startDate", required=false, defaultValue="") String startDate,

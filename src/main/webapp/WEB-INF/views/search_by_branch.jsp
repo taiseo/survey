@@ -4,11 +4,13 @@
 
 <table class="table table-striped">
 	<thead>
-		<th>구분</th>
-		<th>문자 발송</th>
-		<th>설문 회신</th>
-		<th>회신율</th>
-		<th>결과 보고</th>
+		<tr>
+			<th>구분</th>
+			<th>문자 발송</th>
+			<th>설문 회신</th>
+			<th>회신율</th>
+			<th>결과 보고</th>
+		</tr>
 	</thead>
 	<tbody>
 		<tr>

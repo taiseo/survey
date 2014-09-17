@@ -33,7 +33,7 @@
 			
 			
 			<a href="<%=request.getContextPath() %>/surveys/update-status/${survey.id}/standby" style="margin-top: 3em"
-				oncick="confirm('승인 요청을 할까요?')"
+				onclick="confirm('승인 요청을 할까요?')"
 				class="btn  btn-primary  btn-large  pull-right">승인 요청</a>
 		</c:if>
 	</p>

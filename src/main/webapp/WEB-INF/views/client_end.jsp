@@ -12,7 +12,6 @@
 		<div class="hero-unit">
 			<h1>감사합니다</h1>
 			<p>설문기간이 종료되었습니다.</p>
-		    </a>
 		</div>
 	</div>
 
