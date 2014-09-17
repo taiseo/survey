@@ -23,18 +23,14 @@
 				<input class="datepicker  span2" type="text" name="endDate" value="${endDate }"/>
 			</td>
 		</tr>
-		<%-- <tr>
+		<tr>
 			<th>지사별 검색</th>
-			<td>
-				<select name="branch">
-					<option value="">전체 지사</option>
-					<c:forEach items="${branchList }" var="branch">
-						<option value="${branch }">${branch }</option>
-					</c:forEach>
-				</select>
+			<td class="js-search-by-branch">
+				<select id="bonbu"></select>
+				<select id="branch" name="branch"></select>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_branch()" />
 			</td>
-		</tr> --%>
+		</tr>
 		<tr>
 			<th>사용자별 검색</th>
 			<td>
@@ -61,5 +57,6 @@
 	<div class="js-search-result"></div>
 	
 </div>
+
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/history.js"></script>
