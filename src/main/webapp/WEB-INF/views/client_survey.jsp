@@ -12,12 +12,17 @@
 		<div class="well">
 			${survey.description }
 		</div>
+		<div class="js-search-by-branch">
+			<h2>귀하께서 계약을 체결하신 공사의 지사는 어디인가요?</h2>
+			<select id="bonbu"></select>
+			<select name="branch"></select>
+		</div>
 		<c:forEach items="${survey.questions}" var="question">
 			<c:set var="question" value="${question }" scope="request"/>
 			<c:choose>
 				<c:when test="${question.type == '페이지-나누기'}">
-					<%= "</div>" %>
-					<%= "<div class='questions-block' style='display: none'>" %>
+	<%= "</div>" %>
+	<%= "<div class='questions-block' style='display: none'>" %>
 				</c:when>
 				<c:when test="${question.type == '주관식1'}">
 					<jsp:include page="include/client_answer_question.jsp"/>
@@ -58,3 +63,5 @@
 
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/client_script.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branches.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branch_functions.js"></script>

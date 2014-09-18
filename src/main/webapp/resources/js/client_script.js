@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	
+	print_bonbu_select_el();
+	print_branch_select_el();
+	bind_branch_select_el();
+
+	
 	bind_page_button();
 	bind_save();
 	bind_etc_response();
@@ -93,12 +99,19 @@ function bind_page_button(){
 		show_page('prev');
 	});
 	$('.js-next').click(function(){
+		
+		if($('[name=branch]').val() == ''){
+			alert('지사를 선택해 주세요.');
+			if($('#bonbu').val() == ''){
+				$('#bonbu').focus();
+			}else{
+				$('[name=branch]').focus();
+			}
+			return false;
+		}
+		
 		show_page('next');
 	});
-//	$('.nav a').click(function(){
-//		var page_no = $(this).index('.nav a') + 1;
-//		show_page(page_no)
-//	});
 }
 
 function show_page(keyword){
@@ -123,13 +136,6 @@ function show_page(keyword){
 		}
 		page_no = $next.index('.questions-block') + 1;
 	}
-//	if(parseInt(keyword) !== NaN){
-//		page_no = keyword;
-//		$target = $('.questions-block:nth-child(' + page_no + ')');
-//		$current.
-//		$current.slideUp();
-//		$target.slideDown();
-//	}
 	if(page_no == 1){
 		$('.js-prev').hide();
 	}
