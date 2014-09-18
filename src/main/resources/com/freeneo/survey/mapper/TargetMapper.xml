@@ -10,6 +10,7 @@
 		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
 		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
 		<result column="hp" jdbcType="VARCHAR" property="hp" />
+		<result column="response_yn" jdbcType="VARCHAR" property="responseYn" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -25,6 +26,44 @@
 		where survey_id = #{surveyId,jdbcType=NUMERIC}
 	</select>
 
+	<select id="countBySurveyId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="countRespondentBySurvyeId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM SV_TARGETS
+		WHERE 
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+			AND RESPONSE_YN = 'Y'
+	</select>
+
+	<select id="countBySurveyIdAndBranch" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+		<if test="branch != ''">
+			and ETC_01 = #{branch,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="countRespondentBySurvyeIdAndBranch" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM SV_TARGETS
+		WHERE 
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+			<if test="branch != ''">
+				AND ETC_01 = #{branch,jdbcType=VARCHAR}
+			</if>
+			AND RESPONSE_YN = 'Y'
+	</select>
+
 	<select id="select" parameterType="com.freeneo.survey.domain.Target"
 		resultMap="BaseResultMap">
 		SELECT
@@ -38,14 +77,29 @@
 	<select id="listBySurveyId" resultMap="BaseResultMap">
 		SELECT
 		*
-		FROM sv_targers
+		FROM sv_targets
 		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="listBySurveysAndBranches" parameterType="java.util.List" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+		WHERE 
+			SURVEY_ID IN 
+				<foreach collection="surveyList" open="(" close=")" separator="," item="survey">
+					#{survey.id,jdbcType=NUMERIC}
+				</foreach>
+			AND ETC_01 IN
+				<foreach collection="branchList" open="(" close=")" separator="," item="branch">
+					#{branch,jdbcType=VARCHAR}
+				</foreach>
 	</select>
 
 	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
 		INSERT ALL
 			<foreach item="customer" index="index" collection="customers">
-				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP)
+				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP, RESPONSE_YN)
 				VALUES (
 					#{surveyId,jdbcType=NUMERIC},
 					#{customer.cstNo,jdbcType=VARCHAR},
@@ -53,12 +107,13 @@
 					#{customer.ptcpDttm,jdbcType=VARCHAR},
 					#{customer.etc01,jdbcType=VARCHAR},
 					#{customer.cstNm,jdbcType=VARCHAR},
-					#{customer.hp,jdbcType=VARCHAR}
+					#{customer.hp,jdbcType=VARCHAR},
+					'N'
 				)
 			</foreach>
 		SELECT * FROM DUAL
 	</insert>
-
+	
 	<delete id="delete" parameterType="java.lang.Long">
 		DELETE FROM sv_targets
 		WHERE survey_id = #{surveyId,jdbcType=NUMERIC}

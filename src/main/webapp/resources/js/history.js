@@ -32,10 +32,30 @@ function bind_name_by_part(){
 }
 
 function search_by_branch(){
+	var branches = [],
+		branch = $('[name=branch]').val(),
+		bonbu = $('#bonbu').val(),
+		branches_string;
+	
+	if(bonbu == '' && branch == ''){
+		// 전체
+		_.each(survey.branches, function(branch){
+			branches = branches.concat(branch);
+		});
+	}else  if(bonbu != '' && branch == ''){
+		// 본부만 선택
+		branches = survey.branches[bonbu];
+	}else{
+		// 지사까지 선택
+		branches.push(branch);
+	}
+	
+	branches_string = $.toJSON(branches);
+	
 	var params = {
 		startDate: $('[name=startDate]').val(),
 		endDate: $('[name=endDate]').val(),
-		branch: $('[name=branch]').val()
+		branches: branches_string
 	}
 	
 	$.post(survey.context_path + '/history/search-by-branch', params, function(html){

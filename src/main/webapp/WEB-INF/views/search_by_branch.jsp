@@ -17,19 +17,25 @@
 			<th>전체</th>
 			<td>${allSendCount }</td>
 			<td>${allRespondentCount }</td>
-			<td>${allResponseRatio }</td>
+			<td>
+				<fmt:formatNumber value="${allResponseRatio }" pattern="0.00"/>%
+			</td>
 			<td></td>
 		</tr>
 		<c:forEach items="${branchHistoryList }" var="branchHistory">
-		<tr>
-			<th>${branchHistory.branchName }</th>
-			<td>${branchHistory.sendCount }</td>
-			<td>${branchHistory.respondentCount }</td>
-			<td>${branchHistory.responseRatio }</td>
-			<td>
-				<form action="#" onclick="alert('제작중');return false">결과 보기</form>
-			</td>
-		</tr>
+			<c:if test="${branchHistory.branchName != '지사 없음' }">
+			<tr>
+				<th>${branchHistory.branchName }</th>
+				<td>${branchHistory.sendCount }</td>
+				<td>${branchHistory.respondentCount }</td>
+				<td>
+					<fmt:formatNumber value="${branchHistory.responseRatio }" pattern="0.00"/>%
+				</td>
+				<td>
+					<form action="#" onclick="alert('제작중');return false">결과 보기</form>
+				</td>
+			</tr>
+			</c:if>
 		</c:forEach>
 	</tbody>
 </table>

@@ -13,6 +13,7 @@ public class Target {
 	private String etc01;
 	private String cstNm;
 	private String hp;	
+	private String responseYn;	
 	
 	public Long getSurveyId() {
 		return surveyId;
@@ -68,6 +69,15 @@ public class Target {
 
 	public void setHp(String hp) {
 		this.hp = hp;
+	}
+
+
+	public String getResponseYn() {
+		return responseYn;
+	}
+
+	public void setResponseYn(String responseYn) {
+		this.responseYn = responseYn;
 	}
 
 	@Override

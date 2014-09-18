@@ -17,5 +17,6 @@ public interface SurveyMapper {
 	public List<Survey> selectByWriter(String writer);
 	public List<Survey> selectByWriterAndDate(@Param("writer") String writer,
 			@Param("startDate") String startDate, @Param("endDate") String endDate);
+	public List<Survey> selectByDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
 	
 }
