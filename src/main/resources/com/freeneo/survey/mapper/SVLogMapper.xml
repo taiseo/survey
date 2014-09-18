@@ -23,6 +23,13 @@
 			AND L.ID = #{id,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="selectByIdAndUsername" parameterType="String" resultMap="BaseResultMap">
+		SELECT U.NAME, L.* FROM SV_USERS U, SV_LOGS L 
+		WHERE U.USERNAME = L.USERNAME
+		    AND L.USERNAME = #{username,jdbcType=VARCHAR}
+			AND L.ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.SVLog">
 		INSERT INTO SV_LOGS (ID, USERNAME, DATETIME, IP, CONTENT) VALUES
 		(
@@ -37,11 +44,12 @@
 	<update id="update" parameterType="com.freeneo.survey.domain.SVLog">
 		UPDATE SV_LOGS 
 		SET
-			USERNAME = #{username,jdbcType=VARCHAR},
 			IP = #{ip,jdbcType=VARCHAR},
 			CONTENT = #{content,jdbcType=VARCHAR}
 		WHERE 
 			ID = #{id,jdbcType=VARCHAR}
+			AND 
+			USERNAME = #{username,jdbcType=VARCHAR}
 	</update>
 
 </mapper>

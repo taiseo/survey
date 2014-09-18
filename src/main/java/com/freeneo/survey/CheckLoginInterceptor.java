@@ -82,7 +82,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			logger.debug("log_msg = {}", model.containsKey("log_msg"));
 
 			String id = session.getId();
-			SVLog log = svlogMapper.selectById(id);
+			SVLog log = svlogMapper.selectByIdAndUsername(id, user.getUsername());
 			boolean isNew = false;
 			
 			if(log == null){
