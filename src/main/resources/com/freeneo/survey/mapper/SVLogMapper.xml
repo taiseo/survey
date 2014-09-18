@@ -14,7 +14,7 @@
 	<select id="list" resultMap="BaseResultMap">
 		SELECT U.NAME, L.* FROM SV_USERS U, SV_LOGS L 
 		WHERE U.USERNAME = L.USERNAME
-		ORDER BY ID DESC
+		ORDER BY L.DATETIME DESC
 	</select>
 	
 	<select id="selectById" parameterType="String" resultMap="BaseResultMap">

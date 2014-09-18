@@ -111,7 +111,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 				log.setContent(newContent);
 				svlogMapper.insert(log);
 			}else{
-				log.setContent(log.getContent() + "\n" + newContent);
+				log.setContent(log.getContent() + "<br>" + newContent);
 				svlogMapper.update(log);
 			}
 		}
