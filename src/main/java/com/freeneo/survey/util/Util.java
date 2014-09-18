@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
@@ -681,5 +680,14 @@ public class Util {
 
 	public static boolean isLocal(HttpServletRequest request){
 		return request.getRemoteAddr().equals("127.0.0.1") || request.getRemoteAddr().equals("0:0:0:0:0:0:0:1");
+	}
+	
+	public static String getUri(HttpServletRequest request){
+		String uri = request.getScheme() + "://" +
+	             request.getServerName() + 
+	             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+	             request.getRequestURI() +
+	            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+		return uri;
 	}
 }

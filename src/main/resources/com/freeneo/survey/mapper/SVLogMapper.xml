@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.SVLogMapper">
+	
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.SVLog">
+		<id column="ID" jdbcType="NUMERIC" property="id" />
+		<result column="USERNAME" jdbcType="VARCHAR" property="username" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="DATETIME" jdbcType="DATE" property="datetime" />
+		<result column="IP" jdbcType="VARCHAR" property="ip" />
+		<result column="CONTENT" jdbcType="VARCHAR" property="content" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT U.NAME, L.* FROM SV_USERS U, SV_LOGS L 
+		WHERE U.USERNAME = L.USERNAME
+		ORDER BY ID DESC
+	</select>
+	
+	<select id="selectById" parameterType="String" resultMap="BaseResultMap">
+		SELECT U.NAME, L.* FROM SV_USERS U, SV_LOGS L 
+		WHERE U.USERNAME = L.USERNAME
+			AND L.ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.SVLog">
+		INSERT INTO SV_LOGS (ID, USERNAME, DATETIME, IP, CONTENT) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{username,jdbcType=VARCHAR},
+			SYSDATE,
+			#{ip,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.SVLog">
+		UPDATE SV_LOGS 
+		SET
+			USERNAME = #{username,jdbcType=VARCHAR},
+			IP = #{ip,jdbcType=VARCHAR},
+			CONTENT = #{content,jdbcType=VARCHAR}
+		WHERE 
+			ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

@@ -139,10 +139,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    registry.addResourceHandler("/resource/**").addResourceLocations("/resource/");
 	}
 
+	@Bean
+	public CheckLoginInterceptor checkLoginInterceptor(){
+		return new CheckLoginInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		registry.addInterceptor(new CheckLoginInterceptor()).excludePathPatterns("/login", "/");
-		registry.addInterceptor(new CheckLoginInterceptor()).addPathPatterns("/*");
+		registry.addInterceptor(checkLoginInterceptor()).excludePathPatterns("/login", "/");
+		registry.addInterceptor(checkLoginInterceptor()).addPathPatterns("/*");
 	}
 	
 	@Override
