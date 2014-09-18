@@ -36,6 +36,24 @@ public class UserController {
 		}
 		
 		List<User> users = userService.getUsers();
+		
+		for (User user : users){
+			String userLevel = user.getUserLevel();
+			if(userLevel.equals("admin")){
+				user.setUserLevel("시스템 관리자");
+			}
+			if(userLevel.equals("승인자2")){
+				user.setUserLevel("결제권한 : 승인 (문자발송 최종 승인)");
+			}
+			if(userLevel.equals("승인자1")){
+				user.setUserLevel("결제권한 : 심의 (문자발송 승인)");
+			}
+			if(userLevel.equals("일반")){
+				user.setUserLevel("사용자");
+			}
+						
+		}
+		
 		model.addAttribute("pageTitle", "사용자 목록");
 		model.addAttribute("users", users);
 

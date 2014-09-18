@@ -10,7 +10,7 @@
 	</div>
 	
 	<form:form method="${httpMethod }" modelAttribute="user">
-		<table class="table  table-striped">
+		<table class="table  table-striped table-condensed">
 			<colgroup>
 				<col width="20%"/>
 			</colgroup>
@@ -33,19 +33,19 @@
 				</tr>
 				</c:if>
 				<tr>
-					<th><form:label path="name">이름</form:label></th>
+					<th><form:label path="name">성명</form:label></th>
 					<td>
 						<form:input path="name"/>
 					</td>
 				</tr>
 				<tr>
-					<th><form:label path="part">부서</form:label></th>
+					<th><form:label path="part">부서명</form:label></th>
 					<td>
 						<form:input path="part"/>
 					</td>
 				</tr>
 				<tr>
-					<th><form:label path="tel">전화</form:label></th>
+					<th><form:label path="tel">전화번호</form:label></th>
 					<td>
 						<form:input path="tel"/>
 					</td>
@@ -62,9 +62,9 @@
 						<c:if test="${sessionScope.user.userLevel == '시스템 관리자' }">
 							<form:select path="userLevel">
 								<form:option value="시스템 관리자">시스템 관리자</form:option>
-								<form:option value="승인자2">승인자2</form:option>
-								<form:option value="승인자1">승인자1</form:option>
-								<form:option value="일반">일반</form:option>
+								<form:option value="승인자2">결제권한(승인)</form:option>
+								<form:option value="승인자1">결제권한(심의)</form:option>
+								<form:option value="일반">사용자</form:option>
 							</form:select>
 						</c:if>
 						<c:if test="${sessionScope.user.userLevel != '시스템 관리자' }">
@@ -79,7 +79,7 @@
 
 		<c:if test="${pageCommand == 'update' }">		
 				<p class="text-center">
-					<input class="btn btn-primary btn-large" type="submit" value="저장" />
+					<input class="btn btn-primary btn-medium" type="submit" value="저장" />
 				</p>
 		</c:if>	
 		
@@ -88,7 +88,7 @@
 				<p>비밀번호를 변경하는 경우에만 채워 주세요.</p>
 		</c:if>
 		
-		<table class="table table-striped">
+		<table class="table table-striped table-condensed">
 			<colgroup>
 				<col width="20%"/>
 			</colgroup>
@@ -123,7 +123,7 @@
 		</table>
 		
 		<p class="text-center">
-			<input class="btn btn-primary btn-large" type="submit" value="저장" />
+			<input class="btn btn-primary btn-medium" type="submit" value="저장" />
 		</p>
 		
 	</form:form>

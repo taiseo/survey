@@ -3,15 +3,16 @@
 <jsp:include page="include/header.jsp" />
 
 <div class="limit-width center-block">
-	<table class="table">
+	<table class="table  table-striped table-condensed table-hover">
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>이름</th>
-			<th>부서</th>
-			<th>전화</th>
+			<th>운영자명</th>
+			<th>부서명</th>
+			<th>전화번호</th>
 			<th>이메일</th>
-			<th>등급</th>
+			<th>권한 등급</th>
+			<th>수정</th>
 			<th>삭제</th>
 		</tr>
 	</thead>
@@ -33,6 +34,14 @@
 			<td>${user.userLevel}</td>
 			<td>
 				<c:if test="${user.userLevel != '시스템 관리자' }">
+					<a href="<%=request.getContextPath()%>/users/${user.id}" 
+						class="btn btn-info">
+						수정
+					</a>
+				</c:if>
+			</td>			
+			<td>
+				<c:if test="${user.userLevel != '시스템 관리자' }">
 					<a href="<%=request.getContextPath() %>/users/delete/${user.id}" 
 						onclick="return confirm('${user.name} 님을 정말로 삭제할까요?')"
 						class="btn btn-danger">
@@ -45,7 +54,7 @@
 	</table>
 	
 	<p class="text-center">
-		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-large">새 사용자</a>
+		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-medium">신규 등록</a>
 	</p>
 </div>
 <jsp:include page="include/footer.jsp" />

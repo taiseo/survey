@@ -23,15 +23,11 @@
 					<td><form:input cssClass="input-block-level" path="msgSubject"/></td>
 				</tr>
 				<tr>
-					<th><form:label path="msg">MMS 내용</form:label></th>
+					<th><form:label path="msg">MMS 인사말</form:label></th>
 					<td><form:input cssClass="input-block-level" path="msg"/></td>
 				</tr>
 				<tr>
-					<th><form:label path="description">내용</form:label></th>
-					<td><form:textarea rows="10" cssClass="wysiwyg  input-block-level" path="description"/></td>
-				</tr>
-				<tr>
-					<th>게시일</th>
+					<th><form:label path="startDate">조사 기간</form:label></th>
 					<td>
 						<form:input cssClass="datepicker  span2" path="startDate" />
 						~
@@ -39,14 +35,23 @@
 					</td>
 				</tr>
 				<tr>
+					<th><form:label path="description">설문개요 (취지)</form:label></th>
+					<td><form:textarea rows="10" cssClass="wysiwyg  input-block-level" path="description"/></td>
+				</tr>
+				<tr>
+					<th><form:label path="description">고객 직접 등록</form:label></th>
+					<td>CRM DB 추출 / 엑셀파일 업로드</td>
+				</tr>
+				<tr>
 					<th>
-						대상
+						<form:label path="targetCategory1">캠페인 그룹 등록</form:label>
 						<div class="js-target-count"></div>
 					</th>
 					<td>
 						<div class="row  js-category">
 							<div class="js-target-category1  span4">
 								<form:select path="targetCategory1">
+									<option value="">목표 그룹 선택 </option>>
 									<form:option value="목적외사업" />
 									<form:option value="농지은행" />
 									<form:option value="유지관리" />
@@ -66,7 +71,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>대상 추출 방법</th>
+					<th><form:label path="limit">대상 추출 방법</form:label></th>
 					<td>
 						<div class="row">
 							<div class="span12">
