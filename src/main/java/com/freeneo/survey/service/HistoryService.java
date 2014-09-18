@@ -47,5 +47,31 @@ public class HistoryService {
 		
 		return userHistory;
 	}
+
+	public UserHistory getUserHistory(User user, String startDate,
+			String endDate) {
+		List<Survey> surveys = surveyMapper.selectByWriterAndDate(user.getUsername(), startDate, endDate);
+		
+		logger.debug("surveys = {}", surveys);
+		
+		int surveyCount = 0;
+		int sendCount = 0;
+		int respondentCount = 0;
+		
+		for(Survey survey : surveys){
+			surveyCount++;
+			sendCount += survey.getSendCount();
+			respondentCount += surveyMapper.selectRespondentCount(survey.getId());
+		}
+		
+		UserHistory userHistory = new UserHistory();
+		userHistory.setSurveyCount(surveyCount);
+		userHistory.setSendCount(sendCount);
+		userHistory.setRespondentCount(respondentCount);
+		userHistory.setResponseRatio(sendCount == 0 ? 0 : (double)respondentCount/(double)sendCount*100.0);
+		userHistory.setUser(user);
+		
+		return userHistory;
+	}
 	
 }

@@ -2,6 +2,8 @@ package com.freeneo.survey.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.freeneo.survey.domain.Survey;
 
 public interface SurveyMapper {
@@ -13,5 +15,7 @@ public interface SurveyMapper {
 	public void update(Survey survey);
 	public void delete(Long id);
 	public List<Survey> selectByWriter(String writer);
+	public List<Survey> selectByWriterAndDate(@Param("writer") String writer,
+			@Param("startDate") String startDate, @Param("endDate") String endDate);
 	
 }

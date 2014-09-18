@@ -99,7 +99,7 @@ public class HistoryController {
 		List<UserHistory> userHistoryList = new ArrayList<UserHistory>();
 		for(User user : users){
 			//TODO getUserHistory에서 날짜를 기반으로 고른다. 
-			userHistoryList.add(historyService.getUserHistory(user));
+			userHistoryList.add(historyService.getUserHistory(user, startDate, endDate));
 		}
 		
 		logger.debug("userHistoryList = {}", userHistoryList);
