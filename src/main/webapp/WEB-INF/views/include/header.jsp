@@ -45,7 +45,7 @@
 					<li><a href="<%=request.getContextPath()%>/surveys">설문관리</a></li>
 					<c:if test="${sessionScope.user.userLevel == '시스템 관리자'}">
 						<li><a href="<%=request.getContextPath()%>/customers">캠페인(타겟)</a></li>
-						<li><a href="<%=request.getContextPath()%>/history">결과 및 통계</a></li>
+						<li><a href="<%=request.getContextPath()%>/history">조사 결과</a></li>
 						<li><a href="<%=request.getContextPath()%>/users">사용자관리</a></li>
 						<li><a href="<%=request.getContextPath()%>/config">환경설정</a></li>
 					</c:if>
@@ -57,7 +57,7 @@
 				<ul class="nav pull-right">
 					<li>
 						<a href="<%= request.getContextPath() %>/logout">
-						${sessionScope.user.name } 로그아웃
+						${sessionScope.user.name } <span class="label label-warning">로그아웃</span>
 						</a>
 					</li>
 				</ul>
