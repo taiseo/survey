@@ -21,12 +21,12 @@
 				<th nowrap="nowrap">설문시작일</th>
 				<th nowrap="nowrap">종료일</th>
 				<th nowrap="nowrap">대상</th>
-				<th nowrap="nowrap">작성자</th>
-				<th nowrap="nowrap">부서</th>
+				<th nowrap="nowrap">작성자(부서)</th>
 				<th nowrap="nowrap">입력일시</th>
 				<th nowrap="nowrap">상태</th>
 				<th nowrap="nowrap">진행</th>
-				<th nowrap="nowrap">기능</th>
+				<th nowrap="nowrap">응답수</th>
+				<th nowrap="nowrap">관리</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,8 +58,7 @@
 						${survey.targetCategory2 }
 						${survey.targetBranches }
 					</td>
-					<td nowrap="nowrap">${survey.writer }</td>
-					<td nowrap="nowrap">${survey.part }</td>
+					<td nowrap="nowrap">${survey.writer } [${survey.part }]</td>
 					<td nowrap="nowrap">${survey.datetime }</td>
 					<td nowrap="nowrap">
 						${survey.status }
@@ -124,9 +123,6 @@
 						<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
 							보기
 						</a>
-						
-						<br />
-						
 						<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
 							결과
 						</a>
