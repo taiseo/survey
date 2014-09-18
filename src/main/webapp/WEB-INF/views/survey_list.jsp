@@ -73,7 +73,7 @@
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
 							<c:when test="${survey.status == '임시저장'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
+								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/standby">
 									승인요청
 								</a>
 							</c:when>
@@ -81,7 +81,7 @@
 							<%--승인자1 입장 --%>
 							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자2만 승인') 
 									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자1' )}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval1">
+								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval1">
 									승인
 								</a>
 							</c:when>
@@ -89,27 +89,27 @@
 							<%-- 승인자2 입장 --%>
 							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자1만 승인') 
 									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자2' )}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
+								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
 									승인
 								</a>
 							</c:when>
 							
 							<c:when test="${survey.status == '발송대기'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending"
+								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/sending"
 									onclick="return confirm('한 번 발송하면 돌이킬 수 없습니다. 정말로 발송할까요?')">
 									발송
 								</a>
 							</c:when>
 							<c:when test="${survey.status == '발송'}">
-								<a class="btn" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/close">
+								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/close">
 									종료
 								</a>
 							</c:when>
 							<c:when test="${survey.status == '종료'}">
-								<input class="btn" type="button" disabled value="종료" />
+								<input class="btn  btn-small" type="button" disabled value="종료" />
 							</c:when>
 							<c:otherwise>
-								<input class="btn" type="button" disabled value="승인대기" />
+								<input class="btn  btn-small" type="button" disabled value="승인대기" />
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -117,16 +117,16 @@
 						${survey.respondentCount }
 					</td>
 					<td nowrap="nowrap">
-						<a class="btn" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
+						<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
 							수정
 						</a>
-						<a class="btn  btn" href="<%=request.getContextPath()%>/survey/${survey.id}">
+						<a class="btn  btn  btn-small" href="<%=request.getContextPath()%>/survey/${survey.id}">
 							보기
 						</a>
-						<a class="btn  btn-info" href="<%=request.getContextPath()%>/statistics/${survey.id}">
+						<a class="btn  btn-info  btn-small" href="<%=request.getContextPath()%>/statistics/${survey.id}">
 							결과
 						</a>
-						<a class="btn  btn-danger" href="<%=request.getContextPath()%>/surveys/delete/${survey.id}"
+						<a class="btn  btn-danger  btn-small" href="<%=request.getContextPath()%>/surveys/delete/${survey.id}"
 							onclick="return confirm('정말로 삭제할까요?')">
 							삭제
 						</a>

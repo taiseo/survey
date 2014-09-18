@@ -105,9 +105,6 @@ td * {
 	vertical-align: top;
 }
 
-.table, .table .btn {
+.table th, .table td {
 	font-size : 12px;
-}
-.table .btn {
-	padding: 0px 8px;
 }
