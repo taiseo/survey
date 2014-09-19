@@ -21,7 +21,7 @@
 			</c:if>
 			<c:if test="${responseItem.content == '$$$etc$$$'}">
 				기타 : 
-				<input type="text" class="span7  js-etc" />
+				<input type="text" class="input-block-level  js-etc" />
 			</c:if>
 			
 		</label>
