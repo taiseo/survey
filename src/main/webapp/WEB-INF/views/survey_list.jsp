@@ -7,12 +7,6 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<p class="text-center">
-		<a href="<%=request.getContextPath() %>/surveys/insert" class="btn  btn-primary  btn-large">
-			새 설문
-		</a>
-	</p>
-
 	<table class="table  table-striped">
 		<thead>
 			<tr>
@@ -53,13 +47,13 @@
 							</small>
 						</c:if>
 					</td>
-					<td nowrap="nowrap">${survey.startDate }
+					<td nowrap="nowrap">${survey.startDate } ~
 					<br />
 					${survey.endDate }</td>
 					<td>
 						${survey.targetCategory1 }
 						${survey.targetCategory2 }
-						${survey.targetBranches }
+						<%-- ${survey.targetBranches } --%>
 					</td>
 					<td>${survey.writer } <br />[${survey.part }]</td>
 					<td nowrap="nowrap" class="align-center">${survey.datetime }</td>
@@ -137,7 +131,13 @@
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table>	
+	</table>
+	
+	<p class="text-right">
+		<a href="<%=request.getContextPath() %>/surveys/insert" class="btn  btn-primary">
+			새 설문
+		</a>
+	</p>	
 </div>
 
 <jsp:include page="include/footer.jsp" />

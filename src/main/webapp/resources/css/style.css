@@ -13,6 +13,10 @@ body {
 		'NanumGothic', 'NanumGothicOTF', '나눔고딕', '나눔고딕OTF', sans-serif;
 }
 
+h2 {
+	font-size: 1.3em;
+}
+
 .page-title {
 	font-size: 1.5em;
 }
@@ -115,4 +119,9 @@ td * {
 
 .align-center {
 	text-align: center;
+}
+
+.page-header h1 {
+	font-size: 1.5em;
+	line-height: 1.5em;
 }

@@ -3,6 +3,12 @@
 <jsp:include page="include/header.jsp" />
 
 <div class="limit-width center-block">
+
+	<div class="page-header">
+		<h1>${pageTitle }</h1>
+	</div>
+	
+
 	<table class="table  table-striped table-condensed table-hover">
 	<thead>
 		<tr>
