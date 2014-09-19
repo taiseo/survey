@@ -1,5 +1,6 @@
 package com.freeneo.survey;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,9 +79,6 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 
 		if (user != null) {
 			
-			Map<String, Object> model = modelAndView.getModel();
-			logger.debug("log_msg = {}", model.containsKey("log_msg"));
-
 			String id = session.getId();
 			SVLog log = svlogMapper.selectByIdAndUsername(id, user.getUsername());
 			boolean isNew = false;
@@ -98,7 +96,12 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			log.setUsername(user.getUsername());
 
 			String newContent;
-			
+
+			logger.debug("modelAndView = {}", modelAndView);
+			Map<String, Object> model = new HashMap<String, Object>();
+			if(modelAndView != null){
+				model = modelAndView.getModel();
+			}
 			if (model.containsKey("log_msg")) {
 				newContent = model.get("log_msg").toString();
 			} else if (model.containsKey("pageTitle")) {
