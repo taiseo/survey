@@ -40,6 +40,11 @@ public class ResponseController {
 		
 		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
 			logger.debug("시작하지 않은 설문");
+			return null;
+		};
+		if( Util.compareWithToday(survey.getStartDate()) > 0 ){
+			logger.debug("종료한 설문");
+			return null;
 		};
 		
 		if( ! response.getResponse().equals("")){
@@ -61,9 +66,18 @@ public class ResponseController {
 			@RequestParam(value="questionId") Long questionId,
 			@RequestParam(value="response[]") String[] response,
 			@RequestParam(value="respondent") String respondent
-			){
+			) throws ParseException{
 		
-		// TODO 개시한 설문일 때만 저장
+		Survey survey = surveyMapper.select(surveyId);
+		
+		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
+			logger.debug("시작하지 않은 설문");
+			return null;
+		};
+		if( Util.compareWithToday(survey.getStartDate()) > 0 ){
+			logger.debug("종료한 설문");
+			return null;
+		};
 		
 		logger.debug("response = {}", response);
 		
