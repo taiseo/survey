@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.freeneo.survey.CheckLoginInterceptor;
+import com.freeneo.survey.SVInterceptor;
 
 @ComponentScan(basePackages = {"com.freeneo.survey"})
 @EnableWebMvc
@@ -140,14 +140,14 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public CheckLoginInterceptor checkLoginInterceptor(){
-		return new CheckLoginInterceptor();
+	public SVInterceptor SVInterceptor(){
+		return new SVInterceptor();
 	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		registry.addInterceptor(checkLoginInterceptor()).excludePathPatterns("/login", "/");
-		registry.addInterceptor(checkLoginInterceptor()).addPathPatterns("/*");
+		registry.addInterceptor(SVInterceptor()).excludePathPatterns("/login", "/");
+		registry.addInterceptor(SVInterceptor()).addPathPatterns("/*");
 	}
 	
 	@Override

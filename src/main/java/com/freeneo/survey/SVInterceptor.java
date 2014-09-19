@@ -18,10 +18,10 @@ import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.SVLogMapper;
 import com.freeneo.survey.util.Util;
 
-public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
+public class SVInterceptor extends HandlerInterceptorAdapter {
 
 	private static Logger logger = LoggerFactory
-			.getLogger(CheckLoginInterceptor.class);
+			.getLogger(SVInterceptor.class);
 
 	@Autowired
 	SVLogMapper svlogMapper;
@@ -102,6 +102,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			if(modelAndView != null){
 				model = modelAndView.getModel();
 			}
+			logger.debug("model = {}", model);
 			if (model.containsKey("log_msg")) {
 				newContent = model.get("log_msg").toString();
 			} else if (model.containsKey("pageTitle")) {
