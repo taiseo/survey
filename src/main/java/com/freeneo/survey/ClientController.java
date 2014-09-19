@@ -1,5 +1,6 @@
 package com.freeneo.survey;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,10 +46,7 @@ public class ClientController {
 			@PathVariable(value="id") Long id,
 			Model model,
 			HttpSession session
-			){
-		
-		
-		// TODO 설문 종료일 체크
+			) throws ParseException{
 		
 		Survey survey = surveyService.getFullSurvey(id);
 		
@@ -68,7 +66,7 @@ public class ClientController {
 		model.addAttribute("isClient", true);
 		model.addAttribute("survey", survey);
 		
-		if(isEnd(survey.getEndDate())){
+		if(Util.compareWithToday(survey.getEndDate()) > 0){
 			
 			logger.debug("설문날짜 초과!!!");
 			
@@ -85,23 +83,5 @@ public class ClientController {
 		}
 		
 		return "client_survey";
-	}
-
-	/**
-	 * 설문 종료 여부
-	 * @param endDate
-	 * @return
-	 */
-	private boolean isEnd(String endDate) {
-
-		int eYear = new Integer(endDate.substring(0, 4)).intValue();
-		int eMonth = new Integer(endDate.substring(5, 7)).intValue();
-		int eDay = new Integer(endDate.substring(8, 10)).intValue();
-
-		int tYear = new Integer(Util.systemDate("yyyy"));
-		int tMonth = new Integer(Util.systemDate("MM"));
-		int tDay = new Integer(Util.systemDate("dd"));
-		
-		return (tYear >= eYear && tMonth >= eMonth && tDay > eDay);
 	}
 }

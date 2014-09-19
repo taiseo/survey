@@ -690,4 +690,26 @@ public class Util {
 	            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 		return uri;
 	}
+	
+	/**
+	 * 2014-09-26 형태의 날짜를 비교한다.
+	 * 오늘을 기준으로. 오늘이 더 크면 1, 같으면 0, 오늘이 더 작으면 -1 리턴.
+	 * @param date
+	 * @return
+	 * @throws ParseException
+	 */
+	public static int compareWithToday(String date) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateParsed = formatter.parse(date);
+		Calendar cal = Calendar.getInstance();
+		Date today = formatter.parse(formatter.format(cal.getTime()));
+		
+		logger.debug("String date = {}", date);
+		logger.debug("String formatted today = {}", formatter.format(cal.getTime()));
+		logger.debug("Date dateParsed = {}", dateParsed);
+		logger.debug("Date today = {}", today);
+		logger.debug("today.compareTo(dateParsed) = {}", today.compareTo(dateParsed));
+		
+		return today.compareTo(dateParsed);
+	}
 }

@@ -1,11 +1,16 @@
 package com.freeneo.survey;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.freeneo.survey.domain.Response;
+import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.mapper.ResponseMapper;
+import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.util.Util;
 
 @Controller
 @RequestMapping(value="/responses")
@@ -23,14 +31,20 @@ public class ResponseController {
 	
 	@Autowired
 	ResponseMapper responseMapper;
+	@Autowired
+	SurveyMapper surveyMapper;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public Response insert(Response response){
-		
-		// TODO 개시한 설문일 때만 저장
+	public Response insert(Response response) throws ParseException{
 		
 		logger.debug("response = {}", response);
+		
+		Survey survey = surveyMapper.select(response.getSurveyId());
+		
+		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
+			logger.debug("시작하지 않은 설문");
+		};
 		
 		if( ! response.getResponse().equals("")){
 			Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
