@@ -14,6 +14,7 @@ public class User {
 	private String name;
 	private String part;
 	private String tel;
+	private String hp;
 	private String email;
 	private String userLevel;
 	
@@ -23,7 +24,7 @@ public class User {
 	};
 
 	public User(Long id, String username, String password, String name, String part,
-			String tel, String email, String userLevel) {
+			String tel, String hp, String email, String userLevel) {
 		this.id = id;
 		this.name = name;
 		this.username = username;
@@ -32,6 +33,7 @@ public class User {
 		}
 		this.part = part;
 		this.tel = tel;
+		this.hp = hp;
 		this.email = email;
 		this.userLevel = userLevel;
 	}
@@ -110,7 +112,23 @@ public class User {
 	public void setUserLevel(String userLevel) {
 		this.userLevel = userLevel;
 	}
-	
+		
+	public String getHp() {
+		return hp;
+	}
+
+	public void setHp(String hp) {
+		this.hp = hp;
+	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public static void setLogger(Logger logger) {
+		User.logger = logger;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		return Pojomatic.equals(this, o);

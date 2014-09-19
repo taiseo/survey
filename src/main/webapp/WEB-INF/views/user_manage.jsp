@@ -51,6 +51,12 @@
 					</td>
 				</tr>
 				<tr>
+					<th><form:label path="hp">휴대폰</form:label></th>
+					<td>
+						<form:input path="hp"/>
+					</td>
+				</tr>				
+				<tr>
 					<th><form:label path="email">이메일</form:label></th>
 					<td>
 						<form:input path="email"/>
