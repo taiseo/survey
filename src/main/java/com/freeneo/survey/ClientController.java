@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
@@ -67,7 +68,31 @@ public class ClientController {
 		model.addAttribute("isClient", true);
 		model.addAttribute("survey", survey);
 		
-		String endDate = survey.getEndDate();
+		if(isEnd(survey.getEndDate())){
+			
+			logger.debug("설문날짜 초과!!!");
+			
+			model.addAttribute("pageTitle", survey.getTitle() + " 설문기간 종료");
+			model.addAttribute("error_msg", "설문기간이 종료되었습니다.");
+			
+			User user = (User) session.getAttribute("user");
+			
+			if(user == null){
+				return "client_end";
+			}else{
+				model.addAttribute("error_msg", "설문기간이 종료되었습니다. 관리자기 때문에 설문 내용은 보여 드립니다. 일반 사용자에겐 설문 내용도 보여 주지 않습니다.");
+			}
+		}
+		
+		return "client_survey";
+	}
+
+	/**
+	 * 설문 종료 여부
+	 * @param endDate
+	 * @return
+	 */
+	private boolean isEnd(String endDate) {
 
 		int eYear = new Integer(endDate.substring(0, 4)).intValue();
 		int eMonth = new Integer(endDate.substring(5, 7)).intValue();
@@ -76,20 +101,7 @@ public class ClientController {
 		int tYear = new Integer(Util.systemDate("yyyy"));
 		int tMonth = new Integer(Util.systemDate("MM"));
 		int tDay = new Integer(Util.systemDate("dd"));
-
 		
-		if(tYear >= eYear && tMonth >= eMonth && tDay > eDay){
-			
-			logger.debug("설문날짜 초과!!!");
-			
-			model.addAttribute("pageTitle", "설문기간 종료");
-			model.addAttribute("error_msg",
-					"설문기간이 종료되었습니다.");
-			
-			return "client_end";
-		}
-		
-		
-		return "client_survey";
+		return (tYear >= eYear && tMonth >= eMonth && tDay > eDay);
 	}
 }
