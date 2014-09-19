@@ -97,6 +97,7 @@ public class UserController {
 			@RequestParam(value="name") String name,
 			@RequestParam(value="part") String part,
 			@RequestParam(value="tel") String tel,
+			@RequestParam(value="hp") String hp,
 			@RequestParam(value="email") String email,
 			@RequestParam(value="userLevel") String userLevel,
 			HttpServletRequest request,
@@ -104,7 +105,7 @@ public class UserController {
 			Model model
 			){
 		
-		User newUser = new User(id, username, password, name, part, tel, email, userLevel);
+		User newUser = new User(id, username, password, name, part, tel, hp, email, userLevel);
 		newUser.setPasswordToHash();
 		User oldUser = userService.getUserById(newUser);
 		User currentUser = (User) session.getAttribute("user");
@@ -183,13 +184,14 @@ public class UserController {
 			@RequestParam(value="name") String name,
 			@RequestParam(value="part") String part,
 			@RequestParam(value="tel") String tel,
+			@RequestParam(value="hp") String hp,
 			@RequestParam(value="email") String email,
 			@RequestParam(value="userLevel") String userLevel,
 			HttpServletRequest request,
 			Model model
 			) {
 		
-		User newUser = new User(null, username, password, name, part, tel, email, userLevel);
+		User newUser = new User(null, username, password, name, part, tel, hp, email, userLevel);
 		boolean validationError = false;
 		
 		// 필수 입력 항목 검사

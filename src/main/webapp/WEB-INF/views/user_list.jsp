@@ -10,6 +10,7 @@
 			<th>운영자명</th>
 			<th>부서명</th>
 			<th>전화번호</th>
+			<th>핸드폰번호</th>
 			<th>이메일</th>
 			<th>권한 등급</th>
 			<th>수정</th>
@@ -30,6 +31,7 @@
 			</td>
 			<td>${user.part}</td>
 			<td>${user.tel}</td>
+			<td>${user.hp}</td>
 			<td>${user.email}</td>
 			<td>${user.userLevel}</td>
 			<td>

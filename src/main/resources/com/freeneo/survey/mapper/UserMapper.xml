@@ -9,6 +9,7 @@
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="part" jdbcType="VARCHAR" property="part" />
 		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="hp" jdbcType="VARCHAR" property="hp" />
 		<result column="email" jdbcType="VARCHAR" property="email" />
 		<result column="user_level" jdbcType="VARCHAR" property="userLevel" />
 	</resultMap>
@@ -56,11 +57,11 @@
 	        SELECT seq_sv_users.nextval FROM DUAL
 	    </selectKey>
 	    
-		INSERT INTO sv_users (id, username, password, name, part, tel, email,
+		INSERT INTO sv_users (id, username, password, name, part, tel, hp, email,
 		user_level)
 		VALUES (#{id}, #{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR}, #{part,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{hp,jdbcType=VARCHAR},
 		#{email,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}
 		)
 	</insert>
@@ -72,6 +73,7 @@
 		name = #{name,jdbcType=VARCHAR},
 		part = #{part,jdbcType=VARCHAR},
 		tel = #{tel,jdbcType=VARCHAR},
+		hp = #{hp,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
 		user_level = #{userLevel,jdbcType=VARCHAR}
 		WHERE ID = #{id,jdbcType=NUMERIC}
