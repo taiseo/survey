@@ -108,3 +108,11 @@ td * {
 .table th, .table td {
 	font-size : 12px;
 }
+
+.survey-title {
+	font-size: 14px;
+}
+
+.align-center {
+	text-align: center;
+}

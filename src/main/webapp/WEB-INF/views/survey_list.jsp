@@ -17,9 +17,9 @@
 		<thead>
 			<tr>
 
+				<th nowrap="nowrap">No</th>
 				<th nowrap="nowrap">제목</th>
-				<th nowrap="nowrap">설문시작일</th>
-				<th nowrap="nowrap">종료일</th>
+				<th nowrap="nowrap">조사기간</th>
 				<th nowrap="nowrap">대상</th>
 				<th nowrap="nowrap">작성자(부서)</th>
 				<th nowrap="nowrap">입력일시</th>
@@ -30,20 +30,22 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="survey" items="${list}">
+			<c:forEach var="survey" items="${list}" varStatus="status">
 				<tr>
-					<td>
+					<td>${status.count}</td>
+					<td nowrap="nowrap">
 						<c:if test="${survey.status == '임시저장' or survey.status == '승인대기'}">
-							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}">
+							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}" class="survey-title">
 								${survey.title }
 							</a>
 						</c:if>
 						<c:if test="${survey.status != '임시저장' and survey.status != '승인대기'}">
-							<a href="<%=request.getContextPath()%>/survey/${survey.id}">
+							<a href="<%=request.getContextPath()%>/survey/${survey.id}" class="survey-title">
 								${survey.title }
 							</a>
 						</c:if>
 						<c:if test="${survey.status == '발송' or survey.status == '종료'}">
+							<br />
 							<small>
 								<a href="<%=request.getContextPath()%>/surveys/targets/${survey.id}">
 									(대상 보기)
@@ -51,15 +53,16 @@
 							</small>
 						</c:if>
 					</td>
-					<td nowrap="nowrap">${survey.startDate }</td>
-					<td nowrap="nowrap">${survey.endDate }</td>
+					<td nowrap="nowrap">${survey.startDate }
+					<br />
+					${survey.endDate }</td>
 					<td>
 						${survey.targetCategory1 }
 						${survey.targetCategory2 }
 						${survey.targetBranches }
 					</td>
-					<td nowrap="nowrap">${survey.writer } [${survey.part }]</td>
-					<td nowrap="nowrap">${survey.datetime }</td>
+					<td>${survey.writer } <br />[${survey.part }]</td>
+					<td nowrap="nowrap" class="align-center">${survey.datetime }</td>
 					<td nowrap="nowrap">
 						${survey.status }
 						<c:if test="${survey.status == '승인' and  sessionScope.user.userLevel == '시스템 관리자'}">
