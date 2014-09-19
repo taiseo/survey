@@ -82,6 +82,22 @@ public class ClientController {
 			}
 		}
 		
+		if(Util.compareWithToday(survey.getStartDate()) < 0){
+			
+			logger.debug("설문날짜 이전!!!");
+			
+			model.addAttribute("pageTitle", survey.getTitle() + " 설문시작 전");
+			model.addAttribute("error_msg", "설문기간 시작 전입니다.");
+			
+			User user = (User) session.getAttribute("user");
+			
+			if(user == null){
+				return "client_end";
+			}else{
+				model.addAttribute("error_msg", "설문기간 시작 전입니다. 관리자기 때문에 설문 내용은 보여 드립니다. 일반 사용자에겐 설문 내용도 보여 주지 않습니다.");
+			}
+		}
+		
 		return "client_survey";
 	}
 }
