@@ -17,9 +17,6 @@ function bind_target_select(){
 	$('.js-used-branch-checkbox-area').on('change', '.js-target-category2', function(){
 		load_branch();
 	});
-
-	// 지사를 클릭할 때마다 대상 수를 세서 갱신
-	$('.js-used-branch-checkbox-area').on('change', '.js-target-branch', write_target_count);
 }
 
 function load_branch(){
@@ -73,10 +70,11 @@ function check_seleted_branches(){
 
 function fill_target_branches(){
 	var branches = [];
-	$('.js-target-branch:checked').each(function(index, branch){
+	$('.js-target-branch:checked:not(:disabled)').each(function(index, branch){
 		branches.push($(branch).val());
 	});
 	$('.js-target-branches').val($.toJSON(branches));
+	write_target_count();
 }
 
 function write_target_count(){
@@ -88,7 +86,7 @@ function write_target_count(){
 	};
 	
 	if(params.targetBranches == '[]'){
-		$('.js-target-count').html('');
+		$('.js-target-count').html('(0명)');
 		return;
 	}
 	
@@ -122,9 +120,9 @@ function show_branch_by_bonbu(){
 	
 	$('.js-target-branch').attr('disabled', true);
 	$('.js-target-branches-checkbox-area label').hide();
-	$('.js-target-branch').each(function(){
-		if(_.indexOf(survey.branches[bonbu], $(this).val()) != -1){
-			$(this).attr('disabled', false)
+	$('.js-target-branch').each(function(i, el){
+		if(_.indexOf(survey.branches[bonbu], $(el).val()) != -1){
+			$(el).attr('disabled', false)
 				.parent().show();
 		}
 	});

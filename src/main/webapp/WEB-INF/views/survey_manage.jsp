@@ -68,7 +68,6 @@
 						data-target-registration-type="CRM DB 추출">
 					<th>
 						<form:label path="description">CRM DB 추출</form:label>
-						<div class="js-target-count"></div>
 					</th>
 					<td>
 						<div class="row  js-used-branch-checkbox-area">
