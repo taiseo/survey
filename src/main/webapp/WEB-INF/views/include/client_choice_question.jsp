@@ -13,6 +13,7 @@
 		<c:set var="inputType" value="checkbox" scope="page" />
 	</c:if>
 	<div class="response-items">
+		<form onsubmit="return false;">
 		<c:forEach items="${question.responseItems }" var="responseItem">
 		<label>
 			<input type="${inputType }" name="content" value="${responseItem.content }"/>
@@ -26,5 +27,6 @@
 			
 		</label>
 		</c:forEach>
+		</form>
 	</div>
 </div>
