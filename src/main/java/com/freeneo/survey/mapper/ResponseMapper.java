@@ -17,10 +17,11 @@ public interface ResponseMapper {
 	public void update(Response response);
 	public void delete(Long id);
 	public void deleteByQuestionIdAndRespondent(Response response);
-	
+
 	public int countRespondentById(String id);
 	public void insertRespondent(@Param("id") String id, @Param("bonbu") String bonbu, @Param("branch") String branch, @Param("surveyId") Long surveyId);
 	public void updateRespondent(@Param("id") String id, @Param("bonbu") String bonbu, @Param("branch") String branch, @Param("surveyId") Long surveyId);
 	public List<Map<String, ?>> countRespondentBySurveysAndBranches(@Param("surveyList") List<Survey> surveyList,
 			@Param("branchList") List<String> branchList);
+	public Long countRespondentBySurveyId(Long surveyId);
 }

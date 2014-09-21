@@ -32,6 +32,7 @@ import com.freeneo.survey.domain.Target;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
+import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
@@ -56,6 +57,9 @@ public class SurveyController {
 
 	@Autowired
 	ResponseItemMapper responseItemMapper;
+
+	@Autowired
+	ResponseMapper responseMapper;
 
 	@Autowired
 	CustomerMapper customerMapper;
@@ -95,7 +99,7 @@ public class SurveyController {
 		
 		for(Survey survey: list){
 			survey.setDatetime(Util.formating(survey.getDatetime(), "##########<br/>#########"));
-			survey.setRespondentCount(surveyMapper.selectRespondentCount(survey.getId()));
+			survey.setRespondentCount(responseMapper.countRespondentBySurveyId(survey.getId()));
 		}
 
 		logger.debug("surveys = {}", list);

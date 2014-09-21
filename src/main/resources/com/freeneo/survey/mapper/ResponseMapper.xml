@@ -96,6 +96,12 @@
 			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
 	</update>
 	
+	<select id="countRespondentBySurveyId" parameterType="Long" resultType="Long">
+		SELECT COUNT(*)
+		FROM SV_RESPONDENTS
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</select>
+	
 	<select id="countRespondentBySurveysAndBranches" parameterType="java.util.List" resultType="HashMap">
 		SELECT BRANCH, COUNT(*) as COUNT
 		FROM sv_RESPONDENTS
