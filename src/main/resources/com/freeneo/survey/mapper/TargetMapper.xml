@@ -10,7 +10,6 @@
 		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
 		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
 		<result column="hp" jdbcType="VARCHAR" property="hp" />
-		<result column="response_yn" jdbcType="VARCHAR" property="responseYn" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -36,10 +35,9 @@
 	<select id="countRespondentBySurvyeId" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM SV_TARGETS
+		FROM SV_RESPONDENTS
 		WHERE 
 			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
-			AND RESPONSE_YN = 'Y'
 	</select>
 
 	<select id="countBySurveyIdAndBranch" resultType="int">
@@ -55,13 +53,12 @@
 	<select id="countRespondentBySurvyeIdAndBranch" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM SV_TARGETS
+		FROM SV_RESPONDENTS
 		WHERE 
 			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
 			<if test="branch != ''">
-				AND ETC_01 = #{branch,jdbcType=VARCHAR}
+				AND BRANCH = #{branch,jdbcType=VARCHAR}
 			</if>
-			AND RESPONSE_YN = 'Y'
 	</select>
 
 	<select id="select" parameterType="com.freeneo.survey.domain.Target"
@@ -99,7 +96,7 @@
 	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
 		INSERT ALL
 			<foreach item="customer" index="index" collection="customers">
-				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP, RESPONSE_YN)
+				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP)
 				VALUES (
 					#{surveyId,jdbcType=NUMERIC},
 					#{customer.cstNo,jdbcType=VARCHAR},
@@ -107,8 +104,7 @@
 					#{customer.ptcpDttm,jdbcType=VARCHAR},
 					#{customer.etc01,jdbcType=VARCHAR},
 					#{customer.cstNm,jdbcType=VARCHAR},
-					#{customer.hp,jdbcType=VARCHAR},
-					'N'
+					#{customer.hp,jdbcType=VARCHAR}
 				)
 			</foreach>
 		SELECT * FROM DUAL

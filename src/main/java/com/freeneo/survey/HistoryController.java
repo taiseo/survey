@@ -1,11 +1,13 @@
 package com.freeneo.survey;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.Target;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.domain.UserHistory;
+import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapper.UserMapper;
@@ -42,6 +45,7 @@ public class HistoryController {
 	@Autowired SurveyMapper surveyMapper;
 	@Autowired TargetMapper targetMapper;
 	@Autowired SurveyService surveyService;
+	@Autowired ResponseMapper responseMapper;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String history(Model model){
@@ -91,6 +95,10 @@ public class HistoryController {
 		
 		logger.debug("targetList = {}", targetList);
 		
+		List<Map<String, ?>> countByBranch = responseMapper.countRespondentBySurveysAndBranches(surveyList, branchList);
+		
+		logger.debug("countByBranch = {}", countByBranch);
+		
 		int allRespondentCount = 0;
 		
 		for(String branch : branchList){
@@ -98,16 +106,14 @@ public class HistoryController {
 			branchHistory.setBranchName(branch);
 			
 			int sendCount = 0;
-			int respondentCount = 0;
+			int respondentCount = getRespondentCount(countByBranch, branch);;
 			double responseRatio = 0;
+			
+			allRespondentCount += respondentCount;
 			
 			for(Target target : targetList){
 				if(target.getEtc01().equals(branch)){
 					sendCount++;
-					if(target.getResponseYn().equals("Y")){
-						respondentCount++;
-						allRespondentCount++;
-					}
 				}
 			}
 			
@@ -135,6 +141,20 @@ public class HistoryController {
 		model.addAttribute("allResponseRatio", allResponseRatio);
 
 		return "search_by_branch";
+	}
+
+	private int getRespondentCount(List<Map<String, ?>> countByBranch,
+			String branch) {
+
+		int count = 0;
+		
+		for(Map<String, ?> branchCount : countByBranch){
+			if(branchCount.get("BRANCH").equals(branch)){
+				count = Integer.valueOf(((BigDecimal) branchCount.get("COUNT")).intValue());
+			}
+		}
+		
+		return count;
 	}
 
 	@RequestMapping(value="/search-by-user", method=RequestMethod.POST)

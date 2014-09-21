@@ -74,11 +74,11 @@
 	</delete>
 
 	<select id="countRespondentById" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM SV_RESPONDENT WHERE ID = #{id,jdbcType=VARCHAR}
+		SELECT COUNT(*) FROM SV_RESPONDENTS WHERE ID = #{id,jdbcType=VARCHAR}
 	</select>
 	
 	<insert id="insertRespondent" parameterType="String">
-		INSERT INTO SV_RESPONDENT (ID, BONBU, BRANCH, SURVEY_ID) VALUES
+		INSERT INTO SV_RESPONDENTS (ID, BONBU, BRANCH, SURVEY_ID) VALUES
 		(
 			#{id,jdbcType=VARCHAR},
 			#{bonbu,jdbcType=VARCHAR},
@@ -88,12 +88,27 @@
 	</insert>
 
 	<update id="updateRespondent" parameterType="String">
-		UPDATE SV_RESPONDENT SET 
+		UPDATE SV_RESPONDENTS SET 
 			ID = #{id,jdbcType=VARCHAR},
 			BONBU = #{bonbu,jdbcType=VARCHAR},
 			BRANCH = #{branch,jdbcType=VARCHAR}
 		WHERE
 			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
 	</update>
-
+	
+	<select id="countRespondentBySurveysAndBranches" parameterType="java.util.List" resultType="HashMap">
+		SELECT BRANCH, COUNT(*) as COUNT
+		FROM sv_RESPONDENTS
+		WHERE 
+			SURVEY_ID IN 
+				<foreach collection="surveyList" open="(" close=")" separator="," item="survey">
+					#{survey.id,jdbcType=NUMERIC}
+				</foreach>
+			AND BRANCH IN
+				<foreach collection="branchList" open="(" close=")" separator="," item="branch">
+					#{branch,jdbcType=VARCHAR}
+				</foreach>
+		GROUP BY BRANCH
+	</select>
+	
 </mapper>
