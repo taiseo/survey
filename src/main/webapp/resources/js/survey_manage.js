@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	target_registration_type();
-	bind_target_registration_type();
+//	target_registration_type();
+//	bind_target_registration_type();
 	bind_target_group_ids();
 	check_target_group_ids();
 });
@@ -22,11 +22,27 @@ function target_registration_type(){
 
 function bind_target_group_ids(){
 	$('.js-target-group-id').change(function(){
-		var ids = [];
+		
+		$('.js-target-category1').val('');
+		$('.js-target-category2').val('');
+		$('.js-target-bonbu').val('');
+		$('.js-target-branch').attr('checked', false);
+		
+		var ids = [],
+			target_group_ids;
 		$('.js-target-group-id:checked').each(function(i, el){
 			ids.push($(el).val());
 		});
-		$('.js-target-group-ids').val($.toJSON(ids));
+		
+		target_group_ids = $.toJSON(ids);
+		
+		$('.js-target-group-ids').val(target_group_ids);
+		
+		$.post(survey.context_path + '/target-groups/branches', {
+			targetGroupIds: target_group_ids
+		}, function(branchList){
+			$('.js-target-branches').val($.toJSON(branchList));
+		}, 'json');
 	});
 }
 

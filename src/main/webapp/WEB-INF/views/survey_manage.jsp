@@ -75,7 +75,7 @@
 						</div>						
 					</td>
 				</tr>
-				<tr class="target-registration-type js-target-registration-type" 
+				<tr class="target-registration-type js-target-registration-type"
 						data-target-registration-type="CRM DB 추출">
 					<th>
 						<form:label path="description">CRM DB 추출</form:label>

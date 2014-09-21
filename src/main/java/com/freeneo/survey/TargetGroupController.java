@@ -1,8 +1,10 @@
 package com.freeneo.survey;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.freeneo.survey.domain.Customer;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
+import com.freeneo.survey.service.SurveyService;
 
 @RequestMapping(value="/target-groups")
 @Controller
@@ -26,6 +31,7 @@ public class TargetGroupController {
 	
 	@Autowired CustomerMapper customerMapper;
 	@Autowired TargetGroupMapper targetGroupMapper;
+	@Autowired SurveyService surveyService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
@@ -38,6 +44,29 @@ public class TargetGroupController {
 		model.addAttribute("targetGroups", targetGroups);
 		
 		return "target_group_list";
+	}
+	
+	@RequestMapping(value="/branches", method=RequestMethod.POST)
+	@ResponseBody
+	public List<String> selectByGroupIds(
+			@RequestParam(value="targetGroupIds") String targetGroupIds
+			) throws JsonParseException, JsonMappingException, IOException{
+		List<String> branches = new ArrayList<String>();
+		
+		List<Long> targetGroupIdList = surveyService.makeSelectedTargetGroups(targetGroupIds);
+		
+		for(Long targetGroupId : targetGroupIdList){
+			TargetGroup targetGroup = targetGroupMapper.select(targetGroupId);
+			List<String> branchList = surveyService.makeBranchList(targetGroup.getBranches());
+			branches.addAll(branchList);
+		}
+		
+		// 중복 제거
+		Set<String> setItems = new LinkedHashSet<String>(branches);
+		branches.clear();
+		branches.addAll(setItems);
+		
+		return branches;
 	}
 	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)
