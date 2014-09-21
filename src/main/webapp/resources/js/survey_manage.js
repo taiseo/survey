@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	target_registration_type();
+	bind_target_registration_type();
 	bind_target_select();
 	bind_set_branches();
 	attr_disabled_cat2();
@@ -91,5 +93,19 @@ function write_target_count(){
 	
 	$.post(survey.context_path + '/surveys/target-count', params, function(data){
 		$('.js-target-count').html(data);
+	});
+}
+
+function bind_target_registration_type(){
+	$('.js-survey-form').on('change', '[name=targetRegistrationType]', target_registration_type);
+}
+
+function target_registration_type(){
+	var target_registration_type = $('[name=targetRegistrationType]:checked').val();
+	$('.js-target-registration-type').each(function(index, el){
+		$(el).hide();
+		if($(el).data('target-registration-type') == target_registration_type){
+			$(el).show();
+		} 
 	});
 }

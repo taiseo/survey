@@ -125,3 +125,7 @@ td * {
 	font-size: 1.5em;
 	line-height: 1.5em;
 }
+
+.target-registration-type {
+	display: none;
+}

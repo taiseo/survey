@@ -39,6 +39,8 @@ create table sv_surveys
   target_category1   VARCHAR2(50),
   target_category2   VARCHAR2(50),
   target_branches    VARCHAR2(1000),
+  target_group_id    NUMBER,
+  target_registration_type   VARCHAR2(100),
   limit         NUMBER default 30,
   writer        VARCHAR2(30),
   part          VARCHAR2(30),
@@ -136,7 +138,7 @@ CREATE TABLE SV_LOGS
   USERNAME     VARCHAR2(30),
   DATETIME     DATE,
   IP           VARCHAR2(40),
-  CONTENT      VARCHAR2(2000),
+  CONTENT      LONG,
   CONSTRAINT SV_LOGS_PK PRIMARY KEY (ID, USERNAME)
 );
 

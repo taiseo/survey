@@ -171,7 +171,7 @@ public class SurveyController {
 			logger.debug("survey in db={}", survey);
 		}
 		
-		logger.debug("survey={}", survey);
+		logger.debug("survey = {}", survey);
 
 		if (survey.getStatus() != null 
 				&& ! survey.getStatus().equals("승인대기")
@@ -194,6 +194,8 @@ public class SurveyController {
 		List<String> branches = surveyService.makeBranchList(survey
 				.getTargetBranches());
 
+		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
+		
 		model.addAttribute("branches", branches);
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);

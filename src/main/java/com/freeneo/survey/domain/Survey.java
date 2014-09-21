@@ -18,6 +18,8 @@ public class Survey {
 	private String targetCategory1;
 	private String targetCategory2;
 	private String targetBranches;
+	private Long targetGroupId;
+	private String targetRegistrationType;
 	private int limit = 30;
 	private String writer;
 	private String part;
@@ -105,6 +107,22 @@ public class Survey {
 
 	public void setTargetBranches(String targetBranches) {
 		this.targetBranches = targetBranches;
+	}
+
+	public Long getTargetGroupId() {
+		return targetGroupId;
+	}
+
+	public void setTargetGroupId(Long targetGroupId) {
+		this.targetGroupId = targetGroupId;
+	}
+
+	public String getTargetRegistrationType() {
+		return targetRegistrationType;
+	}
+
+	public void setTargetRegistrationType(String targetRegistrationType) {
+		this.targetRegistrationType = targetRegistrationType;
 	}
 
 	public int getLimit() {

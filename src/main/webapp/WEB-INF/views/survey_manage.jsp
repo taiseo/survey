@@ -8,7 +8,7 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<form:form method="${httpMethod }" modelAttribute="survey">
+	<form:form method="${httpMethod }" modelAttribute="survey" cssClass="js-survey-form">
 		<table class="table  table-striped">
 			<colgroup>
 				<col style="width: 10%"/>
@@ -39,12 +39,35 @@
 					<td><form:textarea rows="10" cssClass="wysiwyg  input-block-level" path="description"/></td>
 				</tr>
 				<tr>
-					<th><form:label path="description">고객 직접 등록</form:label></th>
-					<td>CRM DB 추출 / 엑셀파일 업로드</td>
+					<th><form:label path="targetRegistrationType">타겟 등록 방식</form:label></th>
+					<td>
+						<label>
+							<form:radiobutton path="targetRegistrationType" value="캠페인 그룹 선택"/>
+							캠페인 그룹 선택
+						</label>
+						<label>
+							<form:radiobutton path="targetRegistrationType" value="CRM DB 추출"/>
+							CRM DB 추출
+						</label>
+						<label>
+							<form:radiobutton path="targetRegistrationType" value="엑셀파일 업로드"/>
+							엑셀파일 업로드
+						</label>
+					</td>
 				</tr>
-				<tr>
+				<tr class="target-registration-type js-target-registration-type" 
+						data-target-registration-type="캠페인 그룹 선택">
 					<th>
-						<form:label path="targetCategory1">캠페인 그룹 등록</form:label>
+						<form:label path="targetCategory1">캠페인 그룹 선택</form:label>
+					</th>
+					<td>
+						
+					</td>
+				</tr>
+				<tr class="target-registration-type js-target-registration-type" 
+						data-target-registration-type="CRM DB 추출">
+					<th>
+						<form:label path="description">CRM DB 추출</form:label>
 						<div class="js-target-count"></div>
 					</th>
 					<td>
@@ -70,6 +93,13 @@
 						</div>
 					</td>
 				</tr>
+				<tr class="target-registration-type js-target-registration-type" 
+						data-target-registration-type="엑셀파일 업로드">
+					<th>엑셀파일 업로드</th>
+					<td>
+						<input type="file" name="excel" id="excel" />
+					</td>
+				</tr>
 				<tr>
 					<th><form:label path="limit">대상 추출 방법</form:label></th>
 					<td>
@@ -90,9 +120,10 @@
 	</form:form>
 </div>
 
+${survey}
 
 <script type="text/javascript">
-	survey.selected_branches = ${survey.targetBranches };
+	survey.selected_branches = ${survey.targetBranches == null || survey.targetBranches == '' ? '[]' : survey.targetBranches} ;
 </script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />
