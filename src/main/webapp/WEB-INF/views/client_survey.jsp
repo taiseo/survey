@@ -64,4 +64,4 @@
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/client_script.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branches.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branch_functions.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/all_branch_selectbox_functions.js"></script>
