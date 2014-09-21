@@ -2,7 +2,9 @@ package com.freeneo.survey.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +19,11 @@ import com.freeneo.survey.domain.Mms;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.mapperMms.MmsMapper;
@@ -41,6 +45,8 @@ public class SurveyService {
 	TargetMapper targetMapper;
 	@Autowired
 	MmsMapper mmsMapper;
+	@Autowired
+	TargetGroupMapper targetGroupMapper;
 
 	public Survey getFullSurvey(Long id) {
 		Survey survey = surveyMapper.select(id);
@@ -113,9 +119,15 @@ public class SurveyService {
 	public void sendMms(Survey survey) throws JsonParseException,
 			JsonMappingException, IOException {
 
-		List<Customer> customers = customerList(survey.getTargetCategory1(),
-				survey.getTargetCategory2(), survey.getTargetBranches(),
-				survey.getLimit());
+		List<Customer> customers = null;
+		
+		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
+			customers = customerList(survey.getTargetCategory1(),
+					survey.getTargetCategory2(), survey.getTargetBranches(),
+					survey.getLimit());
+		}else if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
+			customers = customerListByTargetGroupIds(survey.getTargetGroupIds());
+		}
 
 		logger.debug("customers = {}", customers);
 
@@ -143,6 +155,23 @@ public class SurveyService {
 		updateTargets(survey.getId(), customers);
 		survey.setSendCount(customers.size());
 		surveyMapper.update(survey);
+	}
+
+	private List<Customer> customerListByTargetGroupIds(String targetGroupIds) throws JsonParseException, JsonMappingException, IOException {
+		
+		List<Customer> customers = new ArrayList<Customer>(); 
+		List<Long> targetGroupIdList = makeSelectedTargetGroups(targetGroupIds);
+		for(Long id : targetGroupIdList){
+			TargetGroup targetGroup = targetGroupMapper.select(id);
+			customers.addAll(customerList(targetGroup.getCategory1(), targetGroup.getCategory2(), targetGroup.getBranches(), targetGroup.getLimit()));
+		}
+		
+		// 중복 제거
+		Set<Customer> setItems = new LinkedHashSet<Customer>(customers);
+		customers.clear();
+		customers.addAll(setItems);
+		
+		return customers;
 	}
 
 	public List<Long> makeSelectedTargetGroups(String targetGroupIds)
