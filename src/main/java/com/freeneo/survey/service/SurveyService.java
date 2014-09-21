@@ -22,6 +22,7 @@ import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.TargetGroup;
+import com.freeneo.survey.mapper.ConfigMapper;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
@@ -49,6 +50,8 @@ public class SurveyService {
 	MmsMapper mmsMapper;
 	@Autowired
 	TargetGroupMapper targetGroupMapper;
+	@Autowired
+	ConfigMapper configMapper;
 
 	public Survey getFullSurvey(Long id) {
 		Survey survey = surveyMapper.select(id);
@@ -134,6 +137,8 @@ public class SurveyService {
 		logger.debug("customers = {}", customers);
 
 		List<Mms> mmsList = new ArrayList<Mms>();
+		
+		String domain = configMapper.select("domain").getValue();
 
 		for (Customer customer : customers) {
 			Mms mms = new Mms();
@@ -142,9 +147,9 @@ public class SurveyService {
 			mms.setCallback("0000");
 			mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 			
-			// TODO 제대로 된 도메인으로 변경해야 한다.
+
 			mms.setMsg(survey.getMsg()
-					+ " http://192.168.0.5:8080/survey/survey/"
+					+ " "+ domain + "/survey/"
 					+ survey.getId());
 			mmsList.add(mms);
 		}
