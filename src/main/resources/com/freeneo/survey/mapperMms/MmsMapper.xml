@@ -3,7 +3,7 @@
 <mapper namespace="com.freeneo.survey.mapperMms.MmsMapper">
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Mms">
-		INSERT INTO MMS_MSG (MSGKEY, SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE)
+		INSERT INTO MMS_MSG (MSGKEY, SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE, FILE_CNT, FILE_PATH1)
 			VALUES (
 				MMS_MSG_SEQ.NEXTVAL,
 				#{subject,jdbcType=VARCHAR}, 
@@ -12,7 +12,9 @@
 				'0',
 				SYSDATE, 
 				#{msg,jdbcType=VARCHAR},
-				'0'
+				'0',
+				'1',
+				#{filePath1,jdbcType=VARCHAR}
 			)
 	</insert>
 

@@ -14,6 +14,8 @@ public class Mms {
 	private String reqdate;
 	private String msg;
 	private String type;
+	private String fileCnt;
+	private String filePath1;
 	
 	public String getMsgkey() {
 		return msgkey;
@@ -77,6 +79,22 @@ public class Mms {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getFileCnt() {
+		return fileCnt;
+	}
+
+	public void setFileCnt(String fileCnt) {
+		this.fileCnt = fileCnt;
+	}
+
+	public String getFilePath1() {
+		return filePath1;
+	}
+
+	public void setFilePath1(String filePath1) {
+		this.filePath1 = filePath1;
 	}
 
 	@Override

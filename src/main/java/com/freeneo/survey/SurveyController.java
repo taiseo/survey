@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -319,6 +320,7 @@ public class SurveyController {
 	public String updateStatus(
 			@PathVariable(value = "id") Long id,
 			@PathVariable(value = "status") String status,
+			HttpServletRequest request,
 			Model model,
 			HttpSession session
 			) throws JsonParseException, JsonMappingException, IOException {
@@ -349,7 +351,7 @@ public class SurveyController {
 		logger.debug("survey to update = {}", survey);
 
 		if (status.equals("발송")) {
-			surveyService.sendMms(survey);
+			surveyService.sendMms(request, survey);
 		}
 
 		surveyMapper.update(survey);

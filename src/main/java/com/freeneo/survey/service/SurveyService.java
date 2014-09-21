@@ -6,6 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +118,7 @@ public class SurveyService {
 		targetMapper.insertAll(surveyId, customers);
 	}
 
-	public void sendMms(Survey survey) throws JsonParseException,
+	public void sendMms(HttpServletRequest request, Survey survey) throws JsonParseException,
 			JsonMappingException, IOException {
 
 		List<Customer> customers = null;
@@ -138,6 +140,7 @@ public class SurveyService {
 			mms.setSubject(survey.getMsgSubject());
 			mms.setPhone(customer.getHp());
 			mms.setCallback("0000");
+			mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 			
 			// TODO 제대로 된 도메인으로 변경해야 한다.
 			mms.setMsg(survey.getMsg()
