@@ -1,5 +1,9 @@
 package com.freeneo.survey;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -9,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.freeneo.survey.domain.ConfigItem;
 import com.freeneo.survey.mapper.ConfigMapper;
@@ -47,14 +53,51 @@ public class ConfigController {
 	@RequestMapping(method=RequestMethod.POST)
 	public String insert(
 			HttpServletRequest request,
+			@RequestParam("logo_image") MultipartFile file,
 			Model model){
+		
+		String fileName = null;
+		
+		if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                
+                //fileName = file.getOriginalFilename();
+                fileName = "upload_logo.jpg";
+ 
+                // Creating the directory to store file
+                //String rootPath = System.getProperty("catalina.home");
+                String rootPath = request.getRealPath("/images/");
+                //File dir = new File(rootPath + File.separator + "tmpFiles");
+                File dir = new File(rootPath);
+                if (!dir.exists())
+                    dir.mkdirs();
+ 
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + fileName);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+ 
+                logger.info("Server File Location="
+                        + serverFile.getAbsolutePath());
+ 
+                //return "You successfully uploaded file=" + name;
+            } catch (Exception e) {
+                //return "You failed to upload " + name + " => " + e.getMessage();
+            }
+        } else {
+            //return "You failed to upload " + name
+            //        + " because the file was empty.";
+        }		
 		
 		String[] keys = {
 			"organization", 
 			"phone", 
 			"fax",
 			"address",
-			"logo_image",
 			"domain"
 		};
 		
@@ -74,11 +117,17 @@ public class ConfigController {
 			}else{
 				configMapper.update(new ConfigItem(key, value));
 			}
-			
-			
-			
-			
 		}
+		
+		if (fileName != null){
+			ConfigItem configItem = configMapper.select("logo_image");
+			if(configItem == null){
+				configMapper.insert(new ConfigItem("logo_image", fileName));
+			}else{
+				configMapper.update(new ConfigItem("logo_image", fileName));
+			}			
+		}	
+
 		
 		return "redirect:/config";
 	}

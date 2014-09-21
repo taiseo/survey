@@ -10,7 +10,7 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<form method="post">
+	<form method="post" enctype="multipart/form-data">
 		<table class="table table-striped">
 		<colgroup>
 			<col style="width: 20%" />
@@ -46,9 +46,9 @@
 			<td>
 				<input type="file" name="logo_image" />
 				<span class="help-inline">설문 발송시 첨부됩니다.</span>
-				<c:if test="${logo_image }">
-				<img src="<%=request.getContextPath() %>/${logo_image}"/>
-				</c:if>
+				
+				<img src="<%=request.getContextPath() %>/images/${logo_image}"/>
+				
 			</td>
 		</tr>
 		<tr>
