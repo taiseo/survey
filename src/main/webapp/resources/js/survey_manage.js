@@ -1,6 +1,6 @@
 $(document).ready(function(){
-//	target_registration_type();
-//	bind_target_registration_type();
+	target_registration_type();
+	bind_target_registration_type();
 	bind_target_group_ids();
 	check_target_group_ids();
 });
