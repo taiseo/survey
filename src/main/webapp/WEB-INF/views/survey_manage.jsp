@@ -42,18 +42,19 @@
 				<tr>
 					<th><form:label path="targetRegistrationType">타겟 등록 방식</form:label></th>
 					<td>
-						<label>
+						<label class="radio  inline">
 							<form:radiobutton path="targetRegistrationType" value="캠페인 그룹 선택"/>
 							캠페인 그룹 선택
 						</label>
-						<label>
+						<label class="radio  inline">
 							<form:radiobutton path="targetRegistrationType" value="CRM DB 추출"/>
 							CRM DB 추출
 						</label>
-						<label>
+						<label class="radio  inline">
 							<form:radiobutton path="targetRegistrationType" value="엑셀파일 업로드"/>
 							엑셀파일 업로드
 						</label>
+						<p class="muted">CRM DB를 사용하는 경우 고객이 달라질 수 있기 때문에 실제 발송 대상은 발송 시점에 추출합니다.</p>
 					</td>
 				</tr>
 				<tr class="target-registration-type js-target-registration-type" 
