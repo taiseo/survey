@@ -1,8 +1,8 @@
 $(document).ready(function(){
 	
 	print_bonbu_select_el();
-	print_branch_select_el();
 	bind_branch_select_el();
+	bind_branch_select_event();
 
 	
 	bind_page_button();
@@ -148,3 +148,33 @@ function show_page(keyword){
 	$('.nav li').removeClass('active');
 	$('.nav li:nth-child(' + page_no + ')').addClass('active');
 }
+
+function bind_branch_select_event(){
+	$('.js-search-by-branch').on('change', 'select', function(){
+		var params = {
+			bonbu: $('#bonbu').val(),
+			branch: $('[name=branch]').val(),
+			surveyId: $('.client').data('survey-id')
+		}
+		
+		if(params.bonbu == '' || params.branch == ''){
+			return;
+		}
+		
+		$.post(survey.context_path + '/responses/respondent', params, function(result){
+			if(result != 1){
+				alert('에러 발생!');
+			}
+		});
+	});
+}
+
+
+
+
+
+
+
+
+
+

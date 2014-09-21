@@ -73,4 +73,27 @@
 		WHERE question_id = #{questionId,jdbcType=NUMERIC} AND respondent = #{respondent,jdbcType=VARCHAR}
 	</delete>
 
+	<select id="countRespondentById" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM SV_RESPONDENT WHERE ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertRespondent" parameterType="String">
+		INSERT INTO SV_RESPONDENT (ID, BONBU, BRANCH, SURVEY_ID) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{bonbu,jdbcType=VARCHAR},
+			#{branch,jdbcType=VARCHAR},
+			#{surveyId,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<update id="updateRespondent" parameterType="String">
+		UPDATE SV_RESPONDENT SET 
+			ID = #{id,jdbcType=VARCHAR},
+			BONBU = #{bonbu,jdbcType=VARCHAR},
+			BRANCH = #{branch,jdbcType=VARCHAR}
+		WHERE
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</update>
+
 </mapper>

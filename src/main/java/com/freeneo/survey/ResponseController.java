@@ -4,10 +4,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +35,7 @@ public class ResponseController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public Response insert(Response response) throws ParseException{
-		
+	public Response insert(Model model, Response response) throws ParseException{
 		logger.debug("response = {}", response);
 		
 		Survey survey = surveyMapper.select(response.getSurveyId());
@@ -55,6 +57,9 @@ public class ResponseController {
 				responseMapper.insert(response);
 			}
 		}
+		
+		model.addAttribute("log_msg", response.toString());
+		logger.debug("model ={}", model);
 		
 		return response;
 	}
@@ -107,6 +112,24 @@ public class ResponseController {
 		logger.debug("response = {}", response);
 		
 		return response;
+	}
+	
+	@RequestMapping(value="/respondent", method=RequestMethod.POST)
+	@ResponseBody
+	public String insertRespondent(
+			@RequestParam(value="bonbu") String bonbu,
+			@RequestParam(value="branch") String branch,
+			@RequestParam(value="surveyId") Long surveyId,
+			HttpSession session
+			){
+		
+		if(responseMapper.countRespondentById(session.getId()) > 0){
+			responseMapper.updateRespondent(session.getId(), bonbu, branch, surveyId);
+		}else{
+			responseMapper.insertRespondent(session.getId(), bonbu, branch, surveyId);
+		}
+		
+		return "1";
 	}
 	
 }
