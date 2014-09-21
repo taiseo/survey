@@ -123,7 +123,11 @@ public class ResponseController {
 			HttpSession session
 			){
 		
-		if(responseMapper.countRespondentById(session.getId()) > 0){
+		int respondentCount = responseMapper.countRespondentById(session.getId());
+		
+		logger.debug("respondentCount = {}", respondentCount);
+		
+		if(respondentCount > 0){
 			responseMapper.updateRespondent(session.getId(), bonbu, branch, surveyId);
 		}else{
 			responseMapper.insertRespondent(session.getId(), bonbu, branch, surveyId);

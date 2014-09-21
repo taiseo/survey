@@ -89,11 +89,11 @@
 
 	<update id="updateRespondent" parameterType="String">
 		UPDATE SV_RESPONDENTS SET 
-			ID = #{id,jdbcType=VARCHAR},
 			BONBU = #{bonbu,jdbcType=VARCHAR},
-			BRANCH = #{branch,jdbcType=VARCHAR}
-		WHERE
+			BRANCH = #{branch,jdbcType=VARCHAR},
 			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+		WHERE
+			ID = #{id,jdbcType=NUMERIC}
 	</update>
 	
 	<select id="countRespondentBySurveyId" parameterType="Long" resultType="Long">
