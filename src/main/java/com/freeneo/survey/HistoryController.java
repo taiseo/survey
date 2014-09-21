@@ -154,77 +154,7 @@ public class HistoryController {
 		
 	}
 	
-	@RequestMapping(value="/search-by-branch-excel", method=RequestMethod.POST)
-	public String searchByBranchExcel(
-			@RequestParam(value="startDate", required=false, defaultValue="") String startDate,
-			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
-			@RequestParam(value="branches", required=false, defaultValue="") String branches,
-			Model model
-			) throws JsonParseException, JsonMappingException, IOException{
-		
-		// 날짜 기반으로 survey를 고른다.
-		List<Survey> surveyList = surveyMapper.selectByDate(startDate, endDate);
-		
-		logger.debug("surveyList = {}", surveyList);
-		
-		// branches를 List<String>으로 바꾼다.
-		List<String> branchList = surveyService.makeBranchList(branches);
-		
-		logger.debug("branchList = {}", branchList);
-		
-		List<BranchHistory> branchHistoryList = new ArrayList<BranchHistory>();
-		
-		List<Target> targetList = targetMapper.listBySurveysAndBranches(surveyList, branchList);
-		
-		logger.debug("targetList = {}", targetList);
-		
-		List<Map<String, ?>> countByBranch = responseMapper.countRespondentBySurveysAndBranches(surveyList, branchList);
-		
-		logger.debug("countByBranch = {}", countByBranch);
-		
-		int allRespondentCount = 0;
-		
-		for(String branch : branchList){
-			BranchHistory branchHistory = new BranchHistory();
-			branchHistory.setBranchName(branch);
-			
-			int sendCount = 0;
-			int respondentCount = getRespondentCount(countByBranch, branch);;
-			double responseRatio = 0;
-			
-			allRespondentCount += respondentCount;
-			
-			for(Target target : targetList){
-				if(target.getEtc01().equals(branch)){
-					sendCount++;
-				}
-			}
-			
-			if(sendCount != 0){
-				responseRatio = (double) respondentCount / (double) sendCount * 100.0;
-			}
-			
-			branchHistory.setSendCount(sendCount);
-			branchHistory.setRespondentCount(respondentCount);
-			branchHistory.setResponseRatio(responseRatio);
 
-			branchHistoryList.add(branchHistory);
-		}
-		
-		logger.debug("branchHistoryList = {}", branchHistoryList);
-		
-		double allResponseRatio = 0;
-		if(targetList.size() != 0){
-			allResponseRatio = (double) allRespondentCount / (double) targetList.size() * 100.0;
-		}
-		
-		model.addAttribute("branchHistoryList", branchHistoryList);
-		model.addAttribute("allSendCount", targetList.size());
-		model.addAttribute("allRespondentCount", allRespondentCount);
-		model.addAttribute("allResponseRatio", allResponseRatio);
-		
-		return "search_by_branch_excel";
-	}	
 
 	private int getRespondentCount(List<Map<String, ?>> countByBranch,
 			String branch) {
@@ -246,6 +176,7 @@ public class HistoryController {
 			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
 			@RequestParam(value="part") String part,
 			@RequestParam(value="username") String username,
+			@RequestParam(value="isExcel") String isExcel,
 			Model model
 			){
 		
@@ -273,6 +204,10 @@ public class HistoryController {
 		
 		model.addAttribute("userHistoryList", userHistoryList);
 		
-		return "search_by_user";
+		if(isExcel !=null && isExcel.equals("Y")){
+			return "search_by_user_excel";
+		}else{
+			return "search_by_user";
+		}
 	}
 }

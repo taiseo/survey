@@ -51,6 +51,7 @@
 					</c:forEach>
 				</select>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_user()" />
+				<button type="button" class="btn btn-info" onclick="search_by_user_excel();">Excel Download</button>
 			</td>
 		</tr>
 		</tbody>

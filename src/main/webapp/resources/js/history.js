@@ -94,8 +94,6 @@ function search_by_branch_excel(){
 
 function search_by_user(){
 	
-	$("#isExcel").val("N");
-	
 	var params = {
 		startDate: $('[name=startDate]').val(),
 		endDate: $('[name=endDate]').val(),
@@ -106,6 +104,24 @@ function search_by_user(){
 	$.post(survey.context_path + '/history/search-by-user', params, function(html){
 		$('.js-search-result').html(html);
 	});
+}
+
+function search_by_user_excel(){
+	
+	$("#frm").attr("action", survey.context_path + '/history/search-by-user');
+	$("#isExcel").val("Y");
+	$("#frm").attr("method","POST");
+	$("#frm").attr("target","_blank");
+	
+	//$("#username").val($('[name=username]').val());
+	
+	frm.submit();
+
+	$("#frm").attr("action","");
+	$("#isExcel").val("N");
+	$("#frm").attr("method","GET");
+	$("#frm").attr("target","_self");
+	
 }
 
 function print_bonbu_select_el(){
