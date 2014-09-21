@@ -36,7 +36,7 @@
 					<td>
 						<a href="<%= request.getContextPath() %>/target-groups/delete/${item.id}" class="btn btn-danger">삭제</a>
 					</td>
-				<tr>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
