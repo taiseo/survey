@@ -44,7 +44,7 @@
 				<ul class="nav">
 					<li><a href="<%=request.getContextPath()%>/surveys">설문관리</a></li>
 					<c:if test="${sessionScope.user.userLevel == '시스템 관리자'}">
-						<%-- <li><a href="<%=request.getContextPath()%>/customers">캠페인(타겟)</a></li> --%>
+						<li><a href="<%=request.getContextPath()%>/target-groups">캠페인(타겟)</a></li>
 						<li><a href="<%=request.getContextPath()%>/history">조사 결과</a></li>
 						<li class="dropdown">
 							<a href="<%=request.getContextPath()%>/users" class="dropdown-toggle" data-toggle="dropdown">
