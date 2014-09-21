@@ -17,5 +17,6 @@
 	지사가 없음
 </c:if>
 <input type="hidden" name="branches" class="js-target-branches" />
+<input type="hidden" name="targetBranches" class="js-target-branches" />
 
 

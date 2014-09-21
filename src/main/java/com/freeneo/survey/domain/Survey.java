@@ -17,6 +17,7 @@ public class Survey {
 	private String endDate;
 	private String targetCategory1;
 	private String targetCategory2;
+	private String targetBonbu;
 	private String targetBranches;
 	private Long targetGroupId;
 	private String targetRegistrationType;
@@ -99,6 +100,14 @@ public class Survey {
 
 	public void setTargetCategory2(String targetCategory2) {
 		this.targetCategory2 = targetCategory2;
+	}
+
+	public String getTargetBonbu() {
+		return targetBonbu;
+	}
+
+	public void setTargetBonbu(String targetBonbu) {
+		this.targetBonbu = targetBonbu;
 	}
 
 	public String getTargetBranches() {

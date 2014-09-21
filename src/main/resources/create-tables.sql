@@ -38,6 +38,7 @@ create table sv_surveys
   end_date           VARCHAR2(10),
   target_category1   VARCHAR2(50),
   target_category2   VARCHAR2(50),
+  target_bonbu       VARCHAR2(100),
   target_branches    VARCHAR2(1000),
   target_group_id    NUMBER,
   target_registration_type   VARCHAR2(100),

@@ -72,24 +72,55 @@
 					</th>
 					<td>
 						<div class="row  js-used-branch-checkbox-area">
-							<div class="js-target-category1  span4">
-								<form:select path="targetCategory1">
-									<option value="">목표 그룹 선택 </option>>
-									<form:option value="목적외사업" />
-									<form:option value="농지은행" />
-									<form:option value="유지관리" />
-								</form:select>
-							</div>
-							<div class="js-target-category2  span4" style="display: none">
-								<form:select path="targetCategory2">
-									<form:option value="농지연금" />
-									<form:option value="농지은행" />
-									<form:option value="경영이양직불" />
-								</form:select>
-							</div>
-							<div class="js-target-branches  span4">
-								<jsp:include page="include/branch_list.jsp" />
-							</div>
+							<table class="table">
+								<colgroup>
+									<col style="width: 100px"/>
+								</colgroup>
+								<tr>
+									<th><form:label path="limit">추출수</form:label></th>
+									<td>
+										<form:input path="limit" cssClass="span1  js-number  js-target-limit"  cssStyle="text-align: right"/>명씩 
+										랜덤으로 추출합니다. <span class="js-target-count"></span>
+									</td>
+								</tr>
+								<tr class="js-target-category1-wrapper">
+									<th><form:label path="targetCategory1">사업분류1</form:label></th>
+									<td>
+										<form:select path="targetCategory1" cssClass="js-target-category1">
+											<option value="">목표 그룹 선택</option>>
+											<form:option value="목적외사업" />
+											<form:option value="농지은행" />
+											<form:option value="유지관리" />
+										</form:select>
+									</td>
+								</tr>
+								<tr class="js-target-category2-wrapper" style="display: none">
+									<th><form:label path="targetCategory2">사업분류2</form:label></th>
+									<td>
+										<form:select path="targetCategory2" cssClass="js-target-category2">
+											<form:option value="농지연금" />
+											<form:option value="농지은행" />
+											<form:option value="경영이양직불" />
+										</form:select>
+									</td>
+								</tr>
+								<tr>
+									<th><form:label path="targetBonbu">지역</form:label></th>
+									<td>
+										<select name="targetBonbu" class="js-target-bonbu" data-value="${survey.targetBonbu}"></select>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<form:label path="targetBranches">지사</form:label>
+									</th>
+									<td>
+										<div class="js-target-branches-checkbox-area">
+											<jsp:include page="include/branch_list.jsp" />
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</td>
 				</tr>
@@ -100,18 +131,6 @@
 						<input type="file" name="excel" id="excel" />
 					</td>
 				</tr>
-				<tr>
-					<th><form:label path="limit">대상 추출 방법</form:label></th>
-					<td>
-						<div class="row">
-							<div class="span12">
-								<form:input path="limit" cssClass="span1  js-number" 
-										cssStyle="text-align: right"/>명씩 
-								랜덤으로 추출합니다.
-							</div>
-						</div>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		<p class="text-center">
@@ -120,11 +139,10 @@
 	</form:form>
 </div>
 
-${survey}
-
 <script type="text/javascript">
-	survey.target_branches = ${targetBranches == null || survey.targetBranches == '' ? '[]' : survey.targetBranches} ;
+	survey.target_branches = ${targetBranches == null || targetBranches == '' ? '[]' : targetBranches} ;
 </script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/used_branch_checkbox.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/survey_manage.js"></script>

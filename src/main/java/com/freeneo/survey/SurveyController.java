@@ -196,7 +196,7 @@ public class SurveyController {
 
 		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
 		
-		model.addAttribute("branches", branches);
+		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "PUT");
@@ -204,7 +204,8 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public String updateAction(Survey survey, Model model, HttpSession session)
+	public String updateAction(
+				Survey survey, Model model, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		User currentUser = (User) session.getAttribute("user");

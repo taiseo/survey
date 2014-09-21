@@ -21,7 +21,7 @@
 					<th><form:label path="limit">추출수</form:label></th>
 					<td>
 						<form:input path="limit" cssClass="span1  js-number  js-target-limit"  cssStyle="text-align: right"/>명씩 
-						랜덤으로 추출합니다.
+						랜덤으로 추출합니다. <span class="js-target-count"></span>
 					</td>
 				</tr>
 				<tr class="js-target-category1-wrapper">
@@ -59,12 +59,6 @@
 						<div class="js-target-branches-checkbox-area">
 							<jsp:include page="include/branch_list.jsp" />
 						</div>
-					</td>
-				</tr>
-				<tr>
-					<th>대상</th>
-					<td>
-						<span class="js-target-count"></span>
 					</td>
 				</tr>
 			</tbody>
