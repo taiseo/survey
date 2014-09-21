@@ -93,6 +93,16 @@ public class TargetGroupController {
 		
 		return "redirect:/target-groups";
 	}
+
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public String deleteAction(@PathVariable(value="id") Long id){
+		
+		logger.debug("id = {}", id);
+		
+		targetGroupMapper.delete(id);
+		
+		return "redirect:/target-groups";
+	}
 		
 
 }

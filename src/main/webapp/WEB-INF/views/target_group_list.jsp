@@ -17,6 +17,7 @@
 				<th nowrap="nowrap">사업분류2</th>
 				<th nowrap="nowrap">지역</th>
 				<th nowrap="nowrap">지사</th>
+				<th nowrap="nowrap"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +32,10 @@
 					<td>${item.category1 }</td>
 					<td>${item.category2 }</td>
 					<td>${item.bonbu }</td>
-					<td>${item.branches }</td>
+					<td style="width: 150px">${item.branches }</td>
+					<td>
+						<a href="<%= request.getContextPath() %>/target-groups/delete/${item.id}" class="btn btn-danger">삭제</a>
+					</td>
 				<tr>
 			</c:forEach>
 		</tbody>
