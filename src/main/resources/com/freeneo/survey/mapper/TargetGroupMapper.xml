@@ -9,22 +9,29 @@
 		<result column="CATEGORY2" jdbcType="VARCHAR" property="category2" />
 		<result column="BONBU" jdbcType="VARCHAR" property="bonbu" />
 		<result column="BRANCHES" jdbcType="VARCHAR" property="branches" />
+		<result column="LIMIT" jdbcType="NUMERIC" property="limit" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
 		SELECT * FROM SV_TARGET_GROUPS ORDER BY ID DESC
 	</select>
+
+	<select id="select" resultMap="BaseResultMap">
+		SELECT * FROM SV_TARGET_GROUPS 
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.TargetGroup">
 		INSERT INTO SV_TARGET_GROUPS 
-			(ID, TITLE, CATEGORY1, CATEGORY2, BONBU, BRANCHES)
+			(ID, TITLE, CATEGORY1, CATEGORY2, BONBU, BRANCHES, LIMIT)
 		VALUES (
 			SEQ_SV_TARGET_GROUPS.NEXTVAL, 
 			#{title,jdbcType=VARCHAR},
 			#{category1,jdbcType=VARCHAR},
 			#{category2,jdbcType=VARCHAR},
 			#{bonbu,jdbcType=VARCHAR},
-			#{branches,jdbcType=VARCHAR}
+			#{branches,jdbcType=VARCHAR},
+			#{limit,jdbcType=NUMERIC}
 		)
 	</insert>
 
@@ -35,7 +42,8 @@
 			CATEGORY1 = #{category1,jdbcType=VARCHAR},
 			CATEGORY2 = #{category2,jdbcType=VARCHAR},
 			BONBU = #{bonbu,jdbcType=VARCHAR},
-			BRANCHES = #{branches,jdbcType=VARCHAR}
+			BRANCHES = #{branches,jdbcType=VARCHAR},
+			LIMIT = #{limit,jdbcType=NUMERIC}
 			
 		WHERE ID = #{id,jdbcType=NUMERIC}
 	</update>

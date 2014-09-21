@@ -7,7 +7,7 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<table class="table  table-striped">
+	<table class="table  table-striped  table-data">
 		<thead>
 			<tr>
 

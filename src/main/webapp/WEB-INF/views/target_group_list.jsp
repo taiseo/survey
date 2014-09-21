@@ -22,8 +22,12 @@
 		<tbody>
 			<c:forEach var="item" items="${targetGroups}" varStatus="status">
 				<tr>
-					<td>${fn:length(targetGroups) - status.count}</td>
-					<td>${item.title }</td>
+					<td>${fn:length(targetGroups) - status.count + 1} </td>
+					<td>
+						<a href="<%= request.getContextPath() %>/target-groups/update/${item.id}">
+							${item.title }
+						</a>
+					</td>
 					<td>${item.category1 }</td>
 					<td>${item.category2 }</td>
 					<td>${item.bonbu }</td>
@@ -34,7 +38,7 @@
 	</table>
 	
 	<p class="text-right">
-		<a href="<%=request.getContextPath() %>/target-group/insert" class="btn  btn-primary">
+		<a href="<%=request.getContextPath() %>/target-groups/insert" class="btn  btn-primary">
 			새 캠페인(타겟) 그룹
 		</a>
 	</p>	

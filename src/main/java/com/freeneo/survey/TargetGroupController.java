@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,4 +40,59 @@ public class TargetGroupController {
 		return "target_group_list";
 	}
 	
+	@RequestMapping(value="/insert", method = RequestMethod.GET)
+	public String insertPage(Model model){
+		
+		TargetGroup targetGroup = new TargetGroup();
+		
+		model.addAttribute("httpMethod", "POST");
+		model.addAttribute("pageTitle", "새 캠페인(타겟) 그룹");
+		model.addAttribute("targetGroup", targetGroup);
+		
+		return "target_group_manage";
+	}
+	
+	@RequestMapping(value="/update/{id}", method = RequestMethod.GET)
+	public String updatePage(
+			@PathVariable(value="id") Long id,
+			Model model){
+		
+		TargetGroup targetGroup = targetGroupMapper.select(id);
+		
+		logger.debug("targetGroup = {}", targetGroup);
+		
+		model.addAttribute("targetBranches", targetGroup.getBranches());
+		model.addAttribute("httpMethod", "PUT");
+		model.addAttribute("pageTitle", "새 캠페인(타겟) 그룹");
+		model.addAttribute("targetGroup", targetGroup);
+		
+		return "target_group_manage";
+	}
+
+	
+	@RequestMapping(value="/insert", method = RequestMethod.POST)
+	public String insertAction(
+			TargetGroup targetGroup,
+			Model model){
+		
+		logger.debug("targetGroup = {}", targetGroup);
+		
+		targetGroupMapper.insert(targetGroup);
+		
+		return "redirect:/target-groups";
+	}
+	
+	@RequestMapping(value="/update/{id}", method = RequestMethod.PUT)
+	public String updateAction(
+			TargetGroup targetGroup,
+			Model model){
+		
+		logger.debug("targetGroup = {}", targetGroup);
+		
+		targetGroupMapper.update(targetGroup);
+		
+		return "redirect:/target-groups";
+	}
+		
+
 }

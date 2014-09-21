@@ -351,14 +351,13 @@ public class SurveyController {
 	@RequestMapping(value = "/target-count", method = RequestMethod.POST)
 	@ResponseBody
 	public String targetCount(
-			@RequestParam(value = "targetCategory1") String targetCategory1,
-			@RequestParam(value = "targetCategory2", required = false, defaultValue = "") String targetCategory2,
-			@RequestParam(value = "targetBranches") String targetBranches,
+			@RequestParam(value = "category1") String category1,
+			@RequestParam(value = "category2", required = false, defaultValue = "") String category2,
+			@RequestParam(value = "branches") String branches,
 			@RequestParam(value = "limit") int limit, Model model)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		List<Customer> customers = surveyService.customerList(targetCategory1,
-				targetCategory2, targetBranches, limit);
+		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit);
 
 		return "(" + customers.size() + "명)";
 	}

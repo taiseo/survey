@@ -71,7 +71,7 @@
 						<div class="js-target-count"></div>
 					</th>
 					<td>
-						<div class="row  js-category">
+						<div class="row  js-used-branch-checkbox-area">
 							<div class="js-target-category1  span4">
 								<form:select path="targetCategory1">
 									<option value="">목표 그룹 선택 </option>>
@@ -123,7 +123,7 @@
 ${survey}
 
 <script type="text/javascript">
-	survey.selected_branches = ${survey.targetBranches == null || survey.targetBranches == '' ? '[]' : survey.targetBranches} ;
+	survey.target_branches = ${targetBranches == null || survey.targetBranches == '' ? '[]' : survey.targetBranches} ;
 </script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <jsp:include page="include/footer.jsp" />

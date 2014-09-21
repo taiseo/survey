@@ -109,7 +109,12 @@ td * {
 	vertical-align: top;
 }
 
-.table th, .table td {
+th label {
+	font-weight: inherit;
+	font-size: inherit;
+}
+
+.table-data th, .table-data td {
 	font-size : 12px;
 }
 

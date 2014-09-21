@@ -12,6 +12,7 @@ public class TargetGroup {
 	private String category2;
 	private String bonbu;
 	private String branches;
+	private int limit = 30;
 
 	public Long getId() {
 		return id;
@@ -59,6 +60,14 @@ public class TargetGroup {
 
 	public void setBranches(String branches) {
 		this.branches = branches;
+	}
+	
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
 	@Override
