@@ -42,7 +42,7 @@ public class ResponseController {
 			logger.debug("시작하지 않은 설문");
 			return null;
 		};
-		if( Util.compareWithToday(survey.getStartDate()) > 0 ){
+		if( Util.compareWithToday(survey.getEndDate()) > 0 ){
 			logger.debug("종료한 설문");
 			return null;
 		};
@@ -74,7 +74,7 @@ public class ResponseController {
 			logger.debug("시작하지 않은 설문");
 			return null;
 		};
-		if( Util.compareWithToday(survey.getStartDate()) > 0 ){
+		if( Util.compareWithToday(survey.getEndDate()) > 0 ){
 			logger.debug("종료한 설문");
 			return null;
 		};
