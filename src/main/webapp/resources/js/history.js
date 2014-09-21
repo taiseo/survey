@@ -20,6 +20,9 @@ function bind_name_by_part(){
 }
 
 function search_by_branch(){
+	
+	$("#isExcel").val("N");
+	
 	var branches = [],
 		branch = $('[name=branch]').val(),
 		bonbu = $('#bonbu').val(),
@@ -51,7 +54,48 @@ function search_by_branch(){
 	});
 }
 
+function search_by_branch_excel(){
+	
+	$("#frm").attr("action", survey.context_path + '/history/search-by-branch');
+	$("#isExcel").val("Y");
+	$("#frm").attr("method","POST");
+	$("#frm").attr("target","_blank");
+	
+	var branches = [],
+	branch = $('[name=branch]').val(),
+	bonbu = $('#bonbu').val(),
+	branches_string;
+
+	if(bonbu == '' && branch == ''){
+		// 전체
+		_.each(survey.branches, function(branch){
+			branches = branches.concat(branch);
+		});
+	}else  if(bonbu != '' && branch == ''){
+		// 본부만 선택
+		branches = survey.branches[bonbu];
+	}else{
+		// 지사까지 선택
+		branches.push(branch);
+	}
+	
+	branches_string = $.toJSON(branches);	
+	$("#branches").val(branches_string);
+	
+	frm.submit();
+
+	$("#frm").attr("action","");
+	$("#isExcel").val("N");
+	$("#frm").attr("method","GET");
+	$("#frm").attr("target","_self");
+	
+}
+
+
 function search_by_user(){
+	
+	$("#isExcel").val("N");
+	
 	var params = {
 		startDate: $('[name=startDate]').val(),
 		endDate: $('[name=endDate]').val(),

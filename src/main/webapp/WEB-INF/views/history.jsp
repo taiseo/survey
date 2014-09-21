@@ -9,7 +9,9 @@
 		<h1>${pageTitle}</h1>
 	</div>
 
-	<form class="base-margin" onsubmit="return false;">
+	<form class="base-margin" onsubmit="return false;" id="frm" name="frm">
+		<input type="hidden" name="isExcel" id="isExcel" value="N" />
+		<input type="hidden" name="branches" id="branches" />
 		<table class="table  table-striped">
 		<colgroup>
 			<col style="width: 15%"/>
@@ -28,7 +30,8 @@
 			<td class="js-search-by-branch">
 				<select id="bonbu"></select>
 				<select id="branch" name="branch"></select>
-				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_branch()" />
+				<input class="btn btn-primary" type="button" value="검색" onclick="search_by_branch()" />
+				<button type="button" class="btn btn-info" onclick="search_by_branch_excel();">Excel Download</button>
 			</td>
 		</tr>
 		<tr>
