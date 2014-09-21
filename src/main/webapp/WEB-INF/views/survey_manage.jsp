@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <jsp:include page="include/header.jsp" />
 <div class="limit-width  center-block">
@@ -58,10 +59,20 @@
 				<tr class="target-registration-type js-target-registration-type" 
 						data-target-registration-type="캠페인 그룹 선택">
 					<th>
-						<form:label path="targetCategory1">캠페인 그룹 선택</form:label>
+						캠페인 그룹 선택
 					</th>
 					<td>
+						<div class="row">
 						
+							<c:forEach items="${targetGroups }" var="targetGroup">
+								<label class="span3">
+									<input type="checkbox" name="targetGroupId[]"
+										class="js-target-group-id" value="${targetGroup.id }"/>
+									${targetGroup.title }
+								</label>
+							</c:forEach>
+							<form:hidden path="targetGroupIds" cssClass="js-target-group-ids"/>
+						</div>						
 					</td>
 				</tr>
 				<tr class="target-registration-type js-target-registration-type" 
@@ -139,6 +150,7 @@
 </div>
 
 <script type="text/javascript">
+	survey.target_group_ids = ${survey.targetGroupIds == null || survey.targetGroupIds == '' ? '[]' : survey.targetGroupIds} ;
 	survey.target_branches = ${targetBranches == null || targetBranches == '' ? '[]' : targetBranches} ;
 </script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/tinymce/js/tinymce/tinymce.min.js"></script>

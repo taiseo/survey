@@ -40,7 +40,7 @@ create table sv_surveys
   target_category2   VARCHAR2(50),
   target_bonbu       VARCHAR2(100),
   target_branches    VARCHAR2(1000),
-  target_group_id    NUMBER,
+  target_group_ids   VARCHAR2(500),
   target_registration_type   VARCHAR2(100),
   limit         NUMBER default 30,
   writer        VARCHAR2(30),

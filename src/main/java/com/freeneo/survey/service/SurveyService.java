@@ -71,12 +71,12 @@ public class SurveyService {
 		List<String> branchList = makeBranchList(targetBranches);
 
 		List<Customer> customers = new ArrayList<Customer>();
-		for(String branch : branchList){
-			customers.addAll(customerMapper.customerList(category, branch, limit));
+		for (String branch : branchList) {
+			customers.addAll(customerMapper.customerList(category, branch,
+					limit));
 			logger.debug("customers = {}", customers);
 		}
-		
-		
+
 		return customers;
 	}
 
@@ -110,32 +110,59 @@ public class SurveyService {
 		targetMapper.insertAll(surveyId, customers);
 	}
 
-	public void sendMms(Survey survey) throws JsonParseException, JsonMappingException, IOException {
-		
-		List<Customer> customers = customerList(survey.getTargetCategory1(), survey.getTargetCategory2(), survey.getTargetBranches(), survey.getLimit());
-		
+	public void sendMms(Survey survey) throws JsonParseException,
+			JsonMappingException, IOException {
+
+		List<Customer> customers = customerList(survey.getTargetCategory1(),
+				survey.getTargetCategory2(), survey.getTargetBranches(),
+				survey.getLimit());
+
 		logger.debug("customers = {}", customers);
-		
+
 		List<Mms> mmsList = new ArrayList<Mms>();
-		
-		for(Customer customer : customers){
+
+		for (Customer customer : customers) {
 			Mms mms = new Mms();
 			mms.setSubject(survey.getMsgSubject());
 			mms.setPhone(customer.getHp());
 			mms.setCallback("0000");
-			mms.setMsg(survey.getMsg() + " http://192.168.0.5:8080/survey/survey/" + survey.getId());
+			
+			// TODO 제대로 된 도메인으로 변경해야 한다.
+			mms.setMsg(survey.getMsg()
+					+ " http://192.168.0.5:8080/survey/survey/"
+					+ survey.getId());
 			mmsList.add(mms);
 		}
-		
+
 		logger.debug("mmsList = {}", mmsList);
-		
-		for(Mms mms : mmsList){
+
+		for (Mms mms : mmsList) {
 			mmsMapper.insert(mms);
 		}
-		
+
 		updateTargets(survey.getId(), customers);
 		survey.setSendCount(customers.size());
 		surveyMapper.update(survey);
+	}
+
+	public List<Long> makeSelectedTargetGroups(String targetGroupIds)
+			throws JsonParseException, JsonMappingException, IOException {
+		logger.debug("targetGroupIds = {}", targetGroupIds);
+
+		if (targetGroupIds == null) {
+			return null;
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		List<Long> targetGroupIdList = objectMapper.readValue(
+				targetGroupIds,
+				objectMapper.getTypeFactory().constructCollectionType(
+						List.class, Long.class));
+
+		logger.debug("targetGroupIdList = {}", targetGroupIdList);
+
+		return targetGroupIdList;
 	}
 
 }

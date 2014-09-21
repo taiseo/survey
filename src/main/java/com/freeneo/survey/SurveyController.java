@@ -29,11 +29,13 @@ import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.Target;
+import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
+import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
@@ -67,6 +69,9 @@ public class SurveyController {
 	@Autowired
 	TargetMapper targetMapper;
 
+	@Autowired
+	TargetGroupMapper targetGroupMapper;
+	
 	HashMap<String, String> statusMap;
 
 	SurveyController() {
@@ -122,6 +127,9 @@ public class SurveyController {
 		survey.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(cal
 				.getTime()));
 		
+		List<TargetGroup> targetGroups = targetGroupMapper.list();
+		
+		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
@@ -191,11 +199,11 @@ public class SurveyController {
 			return list(model, session);
 		}
 
-		List<String> branches = surveyService.makeBranchList(survey
-				.getTargetBranches());
-
 		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
 		
+		List<TargetGroup> targetGroups = targetGroupMapper.list();
+		
+		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);

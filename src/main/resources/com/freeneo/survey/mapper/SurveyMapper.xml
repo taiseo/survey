@@ -14,7 +14,7 @@
 		<result column="target_category2" jdbcType="VARCHAR" property="targetCategory2" />
 		<result column="target_bonbu" jdbcType="VARCHAR" property="targetBonbu" />
 		<result column="target_branches" jdbcType="VARCHAR" property="targetBranches" />
-		<result column="target_group_id" jdbcType="NUMERIC" property="targetGroupId" />
+		<result column="target_group_ids" jdbcType="VARCHAR" property="targetGroupIds" />
 		<result column="target_registration_type" jdbcType="VARCHAR" property="targetRegistrationType" />
 		<result column="limit" jdbcType="NUMERIC" property="limit" />
 		<result column="writer" jdbcType="VARCHAR" property="writer" />
@@ -55,7 +55,7 @@
 		
 		INSERT INTO sv_surveys 
 			(id, title, msg_subject, msg, description, start_date, end_date, 
-			target_category1, target_category2, target_bonbu, target_branches, target_group_id, target_registration_type, limit, 
+			target_category1, target_category2, target_bonbu, target_branches, target_group_ids, target_registration_type, limit, 
 			writer, part, status, send_count, datetime)
 		VALUES (
 			#{id}, 
@@ -69,7 +69,7 @@
 			#{targetCategory2,jdbcType=VARCHAR},
 			#{targetBonbu,jdbcType=VARCHAR},
 			#{targetBranches,jdbcType=VARCHAR},
-			#{targetGroupId,jdbcType=NUMERIC},
+			#{targetGroupIds,jdbcType=VARCHAR},
 			#{targetRegistrationType,jdbcType=VARCHAR},
 			#{limit,jdbcType=NUMERIC},
 			#{writer,jdbcType=VARCHAR}, 
@@ -93,7 +93,7 @@
 			target_category2 = #{targetCategory2,jdbcType=VARCHAR},
 			target_bonbu = #{targetBonbu,jdbcType=VARCHAR},
 			target_branches = #{targetBranches,jdbcType=VARCHAR},
-			target_group_id = #{targetGroupId,jdbcType=NUMERIC},
+			target_group_ids = #{targetGroupIds,jdbcType=VARCHAR},
 			target_registration_type = #{targetRegistrationType,jdbcType=VARCHAR},
 			limit = #{limit,jdbcType=VARCHAR},
 			writer = #{writer,jdbcType=VARCHAR}, 

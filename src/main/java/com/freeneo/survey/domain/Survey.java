@@ -19,7 +19,7 @@ public class Survey {
 	private String targetCategory2;
 	private String targetBonbu;
 	private String targetBranches;
-	private Long targetGroupId;
+	private String targetGroupIds;
 	private String targetRegistrationType;
 	private int limit = 30;
 	private String writer;
@@ -118,12 +118,12 @@ public class Survey {
 		this.targetBranches = targetBranches;
 	}
 
-	public Long getTargetGroupId() {
-		return targetGroupId;
+	public String getTargetGroupIds() {
+		return targetGroupIds;
 	}
 
-	public void setTargetGroupId(Long targetGroupId) {
-		this.targetGroupId = targetGroupId;
+	public void setTargetGroupIds(String targetGroupIds) {
+		this.targetGroupIds = targetGroupIds;
 	}
 
 	public String getTargetRegistrationType() {
