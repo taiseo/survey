@@ -2,7 +2,11 @@
     response.setHeader("Content-Disposition", "attachment; filename=search-by-user.xls"); 
     response.setHeader("Content-Description", "JSP Generated Data"); 
 %>
-
+<!DOCTYPE table PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
 <table class="table table-striped" cellpadding="5" cellspacing="0" border="1">
 	<thead>
 		<tr>
@@ -29,3 +33,5 @@
 		</c:forEach>
 	</tbody>
 </table>
+</body>
+</html>

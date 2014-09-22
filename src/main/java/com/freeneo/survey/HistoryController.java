@@ -176,7 +176,7 @@ public class HistoryController {
 			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
 			@RequestParam(value="part") String part,
 			@RequestParam(value="username") String username,
-			@RequestParam(value="isExcel") String isExcel,
+			@RequestParam(value="isExcel", required=false, defaultValue="") String isExcel,
 			Model model
 			){
 		
@@ -205,8 +205,10 @@ public class HistoryController {
 		model.addAttribute("userHistoryList", userHistoryList);
 		
 		if(isExcel !=null && isExcel.equals("Y")){
+			logger.debug("search_by_user_excel...");
 			return "search_by_user_excel";
 		}else{
+			logger.debug("search_by_user...");
 			return "search_by_user";
 		}
 	}

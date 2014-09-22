@@ -44,6 +44,7 @@ function search_by_branch(){
 	branches_string = $.toJSON(branches);
 	
 	var params = {
+		isExcel: 'N',
 		startDate: $('[name=startDate]').val(),
 		endDate: $('[name=endDate]').val(),
 		branches: branches_string
@@ -58,7 +59,6 @@ function search_by_branch_excel(){
 	
 	$("#frm").attr("action", survey.context_path + '/history/search-by-branch');
 	$("#isExcel").val("Y");
-	$("#frm").attr("method","POST");
 	$("#frm").attr("target","_blank");
 	
 	var branches = [],
@@ -80,13 +80,11 @@ function search_by_branch_excel(){
 	}
 	
 	branches_string = $.toJSON(branches);	
-	$("#branches").val(branches_string);
+	$("#branches").val(branches);
 	
 	frm.submit();
 
-	$("#frm").attr("action","");
 	$("#isExcel").val("N");
-	$("#frm").attr("method","GET");
 	$("#frm").attr("target","_self");
 	
 }
@@ -95,6 +93,7 @@ function search_by_branch_excel(){
 function search_by_user(){
 	
 	var params = {
+		isExcel: 'N',
 		startDate: $('[name=startDate]').val(),
 		endDate: $('[name=endDate]').val(),
 		part: $('[name=part]').val(),
@@ -110,16 +109,11 @@ function search_by_user_excel(){
 	
 	$("#frm").attr("action", survey.context_path + '/history/search-by-user');
 	$("#isExcel").val("Y");
-	$("#frm").attr("method","POST");
 	$("#frm").attr("target","_blank");
-	
-	//$("#username").val($('[name=username]').val());
 	
 	frm.submit();
 
-	$("#frm").attr("action","");
 	$("#isExcel").val("N");
-	$("#frm").attr("method","GET");
 	$("#frm").attr("target","_self");
 	
 }

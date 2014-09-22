@@ -9,7 +9,7 @@
 		<h1>${pageTitle}</h1>
 	</div>
 
-	<form class="base-margin" onsubmit="return false;" id="frm" name="frm">
+	<form class="base-margin" onsubmit="return false;" id="frm" name="frm" method="POST">
 		<input type="hidden" name="isExcel" id="isExcel" value="N" />
 		<input type="hidden" name="branches" id="branches" />
 		<table class="table  table-striped">
