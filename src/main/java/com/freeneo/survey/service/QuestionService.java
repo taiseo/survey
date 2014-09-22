@@ -39,7 +39,7 @@ public class QuestionService {
 		
 		question.setPointResponseCount(pointResponseCount);
 	}
-	
+
 	public void setEtcResponses(Question question){
 		if( ! question.getType().contains("객관식")){
 			return;
@@ -52,6 +52,34 @@ public class QuestionService {
 		logger.debug("responseMapper = {}", responseMapper);
 		
 		List<Response> responses = responseMapper.selectByQuestionId(question.getId());
+		List<String> etcResponses = new ArrayList<String>();
+		for(Response response : responses){
+			boolean etcItem = true;
+			for(ResponseItem responseItem : question.getResponseItems()){
+				if(response.getResponse().equals(responseItem.getContent())){
+					etcItem = false;
+				}
+			}
+			if(etcItem){
+				etcResponses.add(response.getResponse());
+			}
+		}
+		
+		question.setEtcResponses(etcResponses);
+	}
+
+	public void setEtcResponsesByBranch(Question question, String branch) {
+		if( ! question.getType().contains("객관식")){
+			return;
+		}
+		if(question.getResponseItems() == null){
+			logger.debug("responseItems가 세팅돼 있어야 기타 항목을 수집할 수 있습니다.");
+			return;
+		}
+		
+		logger.debug("responseMapper = {}", responseMapper);
+		
+		List<Response> responses = responseMapper.selectByQuestionIdAndBranch(question.getId(), branch);
 		List<String> etcResponses = new ArrayList<String>();
 		for(Response response : responses){
 			boolean etcItem = true;

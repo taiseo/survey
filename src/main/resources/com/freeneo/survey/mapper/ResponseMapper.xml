@@ -9,10 +9,23 @@
 		<result column="respondent" jdbcType="VARCHAR" property="respondent" />
 		<result column="response" jdbcType="VARCHAR" property="response" />
 		<result column="datetime" jdbcType="DATE" property="datetime" />
+		<result column="bonbu" jdbcType="VARCHAR" property="bonbu" />
+		<result column="branch" jdbcType="VARCHAR" property="branch" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
 		SELECT * FROM SV_RESPONSES
+	</select>
+	
+	<select id="listFullBySurveyId" resultMap="BaseResultMap">
+		select rt.question_id, rt.respondent, rt.response, rt.datetime, rt.survey_id, 
+				rs.bonbu, rs.branch, q.type
+		from sv_respondents rs, sv_responses rt, sv_questions q
+		where 
+			rs.id = rt.respondent 
+      		and q.id = rt.question_id
+			and rt.survey_id = #{surveyId}
+		order by branch, question_id
 	</select>
 
 	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -27,6 +40,16 @@
 		*
 		FROM SV_RESPONSES
 		WHERE question_id = #{questionId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByQuestionIdAndBranch" resultMap="BaseResultMap">
+		SELECT
+		*
+		from sv_respondents rt, sv_responses rs
+		WHERE 
+			rt.id = rs.respondent 
+			and rs.question_id = #{questionId,jdbcType=NUMERIC}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
 	</select>
 
 	<select id="selectByQuestionIdAndRespondent" 

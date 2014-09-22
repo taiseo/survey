@@ -32,6 +32,13 @@
 		where survey_id = #{surveyId,jdbcType=NUMERIC}
 	</select>
 
+	<select id="branchListBySurveyId" parameterType="Long" resultType="String">
+		SELECT
+		DISTINCT(ETC_01)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
 	<select id="countRespondentBySurvyeId" resultType="int">
 		SELECT
 		COUNT(*)

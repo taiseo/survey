@@ -16,18 +16,26 @@
 				${question.content }
 				<small>${question.contentDetail }</small>
 			</h2>
-			<p class="text-right"><small>${question.questionRespondentCount }명<!-- 
+			<p class="text-right">
+				<c:if test="${fn:contains(question.type, '주관식')}">
+				<a href="#" class="btn btn-small" 
+					onclick="$(this).parent().next().removeClass('limit-height');$(this).remove();return false;">펼치기</a>
+				</c:if>
+				<small>${question.questionRespondentCount }명<!-- 
 				 -->(<fmt:formatNumber 
 					value="${question.questionRespondentCount / survey.respondentCount * 100 }"
-					pattern=".00" />%) 
-				응답</small></p>
+					pattern="0.0" />%) 
+				응답</small>
+			</p>
+				
 			<c:if test="${fn:contains(question.type, '주관식')}">
-				<ul>
+				<ul class="limit-height">
 				<c:forEach items="${question.responses }" var="response">
 					<li>${response }</li>
 				</c:forEach>
 				</ul>
 			</c:if>
+			
 			<c:if test="${fn:contains(question.type, '객관식')}">
 				<table class="table  table-striped">
 				<colgroup>
@@ -52,7 +60,7 @@
 								<c:if test="${responseItem.responseItemCount > 0 }">
 									<fmt:formatNumber 
 										value="${responseItem.responseItemCount / survey.respondentCount * 100}"
-										pattern=".00" />%
+										pattern="0.0" />%
 								</c:if>
 							</td>
 							<td style="width: 100px">
@@ -76,7 +84,7 @@
 								<c:if test="${fn:length(question.etcResponses) > 0 }">
 									<fmt:formatNumber 
 										value="${fn:length(question.etcResponses) / survey.respondentCount * 100}"
-										pattern=".00" />%
+										pattern="0.0" />%
 								</c:if>
 							</td>
 							<td style="width: 100px">
@@ -128,7 +136,7 @@
 							<c:if test="${point.value > 0 }">
 								<fmt:formatNumber 
 									value="${point.value / survey.respondentCount * 100}"
-									pattern=".00" />%
+									pattern="0.0" />%
 							</c:if>
 						</td>
 						<td style="width: 100px">

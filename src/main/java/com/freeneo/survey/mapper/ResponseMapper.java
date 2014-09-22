@@ -11,6 +11,7 @@ import com.freeneo.survey.domain.Survey;
 public interface ResponseMapper {
 	public List<Response> list();
 	public List<Response> selectByQuestionId(Long questionId);
+	public List<Response> selectByQuestionIdAndBranch(@Param("questionId") Long id, @Param("branch") String branch);
 	public Response select(Long id);
 	public Response selectByQuestionIdAndRespondent(Response response);
 	public void insert(Response response);
@@ -24,4 +25,6 @@ public interface ResponseMapper {
 	public List<Map<String, ?>> countRespondentBySurveysAndBranches(@Param("surveyList") List<Survey> surveyList,
 			@Param("branchList") List<String> branchList);
 	public Long countRespondentBySurveyId(Long surveyId);
+	public List<Response> listFullBySurveyId(Long surveyId);
+	
 }

@@ -29,6 +29,16 @@
 		where question_id = #{questionId,jdbcType=NUMERIC} and response = #{content,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="selectResponseItemCountByBranch" resultType="Long">
+		select count(*) 
+		from sv_responses rs, sv_respondents rt 
+		where 
+			rs.respondent = rt.id
+			and rs.question_id = #{responseItem.questionId,jdbcType=NUMERIC} 
+			and rs.response = #{responseItem.content,jdbcType=VARCHAR}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
 		<selectKey keyProperty="id" order="BEFORE" resultType="long">
 	        SELECT seq_SV_RESPONSE_ITEMS.nextval FROM DUAL

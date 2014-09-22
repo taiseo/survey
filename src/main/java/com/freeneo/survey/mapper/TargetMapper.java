@@ -21,4 +21,5 @@ public interface TargetMapper {
 	public int countRespondentBySurvyeIdAndBranch(@Param("surveyId") Long surveyId, @Param("branch") String branch);
 	public List<Target> listBySurveysAndBranches(@Param("surveyList") List<Survey> surveyList,
 			@Param("branchList") List<String> branchList);
+	public List<String> branchListBySurveyId(Long id);
 }

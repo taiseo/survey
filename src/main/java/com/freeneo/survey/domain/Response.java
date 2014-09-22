@@ -12,6 +12,8 @@ public class Response {
 	private String respondent;
 	private String response;
 	private String datetime;
+	private String bonbu;
+	private String branch;
 	
 	public Long getId() {
 		return id;
@@ -59,6 +61,22 @@ public class Response {
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
+	}
+
+	public String getBonbu() {
+		return bonbu;
+	}
+
+	public void setBonbu(String bonbu) {
+		this.bonbu = bonbu;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 
 	@Override

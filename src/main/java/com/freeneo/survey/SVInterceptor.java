@@ -97,7 +97,6 @@ public class SVInterceptor extends HandlerInterceptorAdapter {
 
 			String newContent;
 
-			logger.debug("modelAndView = {}", modelAndView);
 			Map<String, Object> model = new HashMap<String, Object>();
 			if(modelAndView != null){
 				model = modelAndView.getModel();

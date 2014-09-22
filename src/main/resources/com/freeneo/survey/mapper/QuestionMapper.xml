@@ -26,13 +26,34 @@
 	</select>
 
 	<select id="selectRespondentCount" parameterType="java.lang.Long" resultType="Long">
-		select count(distinct(respondent)) from sv_responses where question_id = #{id,jdbcType=NUMERIC}
+		select count(distinct(respondent)) 
+		from sv_responses 
+		where question_id = #{id,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="selectRespondentCountByBranch" resultType="Long">
+		select count(distinct(respondent))
+		from sv_responses rs, sv_respondents rt
+		where 
+			rt.id = rs.respondent
+			and rs.question_id = #{questionId,jdbcType=NUMERIC}
+           	and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+	
 	
 	<select id="selectResponses" parameterType="Long" resultType="java.lang.String">
 		select response 
 		from sv_responses 
 		where question_id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectResponsesByBranch" resultType="java.lang.String">
+		select rs.response 
+		from sv_responses rs, sv_respondents rt
+		where 
+			rt.id = rs.respondent
+			and rs.question_id = #{id,jdbcType=NUMERIC}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
 	</select>
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Question" keyColumn="id">
