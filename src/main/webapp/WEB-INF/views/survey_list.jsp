@@ -7,6 +7,12 @@
 	<div class="page-header">
 		<h1>${pageTitle }</h1>
 	</div>
+
+	<p class="text-right">
+		<a href="<%=request.getContextPath() %>/surveys/insert" class="btn  btn-primary">
+			새 설문
+		</a>
+	</p>	
 	
 	<table class="table  table-striped  table-data">
 		<thead>

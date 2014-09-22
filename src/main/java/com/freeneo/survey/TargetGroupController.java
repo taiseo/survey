@@ -1,7 +1,10 @@
 package com.freeneo.survey;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,6 +77,15 @@ public class TargetGroupController {
 		
 		TargetGroup targetGroup = new TargetGroup();
 		
+		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -30);
+		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		
+		// TODO targetGroup 객체에 세팅하는 것으로 변경
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
 		model.addAttribute("httpMethod", "POST");
 		model.addAttribute("pageTitle", "새 캠페인(타겟) 그룹");
 		model.addAttribute("targetGroup", targetGroup);
@@ -89,6 +101,15 @@ public class TargetGroupController {
 		TargetGroup targetGroup = targetGroupMapper.select(id);
 		
 		logger.debug("targetGroup = {}", targetGroup);
+
+		// TODO 저장한 데서 불러오게 되면 삭제.
+		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -30);
+		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
 		
 		model.addAttribute("targetBranches", targetGroup.getBranches());
 		model.addAttribute("httpMethod", "PUT");

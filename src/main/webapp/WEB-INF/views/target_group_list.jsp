@@ -7,6 +7,13 @@
 	<div class="page-header">
 		<h1>${pageTitle }</h1>
 	</div>
+
+	<p class="text-right">
+		<a href="<%=request.getContextPath() %>/target-groups/insert" class="btn  btn-primary">
+			새 캠페인(타겟) 그룹
+		</a>
+	</p>	
+
 	
 	<table class="table  table-striped">
 		<thead>
