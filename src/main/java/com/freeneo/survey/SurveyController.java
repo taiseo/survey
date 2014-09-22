@@ -141,14 +141,10 @@ public class SurveyController {
 	public String insertAction(Survey survey, Model model, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		if (survey.getTitle().equals("") || survey.getEndDate().equals("")
-				|| survey.getTargetBranches() == null
-				|| survey.getTargetBranches().equals("[]")
-				|| survey.getMsgSubject().equals("")
-				|| survey.getMsg().equals("")) {
-			model.addAttribute("error_msg",
-					"필수 항목(제목, 게시종료일, 지사, MMS 제목, MMS 내용)을 모두 입력해 주세요.");
-			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 입력페이지로 감.");
+		logger.debug("survey parameter = {}", survey);
+		
+		if ( ! validateSurvey(survey, model)) {
+			logger.debug("필수항목 누락");
 			return insertPage(model, survey);
 		}
 
@@ -157,13 +153,63 @@ public class SurveyController {
 		survey.setWriter(currentUser.getUsername());
 		survey.setPart(currentUser.getPart());
 
-		logger.debug("survey = {}", survey);
-
 		surveyMapper.insert(survey);
 
 		logger.debug("insertedSurvey = {}", survey);
 
 		return "redirect:/surveys/detail/" + survey.getId();
+	}
+
+	/**
+	 * 설문 입력 검증
+	 * @param survey
+	 * @return
+	 */
+	private boolean validateSurvey(Survey survey, Model model) {
+		if(survey.getTitle().equals("")){
+			model.addAttribute("error_msg","제목을 입력해 주세요");
+			return false;
+		}
+		
+		if(survey.getEndDate().equals("")){
+			model.addAttribute("error_msg","종료일을 입력해 주세요");
+			return false;
+		}
+		
+		if(survey.getMsgSubject().equals("")){
+			model.addAttribute("error_msg","MMS 제목을 입력해 주세요");
+			return false;
+		}
+		
+		if(survey.getMsg().equals("")){
+			model.addAttribute("error_msg","MMS 인사말을 입력해 주세요");
+			return false;
+		}
+		
+		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
+			if(survey.getTargetBranches() == null){
+				model.addAttribute("error_msg","지사를 선택해 주세요");
+				return false;
+			}
+			if(survey.getTargetBranches().equals("[]")){
+				model.addAttribute("error_msg","지사를 선택해 주세요");
+				return false;
+			}
+			
+		}
+		
+		if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
+			if(survey.getTargetGroupIds().equals("")){
+				model.addAttribute("error_msg","캠페인 그룹을 선택해 주세요");
+				return false;
+			}
+			if(survey.getTargetGroupIds().equals("[]")){
+				model.addAttribute("error_msg","캠페인 그룹을 선택해 주세요");
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
@@ -220,22 +266,17 @@ public class SurveyController {
 		User currentUser = (User) session.getAttribute("user");
 		Survey oldSurvey = surveyMapper.select(survey.getId());
 
+		logger.debug("new survey = {}", survey);
 		logger.debug("old survey = {}", oldSurvey);
 
 		// 시스템 관리자가 아닌데, 남의 것을 수정하려고 하면
-		if (!currentUser.getUserLevel().equals("시스템 관리자")
+		if ( ! currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(oldSurvey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model, session);
 		}
 
-		if (survey.getTitle().equals("") || survey.getEndDate().equals("")
-				|| survey.getTargetBranches() == null
-				|| survey.getTargetBranches().equals("[]")
-				|| survey.getMsgSubject().equals("")
-				|| survey.getMsg().equals("")) {
-			model.addAttribute("error_msg",
-					"필수 항목(제목, 게시종료일, 지사, MMS 제목, MMS 내용)을 모두 입력해 주세요.");
+		if (validateSurvey(survey, model)) {
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
 			return updatePage(survey.getId(), model, session, survey);
 		}
