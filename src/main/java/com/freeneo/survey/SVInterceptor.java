@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.freeneo.survey.domain.ConfigItem;
 import com.freeneo.survey.domain.SVLog;
 import com.freeneo.survey.domain.User;
+import com.freeneo.survey.mapper.ConfigMapper;
 import com.freeneo.survey.mapper.SVLogMapper;
 import com.freeneo.survey.util.Util;
 
@@ -25,6 +27,9 @@ public class SVInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	SVLogMapper svlogMapper;
+	
+	@Autowired
+	ConfigMapper configMapper;	
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -42,6 +47,13 @@ public class SVInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		;
+		
+		ConfigItem domain = configMapper.select("domain");
+		if (Util.getUri(request).contains(domain.getValue()) && ! request.getRequestURI().contains(
+				request.getContextPath() + "/survey/")) {
+			logger.debug("클라이언트가 /survey/외 접속 시도...-->차단요망");
+			return false;
+		}
 
 		if (request.getRequestURI().contains(
 				request.getContextPath() + "/survey/")) {
