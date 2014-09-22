@@ -33,7 +33,9 @@
 					<fmt:formatNumber value="${branchHistory.responseRatio }" pattern="0.00"/>%
 				</td>
 				<td>
-					<form action="#" onclick="alert('제작중');return false">결과 보기</form>
+					<a target="_blank" href="<%= request.getContextPath() %>/statistics/branch/${branchHistory.branchName }/${startDate}/${endDate}">
+						결과 보기
+					</a>
 				</td>
 			</tr>
 			</c:if>

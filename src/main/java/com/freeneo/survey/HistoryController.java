@@ -138,6 +138,8 @@ public class HistoryController {
 			allResponseRatio = (double) allRespondentCount / (double) targetList.size() * 100.0;
 		}
 		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		model.addAttribute("branchHistoryList", branchHistoryList);
 		model.addAttribute("allSendCount", targetList.size());
 		model.addAttribute("allRespondentCount", allRespondentCount);

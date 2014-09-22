@@ -1,5 +1,7 @@
 package com.freeneo.survey;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,11 +70,26 @@ public class StatisticsController {
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
 			Model model
-			){
+			) throws UnsupportedEncodingException{
+
+		// 한글 인코딩 처리
+		branch = new String(branch.getBytes("8859_1"), "UTF-8");
 		
-		// 하나의 지사, 여러 기간에 걸친 설문
+		// 하나의 지사, 여러 기간에 걸친 설문들
+		List<Survey> surveys = surveyMapper.listByBranchAndDates(branch, startDate, endDate);
+		List<Survey> statisticsSurveys = new ArrayList<Survey>();
 		
+		for(Survey survey : surveys){
+			statisticsSurveys.add(statisticsService.getOneSurveyOneBranchStatistics(survey.getId(), branch));
+		}
 		
-		return "statistics_by_branch";
+		logger.debug("statisticsSurveys = {}", statisticsSurveys);
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("pageTitle", branch + " 통계");
+		model.addAttribute("statisticsSurveys", statisticsSurveys);
+		
+		return "statistics_branch";
 	}
 }

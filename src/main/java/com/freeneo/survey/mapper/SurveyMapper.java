@@ -26,5 +26,10 @@ public interface SurveyMapper {
 	 * @return
 	 */
 	public Long selectRespondentCount(Long id);
+	public List<Survey> listByBranch(String branch);
+	public List<Survey> listByBranchAndDates(
+			@Param("branch") String branch, 
+			@Param("startDate") String startDate,
+			@Param("endDate") String endDate);
 	
 }

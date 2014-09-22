@@ -95,28 +95,40 @@ public class StatisticsService {
 		
 		Map<String, Survey> surveyByBranch = new HashMap<String, Survey>();
 		for(String branch : branches){
-			Survey tempSurvey = surveyService.getFullSurvey(surveyId);
-			tempSurvey.setRespondentCount(responseMapper.countRespondentBySurveyIdAndBranch(surveyId, branch));
-			for(Question question : tempSurvey.getQuestions()){
-				question.setQuestionRespondentCount(questionMapper.selectRespondentCountByBranch(question.getId(), branch));
-				
-				if(question.getType().contains("주관식")){
-					question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
-				}else if(question.getType().equals("점수범위")){
-					question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
-					questionService.setPointResponseCount(question);
-				}else{
-					// 나머지는 객관식
-					for(ResponseItem responseItem : question.getResponseItems()){
-						responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCountByBranch(responseItem, branch));
-					}
-					questionService.setEtcResponsesByBranch(question, branch);
-				}
-			}
+			Survey tempSurvey = getOneSurveyOneBranchStatistics(surveyId, branch);
 			surveyByBranch.put(branch, tempSurvey);
 		}
 		
 		return surveyByBranch;
+	}
+
+
+	/***
+	 * 한 지사의 한 설문 통계 세팅
+	 * @param surveyId
+	 * @param branch
+	 * @return
+	 */
+	public Survey getOneSurveyOneBranchStatistics(Long surveyId, String branch) {
+		Survey survey = surveyService.getFullSurvey(surveyId);
+		survey.setRespondentCount(responseMapper.countRespondentBySurveyIdAndBranch(surveyId, branch));
+		for(Question question : survey.getQuestions()){
+			question.setQuestionRespondentCount(questionMapper.selectRespondentCountByBranch(question.getId(), branch));
+			
+			if(question.getType().contains("주관식")){
+				question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
+			}else if(question.getType().equals("점수범위")){
+				question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
+				questionService.setPointResponseCount(question);
+			}else{
+				// 나머지는 객관식
+				for(ResponseItem responseItem : question.getResponseItems()){
+					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCountByBranch(responseItem, branch));
+				}
+				questionService.setEtcResponsesByBranch(question, branch);
+			}
+		}
+		return survey;
 	}
 
 	
