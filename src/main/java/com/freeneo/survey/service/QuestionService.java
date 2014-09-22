@@ -29,15 +29,17 @@ public class QuestionService {
 			logger.debug("responseItems가 세팅돼 있어야 점수범위 답변을 수집할 수 있습니다.");
 			return;
 		}
-		int min = question.getResponseItems().get(0).getMin();
-		int max = question.getResponseItems().get(0).getMax();
-		
-		TreeMap<Integer, Long> pointResponseCount = new TreeMap<Integer, Long>();
-		for(int i = min; i < max; i++){
-			pointResponseCount.put(i, question.getResponseCount(i));
+		if(question.getResponseItems().size() > 0){
+			int min = question.getResponseItems().get(0).getMin();
+			int max = question.getResponseItems().get(0).getMax();
+			
+			TreeMap<Integer, Long> pointResponseCount = new TreeMap<Integer, Long>();
+			for(int i = min; i < max; i++){
+				pointResponseCount.put(i, question.getResponseCount(i));
+			}
+			
+			question.setPointResponseCount(pointResponseCount);
 		}
-		
-		question.setPointResponseCount(pointResponseCount);
 	}
 
 	public void setEtcResponses(Question question){
