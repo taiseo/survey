@@ -61,6 +61,13 @@
 
 </div>
 
+<div class="limit-width  center-block well">
+	<p><img src="<%=request.getContextPath() %>/images/${logo_image}"/>  </p>
+	<p>${organization } | ${address }</p>
+	<p>Phone : ${phone } / Fax : ${fax } / <a href="http://${domain_value }" target="_blank">${domain_value }</a></p>
+</div>
+
+
 <jsp:include page="include/footer.jsp" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/client_script.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branches.js"></script>
