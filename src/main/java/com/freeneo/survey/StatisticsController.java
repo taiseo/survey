@@ -46,7 +46,7 @@ public class StatisticsController {
 		
 		Survey survey = surveyService.getFullSurvey(id);
 		
-		survey.setRespondentCount(surveyMapper.selectRespondentCount(id));
+		survey.setRespondentCount(responseMapper.countRespondentBySurveyId(id));
 		
 		for(Question question : survey.getQuestions()){
 			question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
@@ -74,6 +74,7 @@ public class StatisticsController {
 		Map<String, Survey> surveyByBranch = new HashMap<String, Survey>();
 		for(String branch : branches){
 			Survey tempSurvey = surveyService.getFullSurvey(id);
+			tempSurvey.setRespondentCount(responseMapper.countRespondentBySurveyIdAndBranch(id, branch));
 			for(Question question : tempSurvey.getQuestions()){
 				question.setQuestionRespondentCount(questionMapper.selectRespondentCountByBranch(question.getId(), branch));
 				
@@ -97,7 +98,7 @@ public class StatisticsController {
 		
 		model.addAttribute("survey", survey);
 		model.addAttribute("surveyByBranch", surveyByBranch);
-        model.addAttribute("pageTitle", "통계");
+        model.addAttribute("pageTitle", survey.getTitle() + " 통계");
         
         return "statistics";
     }

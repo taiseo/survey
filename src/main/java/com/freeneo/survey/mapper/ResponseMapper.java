@@ -25,6 +25,7 @@ public interface ResponseMapper {
 	public List<Map<String, ?>> countRespondentBySurveysAndBranches(@Param("surveyList") List<Survey> surveyList,
 			@Param("branchList") List<String> branchList);
 	public Long countRespondentBySurveyId(Long surveyId);
+	public Long countRespondentBySurveyIdAndBranch(@Param("surveyId") Long surveyId, @Param("branch") String branch);
 	public List<Response> listFullBySurveyId(Long surveyId);
 	
 }
