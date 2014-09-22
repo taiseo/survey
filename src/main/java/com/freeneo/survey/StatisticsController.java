@@ -14,6 +14,7 @@ import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.service.QuestionService;
+import com.freeneo.survey.service.StatisticsService;
 import com.freeneo.survey.service.SurveyService;
 
 import org.slf4j.Logger;
@@ -38,61 +39,19 @@ public class StatisticsController {
 	@Autowired QuestionMapper questionMapper;
 	@Autowired QuestionService questionService;
 	@Autowired TargetMapper targetMapper;
+	@Autowired StatisticsService statisticsService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
 			@PathVariable(value="id") Long id,
 			Model model){
 		
+		// 하나의 설문 전체 통계
 		Survey survey = surveyService.getFullSurvey(id);
+		statisticsService.setSurveyAllStatistics(survey);
 		
-		survey.setRespondentCount(responseMapper.countRespondentBySurveyId(id));
-		
-		for(Question question : survey.getQuestions()){
-			question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
-			
-			if(question.getType().contains("주관식")){
-				question.setResponses(questionMapper.selectResponses(question.getId()));
-			}else if(question.getType().equals("점수범위")){
-				question.setResponses(questionMapper.selectResponses(question.getId()));
-				questionService.setPointResponseCount(question);
-			}else{
-				// 나머지는 객관식
-				for(ResponseItem responseItem : question.getResponseItems()){
-					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
-				}
-				questionService.setEtcResponses(question);
-			}
-		}
-		
-		List<Response> fullResponses = responseMapper.listFullBySurveyId(survey.getId());
-		List<String> branches = targetMapper.branchListBySurveyId(survey.getId());
-		
-		logger.debug("fullResponses = {}", fullResponses);
-		logger.debug("branches = {}", branches);
-		
-		Map<String, Survey> surveyByBranch = new HashMap<String, Survey>();
-		for(String branch : branches){
-			Survey tempSurvey = surveyService.getFullSurvey(id);
-			tempSurvey.setRespondentCount(responseMapper.countRespondentBySurveyIdAndBranch(id, branch));
-			for(Question question : tempSurvey.getQuestions()){
-				question.setQuestionRespondentCount(questionMapper.selectRespondentCountByBranch(question.getId(), branch));
-				
-				if(question.getType().contains("주관식")){
-					question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
-				}else if(question.getType().equals("점수범위")){
-					question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
-					questionService.setPointResponseCount(question);
-				}else{
-					// 나머지는 객관식
-					for(ResponseItem responseItem : question.getResponseItems()){
-						responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCountByBranch(responseItem, branch));
-					}
-					questionService.setEtcResponsesByBranch(question, branch);
-				}
-			}
-			surveyByBranch.put(branch, tempSurvey);
-		}
+		// 하나의 설문에 대한 지사별 통계
+		Map<String, Survey> surveyByBranch = statisticsService.getOneSurveyStatisticsByBranches(id);
 		
 		logger.debug("surveyByBranch = {}", surveyByBranch);
 		
@@ -102,4 +61,18 @@ public class StatisticsController {
         
         return "statistics";
     }
+	
+	@RequestMapping(value="/branch/{branch}/{startDate}/{endDate}", method=RequestMethod.GET)
+	public String byBranch(
+			@PathVariable(value="branch") String branch,
+			@PathVariable(value="startDate") String startDate,
+			@PathVariable(value="endDate") String endDate,
+			Model model
+			){
+		
+		// 하나의 지사, 여러 기간에 걸친 설문
+		
+		
+		return "statistics_by_branch";
+	}
 }
