@@ -149,4 +149,12 @@
 			AND END_DATE &lt;= #{endDate,jdbcType=VARCHAR}
 	</select>
 
+	<select id="listByUsernameAndDates" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS
+		WHERE 
+			WRITER LIKE #{username,jdbcType=VARCHAR}
+			AND START_DATE &gt;= #{startDate,jdbcType=VARCHAR}
+			AND END_DATE &lt;= #{endDate,jdbcType=VARCHAR}
+	</select>
+
 </mapper>

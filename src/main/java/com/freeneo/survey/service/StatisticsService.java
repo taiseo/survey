@@ -60,20 +60,24 @@ public class StatisticsService {
 		
 		survey.setRespondentCount(responseMapper.countRespondentBySurveyId(survey.getId()));
 		
-		for(Question question : survey.getQuestions()){
-			question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
+		if(survey.getQuestions() != null){
 			
-			if(question.getType().contains("주관식")){
-				question.setResponses(questionMapper.selectResponses(question.getId()));
-			}else if(question.getType().equals("점수범위")){
-				question.setResponses(questionMapper.selectResponses(question.getId()));
-				questionService.setPointResponseCount(question);
-			}else{
-				// 나머지는 객관식
-				for(ResponseItem responseItem : question.getResponseItems()){
-					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
+			for(Question question : survey.getQuestions()){
+				
+				question.setQuestionRespondentCount(questionMapper.selectRespondentCount(question.getId()));
+				
+				if(question.getType().contains("주관식")){
+					question.setResponses(questionMapper.selectResponses(question.getId()));
+				}else if(question.getType().equals("점수범위")){
+					question.setResponses(questionMapper.selectResponses(question.getId()));
+					questionService.setPointResponseCount(question);
+				}else{
+					// 나머지는 객관식
+					for(ResponseItem responseItem : question.getResponseItems()){
+						responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
+					}
+					questionService.setEtcResponses(question);
 				}
-				questionService.setEtcResponses(question);
 			}
 		}
 		

@@ -26,7 +26,9 @@
 					<fmt:formatNumber value="${userHistory.responseRatio }" pattern="0.00"/>%
 				</td>
 				<td>
-					<a href="#" onclick="alert('제작중'); return false;">(보기)</a>
+					<a target="_blank" href="<%= request.getContextPath() %>/statistics/user/${userHistory.user.id}/${startDate}/${endDate}">
+						결과 보기
+					</a>
 				</td>
 			</tr>
 		</c:forEach>

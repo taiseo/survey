@@ -204,13 +204,13 @@ public class HistoryController {
 		
 		logger.debug("userHistoryList = {}", userHistoryList);
 		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		model.addAttribute("userHistoryList", userHistoryList);
 		
 		if(isExcel !=null && isExcel.equals("Y")){
-			logger.debug("search_by_user_excel...");
 			return "search_by_user_excel";
 		}else{
-			logger.debug("search_by_user...");
 			return "search_by_user";
 		}
 	}

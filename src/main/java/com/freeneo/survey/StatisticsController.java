@@ -10,11 +10,13 @@ import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Response;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetMapper;
+import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.service.QuestionService;
 import com.freeneo.survey.service.StatisticsService;
 import com.freeneo.survey.service.SurveyService;
@@ -42,6 +44,7 @@ public class StatisticsController {
 	@Autowired QuestionService questionService;
 	@Autowired TargetMapper targetMapper;
 	@Autowired StatisticsService statisticsService;
+	@Autowired UserMapper userMapper;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
@@ -92,4 +95,47 @@ public class StatisticsController {
 		
 		return "statistics_branch";
 	}
+	
+	@RequestMapping(value="/user/{userId}/{startDate}/{endDate}", method=RequestMethod.GET)
+	public String byUser(
+			@PathVariable(value="userId") Long userId,
+			@PathVariable(value="startDate") String startDate,
+			@PathVariable(value="endDate") String endDate,
+			Model model
+			){
+		
+		User user = new User();
+		user.setId(userId);
+		user = userMapper.selectById(user);
+		
+		// 한 사람이 올린 여러 기간에 걸친 설문들
+		List<Survey> surveys = surveyMapper.listByUsernameAndDates(user.getUsername(), startDate, endDate);
+		List<Survey> fullSurveys = new ArrayList<Survey>();
+		
+		logger.debug("surveys = {}", surveys);
+		
+//		List<Map<String, Survey>> surveysByBranch = new ArrayList<Map<String, Survey>>();
+		
+		for(Survey survey : surveys){
+			fullSurveys.add(surveyService.getFullSurvey(survey.getId()));
+		}
+		
+		for(Survey survey : fullSurveys){
+			statisticsService.setSurveyAllStatistics(survey);
+//			surveysByBranch.add(statisticsService.getOneSurveyStatisticsByBranches(survey.getId()));
+		}
+		
+		
+		logger.debug("surveys = {}", surveys);
+//		logger.debug("surveysByBranch = {}", surveysByBranch);
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("pageTitle", user.getName() + " 님이 만든 설문들의 통계");
+		model.addAttribute("surveys", fullSurveys);
+//		model.addAttribute("surveysByBranch", surveysByBranch);
+		
+		return "statistics_user";
+	}
+			
 }

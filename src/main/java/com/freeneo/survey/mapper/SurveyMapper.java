@@ -31,5 +31,9 @@ public interface SurveyMapper {
 			@Param("branch") String branch, 
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate);
+	public List<Survey> listByUsernameAndDates(
+			@Param("username") String username, 
+			@Param("startDate") String startDate,
+			@Param("endDate") String endDate);
 	
 }
