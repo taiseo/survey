@@ -59,7 +59,7 @@ public class SurveyService {
 		for (Question question : questions) {
 			List<ResponseItem> responseItems = responseItemMapper.list(question
 					.getId());
-			if (question.getType().equals("점수범위")) {
+			if (question.getType().equals("점수범위") && responseItems.size() > 0) {
 				responseItems.get(0).setMinMax();
 			}
 			question.setResponseItems(responseItems);
