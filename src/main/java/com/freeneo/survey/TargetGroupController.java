@@ -103,12 +103,14 @@ public class TargetGroupController {
 		logger.debug("targetGroup = {}", targetGroup);
 
 		// TODO 저장한 데서 불러오게 되면 삭제.
+		/**
 		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -30);
 		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
+		**/
+		model.addAttribute("startDate", targetGroup.getStartDate());
+		model.addAttribute("endDate", targetGroup.getEndDate());
 		
 		
 		model.addAttribute("targetBranches", targetGroup.getBranches());

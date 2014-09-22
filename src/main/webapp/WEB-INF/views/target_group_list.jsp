@@ -20,6 +20,7 @@
 			<tr>
 				<th nowrap="nowrap">No</th>
 				<th nowrap="nowrap">제목</th>
+				<th nowrap="nowrap">계약기간</th>
 				<th nowrap="nowrap">사업분류1</th>
 				<th nowrap="nowrap">사업분류2</th>
 				<th nowrap="nowrap">지역</th>
@@ -36,6 +37,7 @@
 							${item.title }
 						</a>
 					</td>
+					<td>${item.startDate } ~ ${item.endDate }</td>
 					<td>${item.category1 }</td>
 					<td>${item.category2 }</td>
 					<td>${item.bonbu }</td>

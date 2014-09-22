@@ -5,6 +5,8 @@
 	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.TargetGroup">
 		<id column="id" jdbcType="NUMERIC" property="id" />
 		<result column="TITLE" jdbcType="VARCHAR" property="title" />
+		<result column="START_DATE" jdbcType="VARCHAR" property="startDate" />
+		<result column="END_DATE" jdbcType="VARCHAR" property="endDate" />
 		<result column="CATEGORY1" jdbcType="VARCHAR" property="category1" />
 		<result column="CATEGORY2" jdbcType="VARCHAR" property="category2" />
 		<result column="BONBU" jdbcType="VARCHAR" property="bonbu" />
@@ -23,10 +25,12 @@
 	
 	<insert id="insert" parameterType="com.freeneo.survey.domain.TargetGroup">
 		INSERT INTO SV_TARGET_GROUPS 
-			(ID, TITLE, CATEGORY1, CATEGORY2, BONBU, BRANCHES, LIMIT)
+			(ID, TITLE, START_DATE, END_DATE, CATEGORY1, CATEGORY2, BONBU, BRANCHES, LIMIT)
 		VALUES (
 			SEQ_SV_TARGET_GROUPS.NEXTVAL, 
 			#{title,jdbcType=VARCHAR},
+			#{startDate,jdbcType=VARCHAR},
+			#{endDate,jdbcType=VARCHAR},
 			#{category1,jdbcType=VARCHAR},
 			#{category2,jdbcType=VARCHAR},
 			#{bonbu,jdbcType=VARCHAR},
@@ -39,6 +43,8 @@
 		UPDATE SV_TARGET_GROUPS SET
 		
 			TITLE = #{title,jdbcType=VARCHAR},
+			START_DATE = #{startDate,jdbcType=VARCHAR},
+			END_DATE = #{endDate,jdbcType=VARCHAR},
 			CATEGORY1 = #{category1,jdbcType=VARCHAR},
 			CATEGORY2 = #{category2,jdbcType=VARCHAR},
 			BONBU = #{bonbu,jdbcType=VARCHAR},

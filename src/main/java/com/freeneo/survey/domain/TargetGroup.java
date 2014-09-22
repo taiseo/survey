@@ -8,6 +8,8 @@ public class TargetGroup {
 
 	private Long id;
 	private String title;
+	private String startDate;
+	private String endDate;
 	private String category1;
 	private String category2;
 	private String bonbu;
@@ -30,6 +32,22 @@ public class TargetGroup {
 		this.title = title;
 	}
 	
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	public String getCategory1() {
 		return category1;
 	}
