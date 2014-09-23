@@ -41,6 +41,8 @@ create table sv_surveys
   target_bonbu       VARCHAR2(100),
   target_branches    VARCHAR2(1000),
   target_group_ids   VARCHAR2(500),
+  target_start_date  VARCHAR2(10),
+  target_end_date    VARCHAR2(10),
   target_registration_type   VARCHAR2(100),
   limit         NUMBER default 30,
   writer        VARCHAR2(30),
