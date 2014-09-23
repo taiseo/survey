@@ -20,6 +20,8 @@ public class Survey {
 	private String targetBonbu;
 	private String targetBranches;
 	private String targetGroupIds;
+	private String targetStartDate;
+	private String targetEndDate;
 	private String targetRegistrationType;
 	private int limit = 30;
 	private String writer;
@@ -124,6 +126,22 @@ public class Survey {
 
 	public void setTargetGroupIds(String targetGroupIds) {
 		this.targetGroupIds = targetGroupIds;
+	}
+	
+	public String getTargetStartDate() {
+		return targetStartDate;
+	}
+
+	public void setTargetStartDate(String targetStartDate) {
+		this.targetStartDate = targetStartDate;
+	}
+
+	public String getTargetEndDate() {
+		return targetEndDate;
+	}
+
+	public void setTargetEndDate(String targetEndDate) {
+		this.targetEndDate = targetEndDate;
 	}
 
 	public String getTargetRegistrationType() {
