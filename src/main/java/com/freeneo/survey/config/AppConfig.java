@@ -22,12 +22,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.freeneo.survey.SVInterceptor;
+import com.freeneo.survey.interceptor.CheckLoginInterceptor;
+import com.freeneo.survey.interceptor.LogInterceptor;
 
 @ComponentScan(basePackages = {"com.freeneo.survey"})
 @EnableWebMvc
@@ -141,14 +143,25 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public SVInterceptor SVInterceptor(){
-		return new SVInterceptor();
+	public CheckLoginInterceptor SVInterceptor(){
+		return new CheckLoginInterceptor();
+	}
+	
+	@Bean
+	public LogInterceptor LogInterceptor(){
+		return new LogInterceptor();
 	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		registry.addInterceptor(SVInterceptor()).excludePathPatterns("/login", "/");
-		registry.addInterceptor(SVInterceptor()).addPathPatterns("/*");
+		
+		InterceptorRegistration checkLoginInterceptor = registry.addInterceptor(SVInterceptor()); 
+		checkLoginInterceptor.addPathPatterns("/*");
+		checkLoginInterceptor.excludePathPatterns("/login", "/");
+		
+		InterceptorRegistration logInterceptor = registry.addInterceptor(LogInterceptor());
+		logInterceptor.addPathPatterns("/*");
+		logInterceptor.excludePathPatterns("/login", "/");
 	}
 	
 	@Override
