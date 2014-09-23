@@ -110,7 +110,7 @@ public class HistoryController {
 			branchHistory.setBranchName(branch);
 			
 			int sendCount = 0;
-			int respondentCount = getRespondentCount(countByBranch, branch);;
+			int respondentCount = getRespondentCount(countByBranch, branch);
 			double responseRatio = 0;
 			
 			allRespondentCount += respondentCount;
@@ -128,6 +128,7 @@ public class HistoryController {
 			branchHistory.setSendCount(sendCount);
 			branchHistory.setRespondentCount(respondentCount);
 			branchHistory.setResponseRatio(responseRatio);
+			branchHistory.setSurveyCount(getSurveyCountFromSurveyListByBranch(surveyList, branch));
 
 			branchHistoryList.add(branchHistory);
 		}
@@ -158,6 +159,23 @@ public class HistoryController {
 	}
 	
 
+
+	private int getSurveyCountFromSurveyListByBranch(List<Survey> surveyList,
+			String branch) {
+		int count = 0;
+		
+		for(Survey survey : surveyList){
+			
+			if(survey.getTargetBranches() == null){
+				continue;
+			}
+			
+			if(survey.getTargetBranches().contains(branch)){
+				count++;
+			}
+		}
+		return count;
+	}
 
 	private int getRespondentCount(List<Map<String, ?>> countByBranch,
 			String branch) {

@@ -10,6 +10,7 @@ public class BranchHistory {
 	private int sendCount;
 	private int respondentCount;
 	private double responseRatio;
+	private int surveyCount;
 	
 	public String getBranchName() {
 		return branchName;
@@ -35,6 +36,13 @@ public class BranchHistory {
 	}
 	public void setResponseRatio(double responseRatio) {
 		this.responseRatio = responseRatio;
+	}
+	
+	public int getSurveyCount() {
+		return surveyCount;
+	}
+	public void setSurveyCount(int surveyCount) {
+		this.surveyCount = surveyCount;
 	}
 	@Override
 	public boolean equals(Object o) {

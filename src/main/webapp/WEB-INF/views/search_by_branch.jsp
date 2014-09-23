@@ -10,6 +10,7 @@
 			<th>문자 발송</th>
 			<th>설문 회신</th>
 			<th>회신율</th>
+			<th>설문 건수</th>
 			<th>결과 보고</th>
 		</tr>
 	</thead>
@@ -21,6 +22,7 @@
 			<td>
 				<fmt:formatNumber value="${allResponseRatio }" pattern="0.00"/>%
 			</td>
+			<td>${allSurveyCount }</td>
 			<td></td>
 		</tr>
 		<c:forEach items="${branchHistoryList }" var="branchHistory">
@@ -32,6 +34,7 @@
 				<td>
 					<fmt:formatNumber value="${branchHistory.responseRatio }" pattern="0.00"/>%
 				</td>
+				<td>${branchHistory.surveyCount }</td>
 				<td>
 					<a target="_blank" href="<%= request.getContextPath() %>/statistics/branch/${branchHistory.branchName }/${startDate}/${endDate}">
 						결과 보기
