@@ -62,9 +62,9 @@ function search_by_branch_excel(){
 	$("#frm").attr("target","_blank");
 	
 	var branches = [],
-	branch = $('[name=branch]').val(),
-	bonbu = $('#bonbu').val(),
-	branches_string;
+		branch = $('[name=branch]').val(),
+		bonbu = $('#bonbu').val(),
+		branches_string;
 
 	if(bonbu == '' && branch == ''){
 		// 전체
@@ -80,7 +80,7 @@ function search_by_branch_excel(){
 	}
 	
 	branches_string = $.toJSON(branches);	
-	$("#branches").val(branches);
+	$("#branches").val(branches_string);
 	
 	frm.submit();
 
