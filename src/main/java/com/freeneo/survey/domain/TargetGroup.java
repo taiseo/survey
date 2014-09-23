@@ -14,10 +14,6 @@ public class TargetGroup {
 	private String branches;
 	private int limit = 30;
 
-	// targetGroup에는 날짜가 필요없다는 게 증명되면 startDate와 endDate는 제거한다. - 2014-09-23 ahw 
-	private String startDate;
-	private String endDate;
-	
 	public Long getId() {
 		return id;
 	}
@@ -34,22 +30,6 @@ public class TargetGroup {
 		this.title = title;
 	}
 	
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
 	public String getCategory1() {
 		return category1;
 	}
