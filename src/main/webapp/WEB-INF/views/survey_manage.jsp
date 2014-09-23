@@ -162,6 +162,8 @@
 	</form:form>
 </div>
 
+<div id="target-detail-modal" class="modal  fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 <script type="text/javascript">
 	survey.target_group_ids = ${survey.targetGroupIds == null || survey.targetGroupIds == '' ? '[]' : survey.targetGroupIds} ;
 	survey.target_branches = ${targetBranches == null || targetBranches == '' ? '[]' : targetBranches} ;

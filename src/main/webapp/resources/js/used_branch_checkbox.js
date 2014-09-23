@@ -6,6 +6,7 @@ $(document).ready(function(){
 	fill_target_bonbus();
 	bind_bonbu_select();
 	bind_rewrite_count_by_target_date();
+	bind_target_detail();
 });
 
 function bind_target_select(){
@@ -79,14 +80,7 @@ function fill_target_branches(){
 }
 
 function write_target_count(){
-	var params = {
-		category1: $('.js-target-category1').val(),
-		category2: $('.js-target-category2').val(),
-		branches: $('.js-target-branches').val(),
-		limit: ( $('.js-target-limit').val() || 30 ),
-		startDate: ( $('.js-target-start-date').val() || null ),
-		endDate: ( $('.js-target-end-date').val() || null )
-	};
+	var params = get_target_params();
 	
 	if(params.targetBranches == '[]'){
 		$('.js-target-count').html('(0명)');
@@ -96,6 +90,17 @@ function write_target_count(){
 	$.post(survey.context_path + '/surveys/target-count', params, function(data){
 		$('.js-target-count').html(data);
 	});
+}
+
+function get_target_params(){
+	return {
+		category1: $('.js-target-category1').val(),
+		category2: $('.js-target-category2').val(),
+		branches: $('.js-target-branches').val(),
+		limit: ( $('.js-target-limit').val() || 30 ),
+		startDate: ( $('.js-target-start-date').val() || null ),
+		endDate: ( $('.js-target-end-date').val() || null )
+	};
 }
 
 function fill_target_bonbus(){
@@ -134,3 +139,25 @@ function show_branch_by_bonbu(){
 function bind_rewrite_count_by_target_date(){
 	$('.js-target-start-date, .js-target-end-date').change(write_target_count);
 }
+
+function bind_target_detail(){
+	$('.js-target-count').on('click', '.js-target-detail', target_detail);
+}
+
+function target_detail(){
+	var params = get_target_params();
+	$.post(survey.context_path + '/surveys/target-detail', params, function(html){
+		$('#target-detail-modal')
+			.html(html)
+			.modal();
+	});
+	return false;
+}
+
+
+
+
+
+
+
+
