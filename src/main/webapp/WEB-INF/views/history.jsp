@@ -31,7 +31,9 @@
 				<select id="bonbu"></select>
 				<select id="branch" name="branch"></select>
 				<input class="btn btn-primary" type="button" value="검색" onclick="search_by_branch()" />
-				<button type="button" class="btn btn-info" onclick="search_by_branch_excel();">Excel Download</button>
+				<button type="button" class="btn btn-info js-search-by-branch-excel"
+					style="display: none" 
+					onclick="search_by_branch_excel();">Excel Download</button>
 			</td>
 		</tr>
 		<tr>
@@ -51,7 +53,9 @@
 					</c:forEach>
 				</select>
 				<input class="btn btn-primary" type="submit" value="검색" onclick="search_by_user()" />
-				<button type="button" class="btn btn-info" onclick="search_by_user_excel();">Excel Download</button>
+				<button type="button" class="btn btn-info hidden js-search-by-user-excel"
+					style="display: none" 
+					onclick="search_by_user_excel();">Excel Download</button>
 			</td>
 		</tr>
 		</tbody>
