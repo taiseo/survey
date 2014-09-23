@@ -83,9 +83,9 @@
 							</c:when>
 							
 							<%--승인자1 입장 --%>
-							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자2만 승인') 
+							<c:when test="${(survey.status == '승인대기') 
 									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자1' )}">
-								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval1">
+								<a class="btn  btn-small  btn-primary" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval1">
 									승인
 								</a>
 							</c:when>
@@ -93,7 +93,7 @@
 							<%-- 승인자2 입장 --%>
 							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자1만 승인') 
 									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자2' )}">
-								<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
+								<a class="btn  btn-small  btn-primary" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
 									승인
 								</a>
 							</c:when>
@@ -116,6 +116,13 @@
 								<input class="btn  btn-small" type="button" disabled value="승인대기" />
 							</c:otherwise>
 						</c:choose>
+						
+						<c:if test="${survey.status == '승인대기' or survey.status == '승인자1만 승인'}">
+							<a class="btn  btn-small  btn-danger" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/temporary"
+								onclick="return confirm('승인 요청을 회수할까요?')">
+								회수
+							</a>
+						</c:if> 
 					</td>
 					<td>
 						${survey.respondentCount }
