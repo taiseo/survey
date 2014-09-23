@@ -136,6 +136,15 @@ th label {
 }
 
 .limit-height {
-	height: 100px;
+	max-height: 100px;
+	*height: 100px;
 	overflow: auto;
+}
+
+.normal-size {
+	font-size: inherit;
+}
+
+.normal-size small {
+	font-size: 0.9em;
 }

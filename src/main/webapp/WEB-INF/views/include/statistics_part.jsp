@@ -6,7 +6,7 @@
 
     <c:forEach items="${survey.questions }" var="question">
     	<c:if test="${question.type != '페이지-나누기' }">
-			<h2>
+			<h2 class="normal-size">
 				${question.content }
 				<small>${question.contentDetail }</small>
 			</h2>

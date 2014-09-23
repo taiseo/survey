@@ -6,14 +6,6 @@
 <jsp:include page="include/header.jsp" />
 <div class="limit-width  center-block">
 	
-	<ul class="nav nav-pills" id="top">
-	<c:forEach items="${surveys }" var="survey">
-		<li>
-			<a href="#${survey.title}">${survey.title }</a>
-		</li>
-	</c:forEach>
-	</ul>
-	
 	<div class="page-header">
 		<h1>
 			${pageTitle } 
@@ -24,14 +16,18 @@
 
 	<c:forEach items="${surveys}" var="survey">
 		
-		<div class="page-header" style="margin-top: 100px" id="${survey.title }">
-			<h1>
+		<h1 class="normal-size  jquery-on-container">
+			<a href="#" class="js-open-target" data-target="#survey${survey.id }">
 				${survey.title } <small>${survey.respondentCount }명 응답</small>
-				<a href="#top" class="btn btn-small pull-right">맨 위로</a>
-			</h1>
-		</div>
+			</a>
+		</h1>
+		
 		<c:set var="survey" value="${survey }" scope="request"/>
-		<jsp:include page="include/statistics_part.jsp"/>
+		<div id="survey${survey.id }" style="display: none">
+			<jsp:include page="include/statistics_part.jsp"/>
+		</div>
+		
 	</c:forEach>
+	
 </div>
 <jsp:include page="include/footer.jsp" />

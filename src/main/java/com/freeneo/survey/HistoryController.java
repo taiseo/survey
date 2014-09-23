@@ -52,9 +52,10 @@ public class HistoryController {
 		
 		List<String> branchList = customerMapper.branchList(null);
 		
-		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -30);
+		cal.add(Calendar.DATE, +7);
+		String endDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+		cal.add(Calendar.DATE, -37);
 		String startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 		
 		List<User> userList = userMapper.list();
