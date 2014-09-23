@@ -8,14 +8,16 @@ public class TargetGroup {
 
 	private Long id;
 	private String title;
-	private String startDate;
-	private String endDate;
 	private String category1;
 	private String category2;
 	private String bonbu;
 	private String branches;
 	private int limit = 30;
 
+	// targetGroup에는 날짜가 필요없다는 게 증명되면 startDate와 endDate는 제거한다. - 2014-09-23 ahw 
+	private String startDate;
+	private String endDate;
+	
 	public Long getId() {
 		return id;
 	}
