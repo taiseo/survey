@@ -5,7 +5,8 @@
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<layout>
 			<pattern>
-				%-5level %msg - %logger{36}:%line [%thread] %d{HH:mm:ss.SSS}%n
+%-5level %msg 
+- %logger{36}:%line [%thread] %d{HH:mm:ss.SSS}%n
 			</pattern>
 		</layout>
 	</appender>
