@@ -166,28 +166,41 @@ public class SurveyController {
 	 * @return
 	 */
 	private boolean validateSurvey(Survey survey, Model model) {
-		if(survey.getTitle().equals("")){
+		if(Util.isEmptyStr(survey.getTitle())){
 			model.addAttribute("error_msg","제목을 입력해 주세요");
 			return false;
 		}
 		
-		if(survey.getEndDate().equals("")){
+		if(Util.isEmptyStr(survey.getEndDate())){
 			model.addAttribute("error_msg","종료일을 입력해 주세요");
 			return false;
 		}
 		
-		if(survey.getMsgSubject().equals("")){
+		if(Util.isEmptyStr(survey.getMsgSubject())){
 			model.addAttribute("error_msg","MMS 제목을 입력해 주세요");
 			return false;
 		}
 		
-		if(survey.getMsg().equals("")){
+		if(Util.isEmptyStr(survey.getMsg())){
 			model.addAttribute("error_msg","MMS 인사말을 입력해 주세요");
 			return false;
 		}
 		
+		if( ! survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
+			
+			if(Util.isEmptyStr(survey.getTargetStartDate())){
+				model.addAttribute("error_msg","계약기간 시작일을 입력해 주세요.");
+				return false;
+			}
+			if(Util.isEmptyStr(survey.getTargetEndDate())){
+				model.addAttribute("error_msg","계약기간 종료일을 입력해 주세요.");
+				return false;
+			}
+			
+		}
+		
 		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
-			if(survey.getTargetBranches() == null){
+			if(Util.isEmptyStr(survey.getTargetBranches())){
 				model.addAttribute("error_msg","지사를 선택해 주세요");
 				return false;
 			}
@@ -199,7 +212,7 @@ public class SurveyController {
 		}
 		
 		if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
-			if(survey.getTargetGroupIds().equals("")){
+			if(Util.isEmptyStr(survey.getTargetGroupIds())){
 				model.addAttribute("error_msg","캠페인 그룹을 선택해 주세요");
 				return false;
 			}
@@ -276,7 +289,7 @@ public class SurveyController {
 			return list(model, session);
 		}
 
-		if (validateSurvey(survey, model)) {
+		if ( ! validateSurvey(survey, model)) {
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
 			return updatePage(survey.getId(), model, session, survey);
 		}
@@ -370,6 +383,8 @@ public class SurveyController {
 		logger.debug("status = {}", status);
 		
 		User user = (User) session.getAttribute("user");
+		logger.debug("user = {}", user);
+		
 		if(user.getUserLevel().equals("일반") && status.contains("승인자")){
 			model.addAttribute("error_msg", "권한이 없습니다.");
 			return list(model, session);

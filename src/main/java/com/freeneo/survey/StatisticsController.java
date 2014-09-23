@@ -2,13 +2,9 @@ package com.freeneo.survey;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.freeneo.survey.domain.Question;
-import com.freeneo.survey.domain.Response;
-import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;

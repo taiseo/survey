@@ -526,11 +526,11 @@ public class Util {
 	}
 
 	/**
-	 * ???????? /??? ????? x????? ??? ??;, ?????? NULL; ???????.
+	 * String이 널 혹은 빈 값이면 null을 리턴. 아니면 문자열을 리턴. 
 	 * 
 	 * @param str
 	 *            String
-	 * @return NULL or ??
+	 * @return NULL or String
 	 */
 	public static String chkNull(String str) {
 		if (str == null) {
@@ -711,5 +711,22 @@ public class Util {
 		logger.debug("today.compareTo(dateParsed) = {}", today.compareTo(dateParsed));
 		
 		return today.compareTo(dateParsed);
+	}
+
+	/**
+	 * 문자열이 NULL이거나 앞뒤로 공백을 자른 값이 ""인 경우 TRUE 리턴.
+	 * @param str
+	 * @return
+	 */
+	public static boolean isEmptyStr(String str) {
+		
+		if(str == null){
+			return true;
+		}
+		if(str.trim().length() == 0){
+			return true;
+		}
+		
+		return false;
 	}
 }

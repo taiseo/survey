@@ -57,6 +57,16 @@
 						<p class="muted">CRM DB를 사용하는 경우 고객이 달라질 수 있기 때문에 실제 발송 대상은 발송 시점에 추출합니다.</p>
 					</td>
 				</tr>
+				
+				<tr class="js-target-date">
+					<th>계약 기간</th>
+					<td>
+						<form:input cssClass="datepicker  span2" path="targetStartDate" />
+						~
+						<form:input cssClass="datepicker  span2" path="targetEndDate" />
+					</td>
+				</tr>
+				
 				<tr class="target-registration-type js-target-registration-type" 
 						data-target-registration-type="캠페인 그룹 선택">
 					<th>
@@ -76,6 +86,8 @@
 						</div>						
 					</td>
 				</tr>
+				
+
 				<tr class="target-registration-type js-target-registration-type"
 						data-target-registration-type="CRM DB 추출">
 					<th>

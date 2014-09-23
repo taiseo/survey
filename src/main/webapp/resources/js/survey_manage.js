@@ -3,6 +3,8 @@ $(document).ready(function(){
 	bind_target_registration_type();
 	bind_target_group_ids();
 	check_target_group_ids();
+	bind_target_date_show_hide();
+	target_date_show_hide();
 });
 
 
@@ -50,4 +52,17 @@ function check_target_group_ids(){
 	_.forEach(survey.target_group_ids, function(id){
 		$('.js-target-group-id[value='+id+']').attr('checked', true);
 	});
+}
+
+function bind_target_date_show_hide(){
+	$('[name="targetRegistrationType"]').on('change', target_date_show_hide);
+}
+
+function target_date_show_hide(){
+	var type = $('[name="targetRegistrationType"]:checked').val();
+	if(type == '캠페인 그룹 선택' || type == 'CRM DB 추출'){
+		$('.js-target-date').show();
+	}else{
+		$('.js-target-date').hide();
+	}
 }
