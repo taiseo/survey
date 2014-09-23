@@ -22,10 +22,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.freeneo.survey.interceptor.CheckLoginInterceptor;
@@ -142,8 +142,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    registry.addResourceHandler("/resource/**").addResourceLocations("/resource/");
 	}
 
+	
+	
 	@Bean
-	public CheckLoginInterceptor SVInterceptor(){
+	public CheckLoginInterceptor checkLoginInterceptor(){
 		return new CheckLoginInterceptor();
 	}
 	
@@ -151,17 +153,14 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public LogInterceptor LogInterceptor(){
 		return new LogInterceptor();
 	}
-	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		
-		InterceptorRegistration checkLoginInterceptor = registry.addInterceptor(SVInterceptor()); 
-		checkLoginInterceptor.addPathPatterns("/*");
-		checkLoginInterceptor.excludePathPatterns("/login", "/");
-		
-		InterceptorRegistration logInterceptor = registry.addInterceptor(LogInterceptor());
-		logInterceptor.addPathPatterns("/*");
-		logInterceptor.excludePathPatterns("/login", "/");
+		registry.addInterceptor(checkLoginInterceptor())
+			.addPathPatterns("/**")
+			.excludePathPatterns("/login/**", "/logout/**", "/survey/**", "/responses/**", "/");
+		registry.addInterceptor(LogInterceptor())
+			.addPathPatterns("/**")
+			.excludePathPatterns("/login/**", "/logout/**", "/survey/**", "/responses/**", "/");
 	}
 	
 	@Override
