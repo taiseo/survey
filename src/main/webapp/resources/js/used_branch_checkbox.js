@@ -5,6 +5,7 @@ $(document).ready(function(){
 	load_branch();
 	fill_target_bonbus();
 	bind_bonbu_select();
+	bind_rewrite_count_by_target_date();
 });
 
 function bind_target_select(){
@@ -82,7 +83,9 @@ function write_target_count(){
 		category1: $('.js-target-category1').val(),
 		category2: $('.js-target-category2').val(),
 		branches: $('.js-target-branches').val(),
-		limit: ( $('.js-target-limit').val() || 30 )
+		limit: ( $('.js-target-limit').val() || 30 ),
+		startDate: ( $('.js-target-start-date').val() || null ),
+		endDate: ( $('.js-target-end-date').val() || null )
 	};
 	
 	if(params.targetBranches == '[]'){
@@ -126,4 +129,8 @@ function show_branch_by_bonbu(){
 				.parent().show();
 		}
 	});
+}
+
+function bind_rewrite_count_by_target_date(){
+	$('.js-target-start-date, .js-target-end-date').change(write_target_count);
 }

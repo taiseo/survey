@@ -407,7 +407,9 @@ public class SurveyController {
 		logger.debug("survey to update = {}", survey);
 
 		if (status.equals("발송")) {
-			surveyService.sendMms(request, survey);
+			if( ! surveyService.sendMms(survey, request, model)){
+				return list(model, session);
+			}
 		}
 
 		surveyMapper.update(survey);
@@ -421,10 +423,13 @@ public class SurveyController {
 			@RequestParam(value = "category1") String category1,
 			@RequestParam(value = "category2", required = false, defaultValue = "") String category2,
 			@RequestParam(value = "branches") String branches,
-			@RequestParam(value = "limit") int limit, Model model)
+			@RequestParam(value = "limit") int limit, 
+			@RequestParam(value = "startDate") String startDate, 
+			@RequestParam(value = "endDate") String endDate, 
+			Model model)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit);
+		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit, startDate, endDate);
 
 		return "(" + customers.size() + "명)";
 	}

@@ -15,4 +15,11 @@ public interface CustomerMapper {
 			@Param("category") String category, 
 			@Param("branch") String branch,
 			@Param("limit") int limit);
+	public List<Customer> customerListByDate(
+			@Param("category") String category, 
+			@Param("branch") String branch,
+			@Param("limit") int limit,
+			@Param("startDate") String startDate,
+			@Param("endDate") String endDate
+			);
 }

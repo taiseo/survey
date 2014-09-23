@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -30,6 +31,7 @@ import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.mapperMms.MmsMapper;
+import com.freeneo.survey.util.Util;
 
 @Service
 public class SurveyService {
@@ -71,7 +73,31 @@ public class SurveyService {
 
 	public List<Customer> customerList(String targetCategory1,
 			String targetCategory2, String targetBranches, int limit)
+					throws JsonParseException, JsonMappingException, IOException {
+		
+		return customerListCommon(targetCategory1, targetCategory2, targetBranches, limit, null, null);
+	}
+	
+	public List<Customer> customerList(String targetCategory1,
+			String targetCategory2, String targetBranches, int limit,
+			String startDate, String endDate)
 			throws JsonParseException, JsonMappingException, IOException {
+		
+		if(startDate.length() > 8){
+			startDate = startDate.replace("-", "").substring(0, 8);
+			endDate = endDate.replace("-", "").substring(0, 8);
+		}
+		
+		logger.debug("startDate = {}", startDate);
+		logger.debug("endDate = {}", endDate);
+		
+		return customerListCommon(targetCategory1, targetCategory2, targetBranches, limit, startDate, endDate);
+	}
+	
+	private List<Customer> customerListCommon(String targetCategory1,
+			String targetCategory2, String targetBranches, int limit,
+			String startDate, String endDate) throws JsonParseException, JsonMappingException, IOException{
+		
 		String category = null;
 		if (targetCategory2 == null) {
 			category = targetCategory1;
@@ -83,12 +109,21 @@ public class SurveyService {
 
 		List<Customer> customers = new ArrayList<Customer>();
 		for (String branch : branchList) {
-			customers.addAll(customerMapper.customerList(category, branch,
-					limit));
+			List<Customer> temp = new ArrayList<Customer>();
+			
+			if(Util.isEmptyStr(startDate) || Util.isEmptyStr(endDate)){
+				temp = customerMapper.customerList(category, branch, limit);
+			}else{
+				temp = customerMapper.customerListByDate(category, branch, limit, startDate, endDate);
+			}
+			
+			customers.addAll(temp);
+			
 			logger.debug("customers = {}", customers);
 		}
 
-		return customers;
+		return customers;		
+		
 	}
 
 	public List<String> makeBranchList(String targetBranches)
@@ -121,7 +156,7 @@ public class SurveyService {
 		targetMapper.insertAll(surveyId, customers);
 	}
 
-	public void sendMms(HttpServletRequest request, Survey survey) throws JsonParseException,
+	public boolean sendMms(Survey survey, HttpServletRequest request, Model model) throws JsonParseException,
 			JsonMappingException, IOException {
 
 		List<Customer> customers = null;
@@ -129,9 +164,9 @@ public class SurveyService {
 		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
 			customers = customerList(survey.getTargetCategory1(),
 					survey.getTargetCategory2(), survey.getTargetBranches(),
-					survey.getLimit());
+					survey.getLimit(), survey.getTargetStartDate(), survey.getTargetEndDate());
 		}else if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
-			customers = customerListByTargetGroupIds(survey.getTargetGroupIds());
+			customers = customerListByTargetGroupIds(survey.getTargetGroupIds(), survey.getTargetStartDate(), survey.getTargetEndDate());
 		}
 
 		logger.debug("customers = {}", customers);
@@ -156,6 +191,11 @@ public class SurveyService {
 
 		logger.debug("mmsList = {}", mmsList);
 
+		if(mmsList.size() == 0){
+			model.addAttribute("error_msg", "발송 대상이 0명입니다.");
+			return false;
+		}
+		
 		for (Mms mms : mmsList) {
 			mmsMapper.insert(mms);
 		}
@@ -163,15 +203,23 @@ public class SurveyService {
 		updateTargets(survey.getId(), customers);
 		survey.setSendCount(customers.size());
 		surveyMapper.update(survey);
+		return true;
 	}
 
-	private List<Customer> customerListByTargetGroupIds(String targetGroupIds) throws JsonParseException, JsonMappingException, IOException {
+	private List<Customer> customerListByTargetGroupIds(String targetGroupIds, String startDate, String endDate) 
+			throws JsonParseException, JsonMappingException, IOException {
 		
 		List<Customer> customers = new ArrayList<Customer>(); 
 		List<Long> targetGroupIdList = makeSelectedTargetGroups(targetGroupIds);
 		for(Long id : targetGroupIdList){
 			TargetGroup targetGroup = targetGroupMapper.select(id);
-			customers.addAll(customerList(targetGroup.getCategory1(), targetGroup.getCategory2(), targetGroup.getBranches(), targetGroup.getLimit()));
+			customers.addAll(customerList(
+					targetGroup.getCategory1(), 
+					targetGroup.getCategory2(), 
+					targetGroup.getBranches(), 
+					targetGroup.getLimit(),
+					startDate,
+					endDate));
 		}
 		
 		// 중복 제거

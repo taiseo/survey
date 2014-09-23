@@ -61,9 +61,9 @@
 				<tr class="js-target-date">
 					<th>계약 기간</th>
 					<td>
-						<form:input cssClass="datepicker  span2" path="targetStartDate" />
+						<form:input cssClass="datepicker  span2  js-target-start-date" path="targetStartDate" />
 						~
-						<form:input cssClass="datepicker  span2" path="targetEndDate" />
+						<form:input cssClass="datepicker  span2  js-target-end-date" path="targetEndDate" />
 					</td>
 				</tr>
 				
