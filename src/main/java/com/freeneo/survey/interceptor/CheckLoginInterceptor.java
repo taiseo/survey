@@ -1,8 +1,5 @@
 package com.freeneo.survey.interceptor;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,11 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.freeneo.survey.domain.ConfigItem;
-import com.freeneo.survey.domain.SVLog;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.ConfigMapper;
 import com.freeneo.survey.mapper.SVLogMapper;
@@ -50,12 +45,14 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 
-		if (session.getAttribute("user") == null) {
+		User user = (User) session.getAttribute("user");
+		
+		if (user == null) {
 
 			// 로컬에서 개발중이면 로그인 검사 패스
 			if (request.getRemoteAddr().equals("127.0.0.1")
 					|| request.getRemoteAddr().equals("0:0:0:0:0:0:0:1")) {
-				User user = new User(4L, "admin", "", "로컬임의아이디", "임의 부서", "", "",
+				user = new User(4L, "admin", "", "로컬임의아이디", "임의 부서", "", "",
 						"email", "시스템 관리자");
 				session.setAttribute("user", user);
 				logger.debug("로컬 개발용 임시 유저 = {}", user);
@@ -65,6 +62,8 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter {
 			logger.debug("로그인 필요");
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
+		}else{
+			logger.debug("로그인 확인됨 | user = {}", user);
 		}
 
 		return true;

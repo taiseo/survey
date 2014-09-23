@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.freeneo.survey.domain.ConfigItem;
 import com.freeneo.survey.domain.SVLog;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.ConfigMapper;
