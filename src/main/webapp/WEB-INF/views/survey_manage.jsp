@@ -98,7 +98,7 @@
 									<th><form:label path="targetCategory1">사업분류1</form:label></th>
 									<td>
 										<form:select path="targetCategory1" cssClass="js-target-category1">
-											<option value="">목표 그룹 선택</option>>
+											<option value="">사업 대분류 선택</option>>
 											<form:option value="목적외사업" />
 											<form:option value="농지은행" />
 											<form:option value="유지관리" />

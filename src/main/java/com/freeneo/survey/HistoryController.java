@@ -67,7 +67,7 @@ public class HistoryController {
 		model.addAttribute("branchList", branchList);
 		model.addAttribute("partList", partList);
 		model.addAttribute("userList", userList);
-		model.addAttribute("pageTitle", "운영 및 통계 내역");
+		model.addAttribute("pageTitle", "조사 결과(분석 통계)");
 		
 		return "history";
 	}
