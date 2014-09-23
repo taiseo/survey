@@ -48,6 +48,10 @@ l-block {
 	margin-bottom: 0;
 }
 
+.no-margin {
+	margin: 0;
+}
+
 .login-form-wrapper {
 	position: absolute;
 	left: 50%;
@@ -147,4 +151,10 @@ th label {
 
 .normal-size small {
 	font-size: 0.9em;
+}
+.index-number {
+	display: inline-block;
+	*display: inline;
+	width: 30px;
+	font-weight: normal;
 }

@@ -14,9 +14,12 @@
 	</div>
 
 
-	<c:forEach items="${surveys}" var="survey">
+	<c:forEach items="${surveys}" var="survey" varStatus="status">
 		
-		<h1 class="normal-size  jquery-on-container">
+		<h1 class="normal-size  jquery-on-container  no-margin">
+			<span class="index-number">
+				${fn:length(surveys) - status.count +1}
+			</span>
 			<a href="#" class="js-open-target" data-target="#survey${survey.id }">
 				${survey.title } <small>${survey.respondentCount }명 응답</small>
 			</a>
@@ -26,6 +29,8 @@
 		<div id="survey${survey.id }" style="display: none">
 			<jsp:include page="include/statistics_part.jsp"/>
 		</div>
+		
+		<hr class="no-margin" />
 		
 	</c:forEach>
 	
