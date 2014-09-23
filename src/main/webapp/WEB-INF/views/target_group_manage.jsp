@@ -18,14 +18,6 @@
 					<td><form:input cssClass="input-block-level" path="title"/></td>
 				</tr>
 				<tr>
-					<th>계약 기간</th>
-					<td>
-						<input class="datepicker  span2" type="text" name="startDate" value="${startDate }"/>
-						~
-						<input class="datepicker  span2" type="text" name="endDate" value="${endDate }"/>
-					</td>
-				</tr>
-				<tr>
 					<th><form:label path="limit">추출수</form:label></th>
 					<td>
 						<form:input path="limit" cssClass="span1  js-number  js-target-limit"  cssStyle="text-align: right"/>명씩 

@@ -12,7 +12,7 @@
 	<form:form method="${httpMethod }" modelAttribute="survey" cssClass="js-survey-form">
 		<table class="table  table-striped">
 			<colgroup>
-				<col style="width: 10%"/>
+				<col style="width: 15%"/>
 			</colgroup>
 			<tbody>
 				<tr>
