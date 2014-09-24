@@ -108,30 +108,18 @@ public class StatisticsController {
 		
 		// 한 사람이 올린 여러 기간에 걸친 설문들
 		List<Survey> surveys = surveyMapper.listByUsernameAndDates(user.getUsername(), startDate, endDate);
-		List<Survey> fullSurveys = new ArrayList<Survey>();
-		
-		logger.debug("surveys = {}", surveys);
-		
-//		List<Map<String, Survey>> surveysByBranch = new ArrayList<Map<String, Survey>>();
 		
 		for(Survey survey : surveys){
-			fullSurveys.add(surveyService.getFullSurvey(survey.getId()));
+			survey.setRespondentCount(responseMapper
+					.countRespondentBySurveyId(survey.getId()));
 		}
-		
-		for(Survey survey : fullSurveys){
-			statisticsService.setSurveyAllStatistics(survey);
-//			surveysByBranch.add(statisticsService.getOneSurveyStatisticsByBranches(survey.getId()));
-		}
-		
 		
 		logger.debug("surveys = {}", surveys);
-//		logger.debug("surveysByBranch = {}", surveysByBranch);
 		
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("pageTitle", user.getName() + " 님이 만든 설문들의 통계");
-		model.addAttribute("surveys", fullSurveys);
-//		model.addAttribute("surveysByBranch", surveysByBranch);
+		model.addAttribute("surveys", surveys);
 		
 		return "statistics_user";
 	}

@@ -13,26 +13,54 @@
 		</h1>
 	</div>
 
+	<table class="table  table-striped  table-data">
+		<thead>
+			<tr>
 
-	<c:forEach items="${surveys}" var="survey" varStatus="status">
-		
-		<h1 class="normal-size  jquery-on-container  no-margin">
-			<span class="index-number">
-				${fn:length(surveys) - status.count +1}
-			</span>
-			<a href="#" class="js-open-target" data-target="#survey${survey.id }">
-				${survey.title } <small>${survey.respondentCount }명 응답</small>
-			</a>
-		</h1>
-		
-		<c:set var="survey" value="${survey }" scope="request"/>
-		<div id="survey${survey.id }" style="display: none">
-			<jsp:include page="include/statistics_part.jsp"/>
-		</div>
-		
-		<hr class="no-margin" />
-		
-	</c:forEach>
+				<th nowrap="nowrap">No</th>
+				<th nowrap="nowrap">제목</th>
+				<th nowrap="nowrap">조사기간</th>
+				<th nowrap="nowrap">대상</th>
+				<th nowrap="nowrap">입력일시</th>
+				<th nowrap="nowrap">상태</th>
+				<th nowrap="nowrap">응답수</th>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach items="${surveys}" var="survey" varStatus="status">
+			
+			<tr>
+				<td>
+					${fn:length(surveys) - status.count +1}
+				</td>
+				<td>
+					<a href="<%=request.getContextPath() %>/statistics/${survey.id}">
+						${survey.title }
+					</a>
+				</td>
+				<td nowrap="nowrap">${survey.startDate } ~
+					<br />
+					${survey.endDate }
+				</td>
+				<td>
+					${survey.targetCategory1 }
+					${survey.targetCategory2 }
+					<%-- ${survey.targetBranches } --%>
+				</td>
+				<td nowrap="nowrap" class="align-center">${survey.datetime }</td>
+				<td>
+					${survey.status }
+				</td>
+				<td>
+					${survey.respondentCount }
+				</td>
+			</tr>
+			
+			
+		</c:forEach>
+		</tbody>
+	</table>
+	
 	
 </div>
 <jsp:include page="include/footer.jsp" />
