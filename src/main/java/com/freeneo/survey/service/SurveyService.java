@@ -184,7 +184,7 @@ public class SurveyService {
 				Mms mms = new Mms();
 				mms.setSubject(survey.getMsgSubject());
 				mms.setPhone(target.getHp());
-				mms.setCallback("0000");
+				mms.setCallback(configMapper.select("phone").getValue());
 				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 				
 	
@@ -199,7 +199,7 @@ public class SurveyService {
 				Mms mms = new Mms();
 				mms.setSubject(survey.getMsgSubject());
 				mms.setPhone(customer.getHp());
-				mms.setCallback("0000");
+				mms.setCallback(configMapper.select("phone").getValue());
 				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 				
 	
@@ -223,8 +223,11 @@ public class SurveyService {
 		
 		if(!survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
 			updateTargets(survey.getId(), customers);
+			survey.setSendCount(customers.size());
+		}else{
+			survey.setSendCount(targets.size());
 		}
-		survey.setSendCount(customers.size());
+		
 		surveyMapper.update(survey);
 		return true;
 	}
