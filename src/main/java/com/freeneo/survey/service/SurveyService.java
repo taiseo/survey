@@ -114,7 +114,7 @@ public class SurveyService {
 			if(Util.isEmptyStr(startDate) || Util.isEmptyStr(endDate)){
 				temp = customerMapper.customerList(category, branch, limit);
 			}else{
-				temp = customerMapper.customerListByDate(category, branch, limit, startDate, endDate);
+				temp = customerMapper.customerListByDate(category, branch, limit, startDate + "000000", endDate + "235959");
 			}
 			
 			customers.addAll(temp);
