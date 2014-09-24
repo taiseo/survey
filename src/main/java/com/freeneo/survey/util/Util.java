@@ -729,4 +729,13 @@ public class Util {
 		
 		return false;
 	}
+
+	public static String getListUrl(HttpServletRequest request, String listUrl) {
+		String referer = request.getHeader("referer");
+		if( ! isEmptyStr(referer)){
+			return referer;
+		}else{
+			return listUrl;
+		}
+	}
 }

@@ -9,8 +9,16 @@
 	<div class="page-header">
 		<h1>${pageTitle } <small>${survey.respondentCount }명 응답</small></h1>
 	</div>
-
+	<c:if test="${listUrl != null}">
+		<div class="text-right">
+			<a href="${listUrl }" class="btn">목록</a>
+		</div>
+	</c:if>
 	<jsp:include page="include/statistics_part.jsp"/>
-	
+	<c:if test="${listUrl != null}">
+		<div class="text-right">
+			<a href="${listUrl }" class="btn">목록</a>
+		</div>
+	</c:if>
 </div>
 <jsp:include page="include/footer.jsp" />

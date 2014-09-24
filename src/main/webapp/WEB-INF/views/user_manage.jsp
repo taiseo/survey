@@ -130,9 +130,15 @@
 		
 		<p class="text-center">
 			<input class="btn btn-primary btn-medium" type="submit" value="저장" />
+			<c:if test="${listUrl != null}">
+				<a href="${listUrl }" class="btn  pull-right">목록</a>
+			</c:if>
 		</p>
 		
 	</form:form>
+	
+	
+	
 </div>
 
 <jsp:include page="include/footer.jsp" />

@@ -145,7 +145,7 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String insertPage(Model model, Survey survey) {
+	public String insertPage(Model model, Survey survey, HttpServletRequest request) {
 		if (survey == null) {
 			survey = new Survey();
 		}
@@ -158,11 +158,14 @@ public class SurveyController {
 				.getTime()));
 
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
+		
+		String listUrl = Util.getListUrl(request, "/surveys");
 
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
+		model.addAttribute("listUrl", listUrl);
 		return "survey_manage";
 	}
 
@@ -171,16 +174,15 @@ public class SurveyController {
 			Survey survey, 
 			Model model, 
 			HttpSession session, 
-			@RequestParam("excel") MultipartFile file,
-			HttpServletRequest request
-			)
+			HttpServletRequest request,
+			@RequestParam("excel") MultipartFile file)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		logger.debug("survey parameter = {}", survey);
 
 		if (!validateSurvey(survey, model)) {
 			logger.debug("필수항목 누락");
-			return insertPage(model, survey);
+			return insertPage(model, survey, request);
 		}
 		
 		
@@ -281,7 +283,7 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String updatePage(@PathVariable(value = "id") Long id, Model model,
+	public String updatePage(HttpServletRequest request, @PathVariable(value = "id") Long id, Model model,
 			HttpSession session, Survey survey) throws JsonParseException,
 			JsonMappingException, IOException {
 
@@ -315,12 +317,14 @@ public class SurveyController {
 		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
 
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
+		String listUrl = Util.getListUrl(request, "/surveys");
 
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
+		model.addAttribute("listUrl", listUrl);
 		return "survey_manage";
 	}
 
@@ -347,7 +351,7 @@ public class SurveyController {
 
 		if (!validateSurvey(survey, model)) {
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
-			return updatePage(survey.getId(), model, session, survey);
+			return updatePage(request, survey.getId(), model, session, survey);
 		}
 
 		if (oldSurvey.getWriter() == null) {

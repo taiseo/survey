@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.freeneo.survey.domain.Survey;
@@ -18,6 +20,7 @@ import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.service.QuestionService;
 import com.freeneo.survey.service.StatisticsService;
 import com.freeneo.survey.service.SurveyService;
+import com.freeneo.survey.util.Util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +50,7 @@ public class StatisticsController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
 			@PathVariable(value="id") Long id,
+			HttpServletRequest request,
 			Model model) throws JsonParseException, JsonMappingException, IOException{
 		
 		// 하나의 설문 전체 통계
@@ -62,6 +66,9 @@ public class StatisticsController {
 		model.addAttribute("surveyByBranch", surveyByBranch);
         model.addAttribute("pageTitle", survey.getTitle() + " 통계");
         
+        String listUrl = request.getContextPath() + "/surveys";
+        model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
+        
         return "statistics";
     }
 	
@@ -69,6 +76,7 @@ public class StatisticsController {
 	public String byBranch(
 			@PathVariable(value="id") Long id,
 			@PathVariable(value="branch") String branch,
+			HttpServletRequest request,
 			Model model) throws JsonParseException, JsonMappingException, IOException{
 		
 		// 한글 인코딩 처리
@@ -80,6 +88,9 @@ public class StatisticsController {
 		
 		model.addAttribute("survey", survey);
         model.addAttribute("pageTitle", branch + " " + survey.getTitle() + " 통계");
+        
+        String listUrl = request.getContextPath() + "/surveys";
+        model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
         
         return "statistics_branch";
     }
@@ -112,34 +123,6 @@ public class StatisticsController {
 		model.addAttribute("surveys", surveys);
 		
 		return "statistics_branch_list";
-	}
-	
-	public String temp(
-			@PathVariable(value="branch") String branch,
-			@PathVariable(value="startDate") String startDate,
-			@PathVariable(value="endDate") String endDate,
-			Model model
-			) throws JsonParseException, JsonMappingException, IOException{
-
-		// 한글 인코딩 처리
-		branch = new String(branch.getBytes("8859_1"), "UTF-8");
-		
-		// 하나의 지사, 여러 기간에 걸친 설문들
-		List<Survey> surveys = surveyMapper.listByBranchAndDates(branch, startDate, endDate);
-		List<Survey> statisticsSurveys = new ArrayList<Survey>();
-		
-		for(Survey survey : surveys){
-			statisticsSurveys.add(statisticsService.getOneSurveyOneBranchStatistics(survey.getId(), branch));
-		}
-		
-		logger.debug("statisticsSurveys = {}", statisticsSurveys);
-		
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-		model.addAttribute("pageTitle", branch + " 통계");
-		model.addAttribute("statisticsSurveys", statisticsSurveys);
-		
-		return "statistics_branch";
 	}
 	
 	@RequestMapping(value="/user/{userId}/{startDate}/{endDate}", method=RequestMethod.GET)

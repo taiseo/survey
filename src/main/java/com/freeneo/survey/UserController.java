@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.service.UserService;
+import com.freeneo.survey.util.Util;
 
 @RequestMapping(value="/users")
 @Controller
@@ -109,6 +110,9 @@ public class UserController {
 		model.addAttribute("user", selectedUser);
 		model.addAttribute("httpMethod", "PUT");
 		
+		String listUrl = request.getContextPath() + "/users";
+		model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
+		
 		return "user_manage";
 	}
 	
@@ -197,6 +201,9 @@ public class UserController {
 		model.addAttribute("pageTitle", "사용자 입력");
 		model.addAttribute("user", user);
 		model.addAttribute("httpMethod", "POST");
+		
+		String listUrl = request.getContextPath() + "/users";
+		model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
 		
 		return "user_manage";
 	}
