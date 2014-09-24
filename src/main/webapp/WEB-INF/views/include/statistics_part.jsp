@@ -98,13 +98,14 @@
 							</td>
 						</tr>
 						
-						<%-- striped 어긋남 방지용 --%>
+						<%-- table-striped 스타일 class 어긋남 방지용 --%>
 						<tr style="display: none"></tr>
 						</c:if>
 					</c:forEach>
 					</tbody>
 				</table>
 			</c:if>
+			
 			<c:if test="${question.type == '점수범위'}">
 				<table class="table  table-striped">
 				<colgroup>
@@ -144,6 +145,34 @@
 				</tbody>
 				</table>
 			</c:if>
+			
+			
+			<c:if test="${question.type == '선호도'}">
+				<table class="table  table-striped">
+				<thead>
+					<tr>
+					<th></th>
+					<c:forEach items="${question.responseItems }" var="responseItem" varStatus="status">
+					<th>${status.count }순위</th>
+					</c:forEach>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${question.responseItems }" var="responseItem">
+						<tr>
+						<th>${responseItem.content }</th>
+						<c:forEach items="${responseItem.preference }" var="point">
+						<td>
+							<fmt:formatNumber value="${point.value / question.questionRespondentCount * 100}" pattern="0.0" />%
+							<small class="muted">(${point.value })</small>
+						</td>
+						</c:forEach>
+						</tr>
+					</c:forEach>
+				</tbody>
+				</table>
+			</c:if>
+			
     	</c:if>
     	<hr />
     </c:forEach>

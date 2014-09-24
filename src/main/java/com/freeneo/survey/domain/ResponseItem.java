@@ -1,6 +1,7 @@
 package com.freeneo.survey.domain;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
@@ -18,6 +19,18 @@ public class ResponseItem {
 	private int min;
 	private int max;
 	private Long responseItemCount;
+	
+	/**
+	 * 선호도 타입 응답 결과를 표시할 때 사용하는 필드.
+	 * 순위 : 명수
+	 * 1: 10
+	 * 2: 5
+	 * 3: 25
+	 * 4: 11
+	 * 5: 33
+	 * key값은 그냥 숫자인데 처리하기 편하게 하려고 String 타입을 사용한 것뿐이다.
+	 */
+	private Map<String, Integer> preference;
 	
 	public Long getId() {
 		return id;
@@ -89,6 +102,14 @@ public class ResponseItem {
 
 	public void setResponseItemCount(Long responseItemCount) {
 		this.responseItemCount = responseItemCount;
+	}
+
+	public Map<String, Integer> getPreference() {
+		return preference;
+	}
+
+	public void setPreference(Map<String, Integer> preference) {
+		this.preference = preference;
 	}
 
 	@Override

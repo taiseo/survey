@@ -1,5 +1,6 @@
 package com.freeneo.survey.service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.Response;
 import com.freeneo.survey.domain.ResponseItem;
@@ -22,6 +25,7 @@ import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.mapperMms.MmsMapper;
+import com.google.gson.Gson;
 
 @Service
 public class StatisticsService {
@@ -55,8 +59,11 @@ public class StatisticsService {
 	/**
 	 * 한 설문 전체 기준 통계
 	 * @param survey
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
-	public void setSurveyAllStatistics(Survey survey) {
+	public void setSurveyAllStatistics(Survey survey) throws JsonParseException, JsonMappingException, IOException {
 		
 		survey.setRespondentCount(responseMapper.countRespondentBySurveyId(survey.getId()));
 		
@@ -71,16 +78,66 @@ public class StatisticsService {
 				}else if(question.getType().equals("점수범위")){
 					question.setResponses(questionMapper.selectResponses(question.getId()));
 					questionService.setPointResponseCount(question);
-				}else{
-					// 나머지는 객관식
+				}else if(question.getType().contains("객관식")){
 					for(ResponseItem responseItem : question.getResponseItems()){
 						responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCount(responseItem));
 					}
 					questionService.setEtcResponses(question);
+				}else if(question.getType().equals("선호도")){
+					Long questionId = question.getId();
+					String[] responses = questionMapper.selectResponses(questionId);
+					List<ResponseItem> responseItems = question.getResponseItems();
+					
+					for(ResponseItem responseItem : responseItems){
+						Map<String, Integer> preference = getPreferenceStatistics(responses, responseItem);
+						responseItem.setPreference(preference);
+					}
 				}
 			}
 		}
 		
+	}
+
+
+	/**
+	 * 
+	 * @param responses JSON string
+	 * @param responseItem 
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	private Map<String, Integer> getPreferenceStatistics(String[] responses,
+			ResponseItem responseItem) throws JsonParseException, JsonMappingException,
+			IOException {
+		Map<String, Integer> preference = new HashMap<String, Integer>();
+		for(String response : responses){
+			List<Map<String, String>> responseMapList = makePreferenceMapList(response);
+			for(Map<String, String> responseMap : responseMapList){
+				if(responseMap.get("content").equals(responseItem.getContent())){
+					String key = responseMap.get("order");
+					int count = 1;
+					if(preference.containsKey(key)){
+						count = preference.get(key) + 1;
+					}
+					preference.put(key, count);
+				}
+			}
+		}
+		logger.debug("preference 응답 - " + responseItem.getContent() + " = {}", preference);
+		return preference;
+	}
+
+
+	private List<Map<String, String>> makePreferenceMapList(String preferenceResponse) throws JsonParseException, JsonMappingException, IOException {
+		
+		Gson gson = new Gson();
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, String>> preferenceMapList = gson.fromJson(preferenceResponse, List.class);
+		
+		return preferenceMapList;
 	}
 
 

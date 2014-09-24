@@ -1,10 +1,13 @@
 package com.freeneo.survey;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.QuestionMapper;
@@ -45,7 +48,7 @@ public class StatisticsController {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String index(
 			@PathVariable(value="id") Long id,
-			Model model){
+			Model model) throws JsonParseException, JsonMappingException, IOException{
 		
 		// 하나의 설문 전체 통계
 		Survey survey = surveyService.getFullSurvey(id);
@@ -98,7 +101,7 @@ public class StatisticsController {
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
 			Model model
-			){
+			) throws JsonParseException, JsonMappingException, IOException{
 		
 		User user = new User();
 		user.setId(userId);

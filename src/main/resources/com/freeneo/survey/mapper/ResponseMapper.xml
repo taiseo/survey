@@ -44,7 +44,7 @@
 	
 	<select id="selectByQuestionIdAndBranch" resultMap="BaseResultMap">
 		SELECT
-		*
+		rs.*, rt.*
 		from sv_respondents rt, sv_responses rs
 		WHERE 
 			rt.id = rs.respondent 
