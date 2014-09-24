@@ -145,8 +145,11 @@ public class StatisticsService {
 	 * 한 설문에 대한 지사별 통계
 	 * @param surveyId
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
-	public Map<String, Survey> getOneSurveyStatisticsByBranches(Long surveyId) {
+	public Map<String, Survey> getOneSurveyStatisticsByBranches(Long surveyId) throws JsonParseException, JsonMappingException, IOException {
 		
 		List<Response> fullResponses = responseMapper.listFullBySurveyId(surveyId);
 		List<String> branches = targetMapper.branchListBySurveyId(surveyId);
@@ -169,8 +172,11 @@ public class StatisticsService {
 	 * @param surveyId
 	 * @param branch
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
-	public Survey getOneSurveyOneBranchStatistics(Long surveyId, String branch) {
+	public Survey getOneSurveyOneBranchStatistics(Long surveyId, String branch) throws JsonParseException, JsonMappingException, IOException {
 		Survey survey = surveyService.getFullSurvey(surveyId);
 		survey.setRespondentCount(responseMapper.countRespondentBySurveyIdAndBranch(surveyId, branch));
 		for(Question question : survey.getQuestions()){
@@ -181,12 +187,20 @@ public class StatisticsService {
 			}else if(question.getType().equals("점수범위")){
 				question.setResponses(questionMapper.selectResponsesByBranch(question.getId(), branch));
 				questionService.setPointResponseCount(question);
-			}else{
+			}else if(question.getType().contains("객관식")){
 				// 나머지는 객관식
 				for(ResponseItem responseItem : question.getResponseItems()){
 					responseItem.setResponseItemCount(responseItemMapper.selectResponseItemCountByBranch(responseItem, branch));
 				}
 				questionService.setEtcResponsesByBranch(question, branch);
+			}else if(question.getType().equals("선호도")){
+				String[] responses = questionMapper.selectResponsesByBranch(question.getId(), branch);
+				List<ResponseItem> responseItems = question.getResponseItems();
+				
+				for(ResponseItem responseItem : responseItems){
+					Map<String, Integer> preference = getPreferenceStatistics(responses, responseItem);
+					responseItem.setPreference(preference);
+				}
 			}
 		}
 		return survey;
