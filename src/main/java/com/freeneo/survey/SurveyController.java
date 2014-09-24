@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
+import com.freeneo.survey.util.ExcelImport;
 import com.freeneo.survey.util.Util;
 
 @Controller
@@ -76,7 +78,7 @@ public class SurveyController {
 
 	@Autowired
 	TargetGroupMapper targetGroupMapper;
-
+	
 	HashMap<String, String> statusMap;
 
 	SurveyController() {
@@ -169,7 +171,9 @@ public class SurveyController {
 			Survey survey, 
 			Model model, 
 			HttpSession session, 
-			@RequestParam("excel") MultipartFile file)
+			@RequestParam("excel") MultipartFile file,
+			HttpServletRequest request
+			)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		logger.debug("survey parameter = {}", survey);
@@ -178,6 +182,8 @@ public class SurveyController {
 			logger.debug("필수항목 누락");
 			return insertPage(model, survey);
 		}
+		
+		
 
 		User currentUser = (User) session.getAttribute("user");
 		survey.setStatus("임시저장");
@@ -185,6 +191,23 @@ public class SurveyController {
 		survey.setPart(currentUser.getPart());
 
 		surveyMapper.insert(survey);
+		
+		List<Customer> customers = null;
+		if (!file.isEmpty()) {
+			ExcelImport importer = new ExcelImport();
+			customers = importer.excelImport(request);
+			logger.debug("targetListExcel = {}", customers);
+			
+			int cstNo = 0;
+			for (Customer customer : customers){
+				customer.setCstNm("");
+				customer.setCstNo(""+cstNo++);
+				customer.setPtcpDttm("");
+				customer.setPtcpTit("");
+			}
+			
+			targetMapper.insertAll(survey.getId(), customers);
+		}
 
 		logger.debug("insertedSurvey = {}", survey);
 
@@ -302,7 +325,11 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public String updateAction(Survey survey, Model model, HttpSession session)
+	public String updateAction(Survey survey, 
+			Model model, 
+			HttpSession session, 
+			@RequestParam("excel") MultipartFile file, 
+			HttpServletRequest request)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		User currentUser = (User) session.getAttribute("user");
@@ -340,6 +367,26 @@ public class SurveyController {
 		} else {
 			survey.setStatus(oldSurvey.getStatus());
 		}
+		
+		List<Customer> customers = null;
+		if (!file.isEmpty()) {
+			ExcelImport importer = new ExcelImport();
+			customers = importer.excelImport(request);
+			logger.debug("targetListExcel = {}", customers);
+			
+			targetMapper.delete(survey.getId());
+			
+			int cstNo = 0;
+			for (Customer customer : customers){
+				customer.setCstNm("");
+				customer.setCstNo(""+cstNo++);
+				customer.setPtcpDttm("");
+				customer.setPtcpTit("");
+			}
+			
+			targetMapper.insertAll(survey.getId(), customers);
+		}		
+		
 
 		logger.debug("new survey = {}", survey);
 

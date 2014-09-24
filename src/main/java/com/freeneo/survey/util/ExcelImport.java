@@ -5,12 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,12 +23,11 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.freeneo.survey.domain.Target;
+import com.freeneo.survey.domain.Customer;
 
 public class ExcelImport {
-	@SuppressWarnings("rawtypes")
-	public ArrayList excelImport(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+
+	public List excelImport(HttpServletRequest request) {
 
 		// 현재시간 설정
 		// Calendar calendar = Calendar.getInstance();
@@ -40,7 +37,7 @@ public class ExcelImport {
 		// PrintStream stream = null;
 
 		/** 등록할 target 목록 */
-		ArrayList targetList = new ArrayList<Target>();
+		ArrayList customers = new ArrayList<Customer>();
 
 		try {
 			String rootPath = (request.getSession().getServletContext()
@@ -141,15 +138,15 @@ public class ExcelImport {
 							 */
 
 							// 셀의 값을 target에 저장한다.
-							Target target = new Target();
+							Customer customer = new Customer();
 							XSSFCell myCell = (XSSFCell) cellRowList.get(0);
-							target.setEtc01(myCell.getRichStringCellValue()
+							customer.setEtc01(myCell.getRichStringCellValue()
 									.getString());
 							myCell = (XSSFCell) cellRowList.get(1);
-							target.setHp(myCell.getRichStringCellValue()
+							customer.setHp(myCell.getRichStringCellValue()
 									.getString());
 
-							targetList.add(target);
+							customers.add(customer);
 
 							/*
 							 * switch (myCell.getCellType()) { case
@@ -253,14 +250,14 @@ public class ExcelImport {
 						ArrayList<HSSFCell> cellRowList = (ArrayList<HSSFCell>) cellGridHssf
 								.get(i);
 
-						Target target = new Target();
+						Customer customer = new Customer();
 						HSSFCell myCell = (HSSFCell) cellRowList.get(0);
-						target.setEtc01(myCell.getRichStringCellValue()
+						customer.setEtc01(myCell.getRichStringCellValue()
 								.getString());
 						myCell = (HSSFCell) cellRowList.get(1);
-						target.setHp(myCell.getRichStringCellValue()
+						customer.setHp(myCell.getRichStringCellValue()
 								.getString());
-						targetList.add(target);
+						customers.add(customer);
 
 						/*
 						 * for (int j = 0; j < cellRowList.size(); j++) {
@@ -321,7 +318,7 @@ public class ExcelImport {
 			tempFile.delete();
 		}
 
-		return targetList;
+		return customers;
 
 	}
 }
