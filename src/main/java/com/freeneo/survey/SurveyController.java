@@ -320,11 +320,11 @@ public class SurveyController {
 		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
 		model.addAttribute("survey", survey);
-		model.addAttribute("httpMethod", "PUT");
+		model.addAttribute("httpMethod", "POST");
 		return "survey_manage";
 	}
 
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String updateAction(Survey survey, 
 			Model model, 
 			HttpSession session, 

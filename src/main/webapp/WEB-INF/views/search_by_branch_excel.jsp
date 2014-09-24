@@ -14,6 +14,7 @@
 			<th>문자 발송</th>
 			<th>설문 회신</th>
 			<th>회신율</th>
+			<th>설문 건수</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -34,6 +35,7 @@
 				<td>
 					<fmt:formatNumber value="${branchHistory.responseRatio }" pattern="0.00"/>%
 				</td>
+				<td>${branchHistory.surveyCount }</td>
 			</tr>
 			</c:if>
 		</c:forEach>
