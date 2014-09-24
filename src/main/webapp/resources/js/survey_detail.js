@@ -6,6 +6,7 @@ $(document).ready(function(){
 	bind_sortable_response_items();
 	bind_remove();
 	bind_save();
+	bind_copy();
 });
 
 function bind_add_question(){
@@ -114,8 +115,10 @@ function bind_sortable_response_items(){
 
 function bind_remove(){
 	$('.js-questions-area').on('click', '.js-remove-question', function(){
-		var $question = $(this).parents('.question');
-		delete_question($question);
+		if(confirm('제거할까요?')){
+			var $question = $(this).parents('.question');
+			delete_question($question);
+		}
 	});
 	
 	$('.js-questions-area').on('click', '.js-remove-response-item', function(){
@@ -136,7 +139,7 @@ function bind_save(){
 	});
 }
 
-function save_question($question){
+function save_question($question, is_save_response_items){
 	var $question_form = $question.find('.question-form');
 	var question_obj = $question_form.serializeObject();
 	
@@ -157,6 +160,12 @@ function save_question($question){
 		$question_form.find('[name=id]').val(inserted_question.id);
 		
 		mynoty(inserted_question_content + ' 관련 정보를 저장했습니다.');
+		
+		console.log(save_response_items);
+		
+		if(is_save_response_items){
+			save_response_items($question);
+		}
 	}, 'json');
 }
 
@@ -269,5 +278,27 @@ function delete_response_item($response_item){
 function init_questions(){
 	_.each(survey.questions, function(question){
 		add_question(question);
+	});
+}
+
+function bind_copy(){
+	$('.js-questions-area').on('click', '.js-copy-question', function(){
+		console.log('copied!')
+		$parent_question = $(this).parents('.question');
+		$question = $parent_question.clone();
+		$question.find('[name=id]').val('');
+		$question.insertAfter($parent_question);
+
+		var new_question_index = $question.index('.question');
+		
+		// order를 저장하기 위해. 다른 question들의 순서도 다 바꿔야 한다.
+		var is_save_response_items = true;
+		$('.question').each(function(index, question){
+			if(index == new_question_index){
+				save_question($(question), is_save_response_items);
+			}else{
+				save_question($(question));
+			}
+		});
 	});
 }

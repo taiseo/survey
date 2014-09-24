@@ -26,7 +26,8 @@
 	</label>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -63,7 +64,8 @@
 	</label>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -103,7 +105,8 @@
 	</div>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -159,7 +162,8 @@
 	</div>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -206,7 +210,8 @@
 	<div class="js-response-items-area"></div>
     
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -261,7 +266,8 @@
 	</div>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
@@ -303,7 +309,8 @@
 	</form>
 	
 	<p class="text-right">
-		<input class="btn  js-remove-question" type="button" value="제거" />
+		<input class="btn  js-copy-question" type="button" value="복사" />
+		<input class="btn  btn-danger  js-remove-question" type="button" value="제거" />
 	</p>
 	
 	<div class="move-question  js-move-question">
