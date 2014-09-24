@@ -9,7 +9,7 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
-	<form:form method="${httpMethod }" modelAttribute="survey" cssClass="js-survey-form">
+	<form:form method="${httpMethod }" modelAttribute="survey" cssClass="js-survey-form" enctype="multipart/form-data">
 		<table class="table  table-striped">
 			<colgroup>
 				<col style="width: 15%"/>
