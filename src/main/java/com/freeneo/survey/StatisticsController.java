@@ -1,7 +1,6 @@
 package com.freeneo.survey;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,7 @@ public class StatisticsController {
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
 			Model model
-			) throws UnsupportedEncodingException{
+			) throws JsonParseException, JsonMappingException, IOException{
 
 		// 한글 인코딩 처리
 		branch = new String(branch.getBytes("8859_1"), "UTF-8");
