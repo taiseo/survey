@@ -73,7 +73,9 @@
 						</c:if>
 					</td>
 					<td>
-						<%-- 설문 상태는 임시저장(temporary) -> 승인대기(standby) -> 승인자1만 승인(approval1) && 승인자2만 승인(approval2) -> 발송(sending) -> 종료(close) 다. --%>
+						<%-- 설문 상태는 임시저장(temporary) -> 승인대기(standby) 
+						     [ -> 심의승인(approval1) - 승인자1이 승인하는 것이고 필수가 아니다. 승인자2가 승인하면 바로 발송대기가 된다. ] 
+						     -> 발송대기(approval_completed) -> 발송(sending) -> 종료(close) 다. --%>
 						<%-- URL 인코딩 디코딩 문제를 피하기 위해서 URL에 영어를 사용했다. --%>
 						<c:choose>
 							<c:when test="${survey.status == '임시저장'}">
@@ -91,9 +93,9 @@
 							</c:when>
 							
 							<%-- 승인자2 입장 --%>
-							<c:when test="${(survey.status == '승인대기' or survey.status == '승인자1만 승인') 
+							<c:when test="${(survey.status == '승인대기' or survey.status == '심의승인') 
 									and ( sessionScope.user.userLevel == '시스템 관리자' or sessionScope.user.userLevel == '승인자2' )}">
-								<a class="btn  btn-small  btn-primary" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval2">
+								<a class="btn  btn-small  btn-primary" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/approval_completed">
 									승인
 								</a>
 							</c:when>
@@ -125,7 +127,7 @@
 							</a>
 						</c:if>
 						
-						<c:if test="${survey.status == '승인대기' or survey.status == '승인자1만 승인'}">
+						<c:if test="${survey.status == '승인대기' or survey.status == '심의승인'}">
 							<a class="btn  btn-small  btn-danger" href="<%=request.getContextPath()%>/surveys/update-status/${survey.id}/temporary"
 								onclick="return confirm('승인 요청을 회수할까요?')">
 								회수

@@ -81,9 +81,7 @@ public class SurveyController {
 		statusMap.put("standby", "승인대기");
 		
 		// 승인1,2는 누가 먼저 하든 상관 없다.
-		statusMap.put("approval1", "승인자1만 승인");
-		statusMap.put("approval2", "승인자2만 승인");
-		
+		statusMap.put("approval1", "심의승인");
 		statusMap.put("approval_completed", "발송대기");
 		statusMap.put("sending", "발송");
 		statusMap.put("close", "종료");
@@ -394,12 +392,12 @@ public class SurveyController {
 		survey.setId(id);
 		
 		// 둘 다 승인하는 시나리오
-		if(survey.getStatus().equals("승인자1만 승인") && status.equals("승인자2만 승인")){
+		if(survey.getStatus().equals("심의승인") && status.equals("승인자2만 승인")){
 			status = "발송대기";
 		}
 		
 		// 둘 다 승인하는 시나리오
-		if(survey.getStatus().equals("승인자2만 승인") && status.equals("승인자1만 승인")){
+		if(survey.getStatus().equals("승인자2만 승인") && status.equals("심의승인")){
 			status = "발송대기";
 		}
 		
