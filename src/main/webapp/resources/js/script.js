@@ -5,6 +5,7 @@ $(document).ready(function(){
 	init_only_number();
 	init_underscore_template();
 	bind_show_hide();
+	bind_date_order_valid();
 });
 
 function attach_active_to_nav(){
@@ -89,4 +90,26 @@ function bind_show_hide(){
 	    var target_selector = $(this).data('target');
 	    $(target_selector).hide();
 	  });
+}
+
+function bind_date_order_valid(){
+	$('[name=startDate], [name=endDate]').on('changeDate', function(){
+		var startDate = $('[name=startDate]').val();
+		var endDate = $('[name=endDate]').val();
+		if(startDate > endDate){
+			alert('시작일이 종료일보다 뒤입니다.');
+			$('[name=endDate]').focus();
+			return false;
+		}
+	});
+	
+	$('[name=targetStartDate], [name=targetEndDate]').on('changeDate', function(){
+		var startDate = $('[name=targetStartDate]').val();
+		var endDate = $('[name=targetEndDate]').val();
+		if(startDate > endDate){
+			alert('시작일이 종료일보다 뒤입니다.');
+			$('[name=targetEndDate]').focus();
+			return false;
+		}
+	});
 }
