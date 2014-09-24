@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -164,7 +165,11 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insertAction(Survey survey, Model model, HttpSession session)
+	public String insertAction(
+			Survey survey, 
+			Model model, 
+			HttpSession session, 
+			@RequestParam("excel") MultipartFile file)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		logger.debug("survey parameter = {}", survey);
