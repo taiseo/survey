@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,14 +75,14 @@ public class SurveyController {
 
 	@Autowired
 	TargetGroupMapper targetGroupMapper;
-	
+
 	HashMap<String, String> statusMap;
 
 	SurveyController() {
 		this.statusMap = new HashMap<String, String>();
 		statusMap.put("temporary", "임시저장"); // 승인요청 전 상태다
 		statusMap.put("standby", "승인대기");
-		
+
 		// 심의승인은 사실상 의미가 없다.
 		statusMap.put("approval1", "심의승인");
 		statusMap.put("approval_completed", "발송대기");
@@ -90,7 +91,14 @@ public class SurveyController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, HttpSession session) {
+	public String list(Model model, HttpSession session){
+		return list("1", model, session);
+	}
+	
+	@RequestMapping(value = "/{page}", method = RequestMethod.GET)	
+	public String list(
+			@PathVariable(value = "page") String page,
+			Model model, HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
 		logger.debug("user = {}", user);
@@ -102,15 +110,33 @@ public class SurveyController {
 		} else {
 			list = surveyMapper.list();
 		}
-		
-		for(Survey survey: list){
-			survey.setDatetime(Util.formating(survey.getDatetime(), "##########<br/>#########"));
-			survey.setRespondentCount(responseMapper.countRespondentBySurveyId(survey.getId()));
+
+		for (Survey survey : list) {
+			survey.setDatetime(Util.formating(survey.getDatetime(),
+					"##########<br/>#########"));
+			survey.setRespondentCount(responseMapper
+					.countRespondentBySurveyId(survey.getId()));
 		}
 
 		logger.debug("surveys = {}", list);
 
-		model.addAttribute("list", list);
+		PagedListHolder<Survey> pagedListHolder = new PagedListHolder<Survey>(
+				list);
+		pagedListHolder.setPageSize(10);
+
+		if (page.equalsIgnoreCase("next")) {
+			pagedListHolder.nextPage();
+		} else if (page.equalsIgnoreCase("prev")) {
+			pagedListHolder.previousPage();
+		} else if (page.equalsIgnoreCase("first")) {
+			pagedListHolder.setPage(0);
+		} else if (page.equalsIgnoreCase("last")) {
+			pagedListHolder.setPage(pagedListHolder.getPageCount());
+		} else {
+			pagedListHolder.setPage(Integer.parseInt(page) - 1);
+		}
+
+		model.addAttribute("pagedListHolder", pagedListHolder);
 		model.addAttribute("pageTitle", "설문 목록");
 		return "survey_list";
 	}
@@ -127,9 +153,9 @@ public class SurveyController {
 		cal.add(Calendar.DATE, +7);
 		survey.setEndDate(new SimpleDateFormat("yyyy-MM-dd").format(cal
 				.getTime()));
-		
+
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
-		
+
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
@@ -142,8 +168,8 @@ public class SurveyController {
 			throws JsonParseException, JsonMappingException, IOException {
 
 		logger.debug("survey parameter = {}", survey);
-		
-		if ( ! validateSurvey(survey, model)) {
+
+		if (!validateSurvey(survey, model)) {
 			logger.debug("필수항목 누락");
 			return insertPage(model, survey);
 		}
@@ -162,66 +188,67 @@ public class SurveyController {
 
 	/**
 	 * 설문 입력 검증
+	 * 
 	 * @param survey
 	 * @return
 	 */
 	private boolean validateSurvey(Survey survey, Model model) {
-		if(Util.isEmptyStr(survey.getTitle())){
-			model.addAttribute("error_msg","제목을 입력해 주세요");
+		if (Util.isEmptyStr(survey.getTitle())) {
+			model.addAttribute("error_msg", "제목을 입력해 주세요");
 			return false;
 		}
-		
-		if(Util.isEmptyStr(survey.getEndDate())){
-			model.addAttribute("error_msg","종료일을 입력해 주세요");
+
+		if (Util.isEmptyStr(survey.getEndDate())) {
+			model.addAttribute("error_msg", "종료일을 입력해 주세요");
 			return false;
 		}
-		
-		if(Util.isEmptyStr(survey.getMsgSubject())){
-			model.addAttribute("error_msg","MMS 제목을 입력해 주세요");
+
+		if (Util.isEmptyStr(survey.getMsgSubject())) {
+			model.addAttribute("error_msg", "MMS 제목을 입력해 주세요");
 			return false;
 		}
-		
-		if(Util.isEmptyStr(survey.getMsg())){
-			model.addAttribute("error_msg","MMS 인사말을 입력해 주세요");
+
+		if (Util.isEmptyStr(survey.getMsg())) {
+			model.addAttribute("error_msg", "MMS 인사말을 입력해 주세요");
 			return false;
 		}
-		
-		if( ! survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
-			
-			if(Util.isEmptyStr(survey.getTargetStartDate())){
-				model.addAttribute("error_msg","계약기간 시작일을 입력해 주세요.");
+
+		if (!survey.getTargetRegistrationType().equals("엑셀파일 업로드")) {
+
+			if (Util.isEmptyStr(survey.getTargetStartDate())) {
+				model.addAttribute("error_msg", "계약기간 시작일을 입력해 주세요.");
 				return false;
 			}
-			if(Util.isEmptyStr(survey.getTargetEndDate())){
-				model.addAttribute("error_msg","계약기간 종료일을 입력해 주세요.");
+			if (Util.isEmptyStr(survey.getTargetEndDate())) {
+				model.addAttribute("error_msg", "계약기간 종료일을 입력해 주세요.");
 				return false;
 			}
-			
+
 		}
-		
-		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
-			if(Util.isEmptyStr(survey.getTargetBranches())){
-				model.addAttribute("error_msg","지사를 선택해 주세요");
+
+		if (survey.getTargetRegistrationType().equals("CRM DB 추출")) {
+			if (Util.isEmptyStr(survey.getTargetBranches())) {
+				model.addAttribute("error_msg", "지사를 선택해 주세요");
 				return false;
 			}
-			if(survey.getTargetBranches().equals("[]")){
-				model.addAttribute("error_msg","지사를 선택해 주세요");
+			if (survey.getTargetBranches().equals("[]")) {
+				model.addAttribute("error_msg", "지사를 선택해 주세요");
 				return false;
 			}
-			
+
 		}
-		
-		if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
-			if(Util.isEmptyStr(survey.getTargetGroupIds())){
-				model.addAttribute("error_msg","캠페인 그룹을 선택해 주세요");
+
+		if (survey.getTargetRegistrationType().equals("캠페인 그룹 선택")) {
+			if (Util.isEmptyStr(survey.getTargetGroupIds())) {
+				model.addAttribute("error_msg", "캠페인 그룹을 선택해 주세요");
 				return false;
 			}
-			if(survey.getTargetGroupIds().equals("[]")){
-				model.addAttribute("error_msg","캠페인 그룹을 선택해 주세요");
+			if (survey.getTargetGroupIds().equals("[]")) {
+				model.addAttribute("error_msg", "캠페인 그룹을 선택해 주세요");
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -238,13 +265,11 @@ public class SurveyController {
 			survey = surveyMapper.select(id);
 			logger.debug("survey in db={}", survey);
 		}
-		
+
 		logger.debug("survey = {}", survey);
 
-		if (survey.getStatus() != null 
-				&& ! survey.getStatus().equals("승인대기")
-				&& ! survey.getStatus().equals("임시저장")
-				) {
+		if (survey.getStatus() != null && !survey.getStatus().equals("승인대기")
+				&& !survey.getStatus().equals("임시저장")) {
 			model.addAttribute("msg", "임시저장이거나 승인대기중인 설문만 수정할 수 있습니다.");
 			return list(model, session);
 		}
@@ -260,9 +285,9 @@ public class SurveyController {
 		}
 
 		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
-		
+
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
-		
+
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
@@ -272,8 +297,7 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-	public String updateAction(
-				Survey survey, Model model, HttpSession session)
+	public String updateAction(Survey survey, Model model, HttpSession session)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		User currentUser = (User) session.getAttribute("user");
@@ -283,13 +307,13 @@ public class SurveyController {
 		logger.debug("old survey = {}", oldSurvey);
 
 		// 시스템 관리자가 아닌데, 남의 것을 수정하려고 하면
-		if ( ! currentUser.getUserLevel().equals("시스템 관리자")
+		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(oldSurvey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
 			return list(model, session);
 		}
 
-		if ( ! validateSurvey(survey, model)) {
+		if (!validateSurvey(survey, model)) {
 			logger.debug("필수항목을 빠뜨린 경우. 이전 입력 정보를 들고 업데이트페이지로 감.");
 			return updatePage(survey.getId(), model, session, survey);
 		}
@@ -371,43 +395,40 @@ public class SurveyController {
 	}
 
 	@RequestMapping(value = "/update-status/{id}/{status}", method = RequestMethod.GET)
-	public String updateStatus(
-			@PathVariable(value = "id") Long id,
+	public String updateStatus(@PathVariable(value = "id") Long id,
 			@PathVariable(value = "status") String status,
-			HttpServletRequest request,
-			Model model,
-			HttpSession session
-			) throws JsonParseException, JsonMappingException, IOException {
+			HttpServletRequest request, Model model, HttpSession session)
+			throws JsonParseException, JsonMappingException, IOException {
 
 		status = statusMap.get(status);
 		logger.debug("status = {}", status);
-		
+
 		User user = (User) session.getAttribute("user");
 		logger.debug("user = {}", user);
-		
-		if(user.getUserLevel().equals("일반") && status.contains("승인자")){
+
+		if (user.getUserLevel().equals("일반") && status.contains("승인자")) {
 			model.addAttribute("error_msg", "권한이 없습니다.");
 			return list(model, session);
 		}
 
 		Survey survey = surveyMapper.select(id);
 		survey.setId(id);
-		
+
 		// 둘 다 승인하는 시나리오
-		if(survey.getStatus().equals("심의승인") && status.equals("승인자2만 승인")){
+		if (survey.getStatus().equals("심의승인") && status.equals("승인자2만 승인")) {
 			status = "발송대기";
 		}
-		
+
 		// 둘 다 승인하는 시나리오
-		if(survey.getStatus().equals("승인자2만 승인") && status.equals("심의승인")){
+		if (survey.getStatus().equals("승인자2만 승인") && status.equals("심의승인")) {
 			status = "발송대기";
 		}
-		
+
 		survey.setStatus(status);
 		logger.debug("survey to update = {}", survey);
 
 		if (status.equals("발송")) {
-			if( ! surveyService.sendMms(survey, request, model)){
+			if (!surveyService.sendMms(survey, request, model)) {
 				return list(model, session);
 			}
 		}
@@ -433,7 +454,7 @@ public class SurveyController {
 		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit, startDate, endDate);
 
 		String linkStr = "";
-		
+
 		if(customers.size() > 0){
 			linkStr = "<a href='#' class='js-target-detail'>" + customers.size() + "명 <small>(자세히 보기)</small></a>";
 		}else{
@@ -444,50 +465,52 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "/targets/{surveyId}", method = RequestMethod.GET)
-	public String targets(
-			@PathVariable(value = "surveyId") Long surveyId,
+	public String targets(@PathVariable(value = "surveyId") Long surveyId,
 			Model model) {
-		
+
 		Survey survey = surveyMapper.select(surveyId);
 		List<Target> targets = targetMapper.selectBySurveyId(surveyId);
-		
-		for (Target target : targets){
-			target.setPtcpDttm(Util.formating(target.getPtcpDttm(), "####-##-##"));			
-		}		
-		
+
+		for (Target target : targets) {
+			target.setPtcpDttm(Util.formating(target.getPtcpDttm(),
+					"####-##-##"));
+		}
+
 		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
 		model.addAttribute("survey", survey);
 		model.addAttribute("targets", targets);
-		
+
 		return "target_list";
 	}
-	
+
 	@RequestMapping(value = "/target-detail", method = RequestMethod.POST)
 	public String targetDetail(
 			@RequestParam(value = "category1") String category1,
 			@RequestParam(value = "category2", required = false, defaultValue = "") String category2,
 			@RequestParam(value = "branches") String branches,
-			@RequestParam(value = "limit") int limit, 
-			@RequestParam(value = "startDate") String startDate, 
-			@RequestParam(value = "endDate") String endDate, 
-			HttpServletRequest request,
-			Model model)
-			throws JsonParseException, JsonMappingException, IOException {
-		
+			@RequestParam(value = "limit") int limit,
+			@RequestParam(value = "startDate") String startDate,
+			@RequestParam(value = "endDate") String endDate,
+			HttpServletRequest request, Model model) throws JsonParseException,
+			JsonMappingException, IOException {
+
 		List<Map<String, String>> targetInfosByBranch = new ArrayList<Map<String, String>>();
 		List<String> branchList = surveyService.makeBranchList(branches);
-		
-		for(String branch : branchList){
+
+		for (String branch : branchList) {
 			Map<String, String> targetInfo = new HashMap<String, String>();
-			
-			// branch를 json으로 전달해야 한다. 이미 있는 걸 또 만들기 귀찮아서 그냥 json으로 만들어서 넘겨 준다. - ahw 2014-09-24 
-			List<Customer> customers = surveyService.customerList(category1, category2, "[\"" + branch + "\"]", limit, startDate, endDate);
+
+			// branch를 json으로 전달해야 한다. 이미 있는 걸 또 만들기 귀찮아서 그냥 json으로 만들어서 넘겨 준다.
+			// - ahw 2014-09-24
+			List<Customer> customers = surveyService.customerList(category1,
+					category2, "[\"" + branch + "\"]", limit, startDate,
+					endDate);
 			targetInfo.put("branchName", branch);
 			targetInfo.put("count", String.valueOf(customers.size()));
-			
+
 			targetInfosByBranch.add(targetInfo);
 		}
-		
+
 		model.addAttribute("targetInfosByBranch", targetInfosByBranch);
 		model.addAttribute("pageTitle", "지사별 대상수");
 		return "target_detail";
