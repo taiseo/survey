@@ -34,7 +34,7 @@ public class UserController {
 		return users("1", model, session);
 	}
 	
-	@RequestMapping(value = "/{page}", method = RequestMethod.GET)	
+	@RequestMapping(value = "/page/{page}", method = RequestMethod.GET)	
 	public String users(
 			@PathVariable(value = "page") String page,
 			Model model, 
