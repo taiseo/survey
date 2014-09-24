@@ -177,6 +177,13 @@ public class HistoryController {
 		return count;
 	}
 
+	/**
+	 * responseMapper.countRespondentBySurveysAndBranches()로 가져온 결과를 파싱하기 위해 만든 함수인데
+	 * 결과적으로 사용하지 않게 됐다. 그래도 혹 모르니 남겨 둔다.
+	 * @param countByBranch
+	 * @param branch
+	 * @return
+	 */
 	private int getRespondentCount(List<Map<String, ?>> countByBranch,
 			String branch) {
 
