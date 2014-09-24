@@ -2,10 +2,12 @@ package com.freeneo.survey;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -424,12 +426,21 @@ public class SurveyController {
 			@RequestParam(value = "limit") int limit, 
 			@RequestParam(value = "startDate") String startDate, 
 			@RequestParam(value = "endDate") String endDate, 
+			HttpServletRequest request,
 			Model model)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit, startDate, endDate);
 
-		return "(" + customers.size() + "명)";
+		String linkStr = "";
+		
+		if(customers.size() > 0){
+			linkStr = "<a href='#' class='js-target-detail'>(" + customers.size() + "명, 자세히 보기)</a>";
+		}else{
+			linkStr = "(0명)";
+		}
+		
+		return linkStr;
 	}
 
 	@RequestMapping(value = "/targets/{surveyId}", method = RequestMethod.GET)
@@ -449,5 +460,36 @@ public class SurveyController {
 		model.addAttribute("targets", targets);
 		
 		return "target_list";
+	}
+	
+	@RequestMapping(value = "/target-detail", method = RequestMethod.POST)
+	public String targetDetail(
+			@RequestParam(value = "category1") String category1,
+			@RequestParam(value = "category2", required = false, defaultValue = "") String category2,
+			@RequestParam(value = "branches") String branches,
+			@RequestParam(value = "limit") int limit, 
+			@RequestParam(value = "startDate") String startDate, 
+			@RequestParam(value = "endDate") String endDate, 
+			HttpServletRequest request,
+			Model model)
+			throws JsonParseException, JsonMappingException, IOException {
+		
+		List<Map<String, String>> targetInfosByBranch = new ArrayList<Map<String, String>>();
+		List<String> branchList = surveyService.makeBranchList(branches);
+		
+		for(String branch : branchList){
+			Map<String, String> targetInfo = new HashMap<String, String>();
+			
+			// branch를 json으로 전달해야 한다. 이미 있는 걸 또 만들기 귀찮아서 그냥 json으로 만들어서 넘겨 준다. - ahw 2014-09-24 
+			List<Customer> customers = surveyService.customerList(category1, category2, "[\"" + branch + "\"]", limit, startDate, endDate);
+			targetInfo.put("branchName", branch);
+			targetInfo.put("count", String.valueOf(customers.size()));
+			
+			targetInfosByBranch.add(targetInfo);
+		}
+		
+		model.addAttribute("targetInfosByBranch", targetInfosByBranch);
+		model.addAttribute("pageTitle", "지사별 대상수");
+		return "target_detail";
 	}
 }
