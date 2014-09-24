@@ -11,14 +11,12 @@
 		<tr>
 			<th>구분</th>
 			<th>대상</th>
-			<th>결과 보고</th>
 		</tr>
 	</thead>
 	<c:forEach var="map" items="${targetInfosByBranch}">
 		<tr>
 			<td>${map.branchName }</td>
 			<td>${map.count }</td>
-			<td><a href="#">결과 보고</a></td>
 		</tr>
 	</c:forEach>
 	</table>
