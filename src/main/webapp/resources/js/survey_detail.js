@@ -3,6 +3,7 @@ $(document).ready(function(){
 	bind_add_question();
 	bind_add_response_item();
 	bind_sortable();
+	bind_sortable_response_items();
 	bind_remove();
 	bind_save();
 });

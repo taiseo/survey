@@ -232,6 +232,63 @@
 
 
 
+
+<%= "<script type='text/template' id='선호도'>" %>
+<div class="question  clearfix">
+	<h2>선호도</h2>
+	<form class="question-form" onsubmit="return false;">
+		<input type="hidden" name="type" value="선호도" />
+		<input type="hidden" name="id" value="<@=id@>"/>
+		<input type="hidden" name="surveyId" value="${survey.id }" />
+		
+		<label>
+			질문
+			<input type="text" name="content" class="input-block-level" value="<@=content@>"/>
+		</label>
+		
+		<label>
+			질문 보조 설명
+			<input type="text" name="contentDetail" class="input-block-level" value="<@=contentDetail@>"/>
+		</label>
+	</form>
+	
+	<div class="js-response-items-area"></div>
+	
+	<div>
+		<input type="radio" disabled/>
+		<input class="js-add-reponse-item  span5  btn" type="button" value="답항을 추가하려면 클릭하세요." 
+				data-template-id="선호도-답항" />
+	</div>
+	
+	<p class="text-right">
+		<input class="btn  js-remove-question" type="button" value="제거" />
+	</p>
+	
+	<div class="move-question  js-move-question">
+		<i class="icon-move"></i>
+	</div>
+	<hr />
+</div>
+<%= "</script>" %>
+
+<%= "<script type='text/template' id='선호도-답항'>" %>
+	<div class="js-response-item">
+		<input type="hidden" name="id" value="<@=id@>"/>
+		<i class="js-move-response-item  icon-move  move-response-item"></i>
+		<input class="span7" type="text" name="content" value="<@=content@>" />
+		<i class="js-remove-response-item  icon-remove"></i>
+	</div>
+<%= "</script>" %>
+
+
+
+
+
+
+
+
+
+
 <%= "<script type='text/template' id='페이지-나누기'>" %>
 <div class="question  clearfix">
 	<h2>페이지 나누기</h2>
