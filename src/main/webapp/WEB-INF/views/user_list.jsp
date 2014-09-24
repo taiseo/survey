@@ -68,9 +68,7 @@
 		<a href="<%=request.getContextPath() %>/users/insert" class="btn  btn-primary  btn-medium">신규 등록</a>
 	</p>
 	
-	<p class="text-center">
-		<% String path = request.getContextPath() + "/users/page"; %>
-		<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
-	</p>	
+	<% String path = request.getContextPath() + "/users/page"; %>
+	<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
 </div>
 <jsp:include page="include/footer.jsp" />

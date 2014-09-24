@@ -48,10 +48,8 @@
 	</tbody>
 	</table>
 
-	<p class="text-center">
-		<% String path = request.getContextPath() + "/logs"; %>
-		<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
-	</p>
+	<% String path = request.getContextPath() + "/logs"; %>
+	<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
 
 </div>
 <jsp:include page="include/footer.jsp" />

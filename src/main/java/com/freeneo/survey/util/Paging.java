@@ -24,53 +24,54 @@ public class Paging extends TagSupport {
 		out = pageContext.getOut();
 		if (pageListHolder.getNrOfElements() <= pageListHolder.getPageSize()) {
 			try {
-				out.write("1");
+				out.write("<div class='pagination'><ul><li class='disabled'><a href='#' onclick='return false'>1</a></li></ul></div>");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			try {
+				out.write("<div class='pagination  text-center'><ul>");
 				if (pageListHolder.getPageCount() <= offset) {
 					for (int i = 0; i < pageListHolder.getPageCount(); i++) {
 						if (pageListHolder.getPage() == i) {
-							out.write((pageListHolder.getPage() + 1) + "&nbsp;");
+							out.write("<li class='disabled'><a href='#' onclick='return false'>" + (pageListHolder.getPage() + 1) + "</a></li>");
 						} else {
-							out.write("<a href=\"" + contextRoot + "/"
-									+ (i + 1) + "\">" + (i + 1) + "</a>&nbsp;");
+							out.write("<li><a href=\"" + contextRoot + "/"
+									+ (i + 1) + "\">" + (i + 1) + "</a></li>");
 						}
 					}
 				} else {
 					if (pageListHolder.isFirstPage()) {
-						out.write("1&nbsp;");
+						out.write("<li class='disabled'><a href='#' onclick='return false'>1</a></li>");
 						for (int i = 2; i <= offset + 1; i++) {
-							out.write("<a href=\"/" + contextRoot + "/" + i
-									+ "\">" + i + "</a>&nbsp;");
+							out.write("<li><a href=\"/" + contextRoot + "/" + i
+									+ "\">" + i + "</a></li>");
 						}
-						out.write("<a href=\"/" + contextRoot
-								+ "/next\">&gt;&gt;</a>&nbsp;");
-						out.write("<a href=\"/" + contextRoot
-								+ "/last\">&gt;|</a>&nbsp;");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/next\">&gt;&gt;</a></li>");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/last\">&gt;|</a></li>");
 					} else if (pageListHolder.isLastPage()) {
-						out.write("<a href=\"/" + contextRoot
-								+ "/first\">|&lt;</a>&nbsp;");
-						out.write("<a href=\"/" + contextRoot
-								+ "/prev\">&lt;&lt;</a>&nbsp;");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/first\">|&lt;</a></li>");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/prev\">&lt;&lt;</a></li>");
 						for (int i = pageListHolder.getPageCount() - offset; i <= pageListHolder
 								.getPageCount(); i++) {
 							int currentPage = pageListHolder.getPage() + 1;
 							if (currentPage == i) {
-								out.write((currentPage) + "&nbsp;");
+								out.write("<li class='disabled'><a href='#' onclick='return false'>" + (currentPage) + "</a></li>");
 							} else {
-								out.write("<a href=\"/" + contextRoot + "/" + i
-										+ "\">" + i + "</a>&nbsp;");
+								out.write("<li><a href=\"/" + contextRoot + "/" + i
+										+ "\">" + i + "</a></li>");
 							}
 						}
 					} else {
-						out.write("<a href=\"/" + contextRoot
-								+ "/first\">|&lt;</a>&nbsp;");
-						out.write("<a href=\"/" + contextRoot
-								+ "/prev\">&lt;&lt;</a>&nbsp;");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/first\">|&lt;</a></li>");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/prev\">&lt;&lt;</a></li>");
 						int currentPage = pageListHolder.getPage() + 1;
 						int startingPoint = getStartingPoint(currentPage);
 						int endingPoint = getEndingPoint(currentPage);
@@ -83,19 +84,19 @@ public class Paging extends TagSupport {
 						}
 						for (int i = startingPoint; i <= endingPoint; i++) {
 							if (currentPage == i) {
-								out.write((currentPage) + "&nbsp;");
+								out.write("<li class='disabled'><a href='#' onclick='return false'>" + (currentPage) + "</a></li>");
 							} else {
-								out.write("<a href=\"/" + contextRoot + "/" + i
-										+ "\">" + i + "</a>&nbsp;");
+								out.write("<li><a href=\"/" + contextRoot + "/" + i
+										+ "\">" + i + "</a></li>");
 							}
 						}
-						out.write("<a href=\"/" + contextRoot
-								+ "/next\">&gt;&gt;</a>&nbsp;");
-						out.write("<a href=\"/" + contextRoot
-								+ "/last\">&gt;|</a>&nbsp;");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/next\">&gt;&gt;</a></li>");
+						out.write("<li><a href=\"/" + contextRoot
+								+ "/last\">&gt;|</a></li>");
 					}
 				}
-
+				out.write("</ul></div>");
 			} catch (IOException ioe) {
 			}
 

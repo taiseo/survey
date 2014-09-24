@@ -57,10 +57,8 @@
 		</a>
 	</p>
 	
-	<p class="text-center">
-		<% String path = request.getContextPath() + "/target-groups"; %>
-		<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
-	</p>	
+	<% String path = request.getContextPath() + "/target-groups"; %>
+	<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
 </div>
 
 <jsp:include page="include/footer.jsp" />
