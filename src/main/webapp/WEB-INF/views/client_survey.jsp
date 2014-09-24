@@ -39,6 +39,9 @@
 				<c:when test="${question.type == '점수범위'}">
 					<jsp:include page="include/client_number_range_question.jsp"/>
 				</c:when>
+				<c:when test="${question.type == '선호도'}">
+					<jsp:include page="include/client_preference_question.jsp"/>
+				</c:when>
 				
 			</c:choose>
 		</c:forEach>

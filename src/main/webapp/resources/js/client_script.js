@@ -50,6 +50,7 @@ function save(input_obj){
 	if($question.data('type') == '객관식2'){
 		var url = survey.context_path + '/responses/multiple';
 	}
+	
 	var params = {
 		'surveyId': $('.client').data('survey-id'),
 		'questionId': $question.data('id'),
@@ -91,6 +92,20 @@ function get_content($question){
 				contents.push($(el).val());
 			});
 			return contents;
+			break;
+		case '선호도':
+			var contents = [];
+			$question.find('[name=content]').each(function(i, el){
+				contents.push({
+					content: $.trim($(el).parent().text()),
+					order: el.value
+				});
+				if(el.value == ''){
+					contents = [];
+					return false;
+				}
+			});
+			return contents.length ? $.toJSON(contents) : '' ;
 	}
 }
 

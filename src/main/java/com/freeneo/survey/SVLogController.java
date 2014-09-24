@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.freeneo.survey.domain.SVLog;
-import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.mapper.SVLogMapper;
 
 @Controller

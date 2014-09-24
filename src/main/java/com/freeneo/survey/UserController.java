@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.service.UserService;
 
