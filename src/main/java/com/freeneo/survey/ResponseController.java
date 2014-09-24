@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.freeneo.survey.domain.Response;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.User;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.util.Util;
@@ -35,19 +36,14 @@ public class ResponseController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public Response insert(Model model, Response response) throws ParseException{
+	public Response insert(Model model, Response response, HttpSession session) throws ParseException{
 		logger.debug("response = {}", response);
 		
 		Survey survey = surveyMapper.select(response.getSurveyId());
 		
-		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
-			logger.debug("시작하지 않은 설문");
+		if( ! canResponse(survey, session)){
 			return null;
-		};
-		if( Util.compareWithToday(survey.getEndDate()) > 0 ){
-			logger.debug("종료한 설문");
-			return null;
-		};
+		}
 		
 		if( ! response.getResponse().equals("")){
 			Response selectedResponse = responseMapper.selectByQuestionIdAndRespondent(response);
@@ -70,19 +66,15 @@ public class ResponseController {
 			@RequestParam(value="surveyId") Long surveyId,
 			@RequestParam(value="questionId") Long questionId,
 			@RequestParam(value="response[]") String[] response,
-			@RequestParam(value="respondent") String respondent
+			@RequestParam(value="respondent") String respondent,
+			HttpSession session
 			) throws ParseException{
 		
 		Survey survey = surveyMapper.select(surveyId);
 		
-		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
-			logger.debug("시작하지 않은 설문");
+		if( ! canResponse(survey, session)){
 			return null;
-		};
-		if( Util.compareWithToday(survey.getEndDate()) > 0 ){
-			logger.debug("종료한 설문");
-			return null;
-		};
+		}
 		
 		logger.debug("response = {}", response);
 		
@@ -105,6 +97,26 @@ public class ResponseController {
 		return responses;
 	}
 	
+	private boolean canResponse(Survey survey, HttpSession session) throws ParseException {
+		
+		User user = (User) session.getAttribute("user");
+		
+		if(user != null){
+			logger.debug("로그인한 사용자는 설문에 응답할 수 없습니다.");
+			return false;
+		}
+		
+		if( Util.compareWithToday(survey.getStartDate()) < 0 ){
+			logger.debug("시작하지 않은 설문");
+			return false;
+		};
+		if( Util.compareWithToday(survey.getEndDate()) > 0 ){
+			logger.debug("종료한 설문");
+			return false;
+		};
+		return true;
+	}
+
 	@RequestMapping(method=RequestMethod.PUT)
 	public Response update(Response response){
 		
