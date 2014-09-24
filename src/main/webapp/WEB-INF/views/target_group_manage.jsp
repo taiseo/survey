@@ -18,10 +18,18 @@
 					<td><form:input cssClass="input-block-level" path="title"/></td>
 				</tr>
 				<tr>
-					<th><form:label path="limit">추출수</form:label></th>
+					<th><form:label path="limit">지사별 인원</form:label></th>
 					<td>
 						<form:input path="limit" cssClass="span1  js-number  js-target-limit"  cssStyle="text-align: right"/>명씩 
-						랜덤으로 추출합니다. <span class="js-target-count"></span>
+						랜덤으로 추출합니다. 
+					</td>
+				</tr>
+				<tr>
+					<th>추출된 인원</th>
+					<td>
+						<span class="js-target-count"></span>
+						<br />
+						<small class="muted">추출된 인원은 현 시점을 기준으로 하고 계약 기간은 신경쓰지 않은 것으로 실제 문자 발송시엔 인원이 달라질 수 있습니다.</small>
 					</td>
 				</tr>
 				<tr class="js-target-category1-wrapper">

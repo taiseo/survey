@@ -99,7 +99,7 @@ public class SurveyService {
 			String startDate, String endDate) throws JsonParseException, JsonMappingException, IOException{
 		
 		String category = null;
-		if (targetCategory2 == null) {
+		if (Util.isEmptyStr(targetCategory2)) {
 			category = targetCategory1;
 		} else {
 			category = targetCategory2;
@@ -248,6 +248,25 @@ public class SurveyService {
 		logger.debug("targetGroupIdList = {}", targetGroupIdList);
 
 		return targetGroupIdList;
+	}
+	
+	public List<String> getBranchesByTargetGroupIds(String targetGroupIds) throws JsonParseException, JsonMappingException, IOException {
+		List<String> branches = new ArrayList<String>();
+		
+		List<Long> targetGroupIdList = makeSelectedTargetGroups(targetGroupIds);
+		
+		for(Long targetGroupId : targetGroupIdList){
+			TargetGroup targetGroup = targetGroupMapper.select(targetGroupId);
+			List<String> branchList = makeBranchList(targetGroup.getBranches());
+			branches.addAll(branchList);
+		}
+		
+		// 중복 제거
+		Set<String> setItems = new LinkedHashSet<String>(branches);
+		branches.clear();
+		branches.addAll(setItems);
+		
+		return branches;
 	}
 
 }

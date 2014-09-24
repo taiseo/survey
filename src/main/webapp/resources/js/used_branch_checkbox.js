@@ -83,7 +83,7 @@ function write_target_count(){
 	var params = get_target_params();
 	
 	if(params.targetBranches == '[]'){
-		$('.js-target-count').html('(0명)');
+		$('.js-target-count').html('0명');
 		return;
 	}
 	
@@ -147,6 +147,9 @@ function bind_target_detail(){
 function target_detail(){
 	var params = get_target_params();
 	$.post(survey.context_path + '/surveys/target-detail', params, function(html){
+		if($('#target-detail-modal').length == 0){
+			$('body').append('<div id="target-detail-modal" class="modal  fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+		}
 		$('#target-detail-modal')
 			.html(html)
 			.modal();

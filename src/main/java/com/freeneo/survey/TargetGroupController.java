@@ -2,9 +2,11 @@ package com.freeneo.survey;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.freeneo.survey.domain.Customer;
 import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
@@ -48,25 +51,11 @@ public class TargetGroupController {
 	
 	@RequestMapping(value="/branches", method=RequestMethod.POST)
 	@ResponseBody
-	public List<String> selectByGroupIds(
+	public List<String> getBranches(
 			@RequestParam(value="targetGroupIds") String targetGroupIds
 			) throws JsonParseException, JsonMappingException, IOException{
-		List<String> branches = new ArrayList<String>();
 		
-		List<Long> targetGroupIdList = surveyService.makeSelectedTargetGroups(targetGroupIds);
-		
-		for(Long targetGroupId : targetGroupIdList){
-			TargetGroup targetGroup = targetGroupMapper.select(targetGroupId);
-			List<String> branchList = surveyService.makeBranchList(targetGroup.getBranches());
-			branches.addAll(branchList);
-		}
-		
-		// 중복 제거
-		Set<String> setItems = new LinkedHashSet<String>(branches);
-		branches.clear();
-		branches.addAll(setItems);
-		
-		return branches;
+		return surveyService.getBranchesByTargetGroupIds(targetGroupIds);
 	}
 	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)
@@ -133,5 +122,73 @@ public class TargetGroupController {
 		return "redirect:/target-groups";
 	}
 		
+	@RequestMapping(value = "/count", method = RequestMethod.POST)
+	@ResponseBody
+	public String targetGroupCount(
+			@RequestParam(value = "targetGroupIds") String targetGroupIds,
+			@RequestParam(value = "startDate") String startDate, 
+			@RequestParam(value = "endDate") String endDate, 
+			HttpServletRequest request,
+			Model model)
+			throws JsonParseException, JsonMappingException, IOException {
 
+		logger.debug("targetGroupIds = {}", targetGroupIds);
+		
+		List<Long> targetGroupIdList = surveyService.makeSelectedTargetGroups(targetGroupIds);
+
+		int count = 0;
+		for( long id : targetGroupIdList ){
+			count += getCount(id, startDate, endDate);
+		}
+
+		String linkStr = "";
+		
+		if(count > 0){
+			linkStr = "<a href='#' class='js-target-group-detail'>" + count + "명 <small>(자세히 보기)</small></a>";
+		}else{
+			linkStr = "0명";
+		}
+		
+		return linkStr;
+	}
+
+	private int getCount(long id, String startDate, String endDate)
+			throws JsonParseException, JsonMappingException, IOException {
+		TargetGroup tg = targetGroupMapper.select(id);
+		List<Customer> customers = surveyService.customerList(tg.getCategory1(), tg.getCategory2(), tg.getBranches(), tg.getLimit(), startDate, endDate);
+		return customers.size();
+	}
+	
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	public String targetDetail(
+			@RequestParam(value = "targetGroupIds") String targetGroupIds,
+			@RequestParam(value = "startDate") String startDate, 
+			@RequestParam(value = "endDate") String endDate, 
+			HttpServletRequest request,
+			Model model)
+			throws JsonParseException, JsonMappingException, IOException {
+		
+		logger.debug("targetGroupIds = {}", targetGroupIds);
+		
+		List<Long> targetGroupIdList = surveyService.makeSelectedTargetGroups(targetGroupIds);
+		List<Map<String, String>> targetInfosByTargetGroup = new ArrayList<Map<String, String>>();
+		
+		for( long id : targetGroupIdList ){
+			
+			Map<String, String> targetInfo = new HashMap<String, String>();
+
+			TargetGroup tg = targetGroupMapper.select(id);
+			List<Customer> customers = surveyService.customerList(tg.getCategory1(), tg.getCategory2(), tg.getBranches(), tg.getLimit(), startDate, endDate);
+			
+			targetInfo.put("targetGroupName", tg.getTitle());
+			targetInfo.put("count", String.valueOf(customers.size()));
+			
+			targetInfosByTargetGroup.add(targetInfo);
+		}
+		
+		model.addAttribute("targetInfosByTargetGroup", targetInfosByTargetGroup);
+		model.addAttribute("pageTitle", "타겟 그룹별 대상수");
+		
+		return "target_group_detail";
+	}
 }

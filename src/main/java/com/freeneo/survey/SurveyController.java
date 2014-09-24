@@ -82,7 +82,7 @@ public class SurveyController {
 		statusMap.put("temporary", "임시저장"); // 승인요청 전 상태다
 		statusMap.put("standby", "승인대기");
 		
-		// 승인1,2는 누가 먼저 하든 상관 없다.
+		// 심의승인은 사실상 의미가 없다.
 		statusMap.put("approval1", "심의승인");
 		statusMap.put("approval_completed", "발송대기");
 		statusMap.put("sending", "발송");
@@ -435,14 +435,14 @@ public class SurveyController {
 		String linkStr = "";
 		
 		if(customers.size() > 0){
-			linkStr = "<a href='#' class='js-target-detail'>(" + customers.size() + "명, 자세히 보기)</a>";
+			linkStr = "<a href='#' class='js-target-detail'>" + customers.size() + "명 <small>(자세히 보기)</small></a>";
 		}else{
-			linkStr = "(0명)";
+			linkStr = "0명";
 		}
 		
 		return linkStr;
 	}
-
+	
 	@RequestMapping(value = "/targets/{surveyId}", method = RequestMethod.GET)
 	public String targets(
 			@PathVariable(value = "surveyId") Long surveyId,
