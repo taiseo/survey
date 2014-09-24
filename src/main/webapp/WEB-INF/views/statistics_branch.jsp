@@ -7,32 +7,10 @@
 <div class="limit-width  center-block">
 	
 	<div class="page-header">
-		<h1>
-			${pageTitle } 
-			<small>${startDate }~${endDate}</small>
-		</h1>
+		<h1>${pageTitle } <small>${survey.respondentCount }명 응답</small></h1>
 	</div>
-	
-	<c:forEach items="${statisticsSurveys }" var="survey" varStatus="status">
-		<c:set var="survey" value="${survey }" scope="request"/>
-		
-		
-		<h1 class="normal-size  jquery-on-container">
-			<span class="index-number">
-				${fn:length(statisticsSurveys) - status.count +1}
-			</span>
-			<a href="#" class="js-open-target" data-target="#survey${survey.id }">
-				${survey.title } <small>${survey.respondentCount }명 응답</small>
-			</a>
-		</h1>
-		
-		<div id="survey${survey.id }" style="display: none">
-		<jsp:include page="include/statistics_part.jsp"/>
-		</div>
-		
-		<hr class="no-margin" />
-		
-	</c:forEach>
 
+	<jsp:include page="include/statistics_part.jsp"/>
+	
 </div>
 <jsp:include page="include/footer.jsp" />

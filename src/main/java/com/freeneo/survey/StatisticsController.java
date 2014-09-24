@@ -65,8 +65,56 @@ public class StatisticsController {
         return "statistics";
     }
 	
-	@RequestMapping(value="/branch/{branch}/{startDate}/{endDate}", method=RequestMethod.GET)
+	@RequestMapping(value="/{branch}/{id}", method=RequestMethod.GET)
 	public String byBranch(
+			@PathVariable(value="id") Long id,
+			@PathVariable(value="branch") String branch,
+			Model model) throws JsonParseException, JsonMappingException, IOException{
+		
+		// 한글 인코딩 처리
+		branch = new String(branch.getBytes("8859_1"), "UTF-8");
+
+		Survey survey = statisticsService.getOneSurveyOneBranchStatistics(id, branch);
+		
+		logger.debug("survey = {}", survey);
+		
+		model.addAttribute("survey", survey);
+        model.addAttribute("pageTitle", branch + " " + survey.getTitle() + " 통계");
+        
+        return "statistics_branch";
+    }
+	
+	@RequestMapping(value="/branch/{branch}/{startDate}/{endDate}", method=RequestMethod.GET)
+	public String listByBranch(
+			@PathVariable(value="branch") String branch,
+			@PathVariable(value="startDate") String startDate,
+			@PathVariable(value="endDate") String endDate,
+			Model model
+			) throws JsonParseException, JsonMappingException, IOException{
+
+		// 한글 인코딩 처리
+		branch = new String(branch.getBytes("8859_1"), "UTF-8");
+		
+		// 하나의 지사, 여러 기간에 걸친 설문들
+		List<Survey> surveys = surveyMapper.listByBranchAndDates(branch, startDate, endDate);
+		
+		for(Survey survey : surveys){
+			survey.setRespondentCount(responseMapper
+					.countRespondentBySurveyIdAndBranch(survey.getId(), branch));
+		}
+		
+		logger.debug("surveys = {}", surveys);
+		
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("pageTitle", branch + " 통계");
+		model.addAttribute("branch", branch);
+		model.addAttribute("surveys", surveys);
+		
+		return "statistics_branch_list";
+	}
+	
+	public String temp(
 			@PathVariable(value="branch") String branch,
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
