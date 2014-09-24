@@ -22,6 +22,7 @@ import com.freeneo.survey.domain.Mms;
 import com.freeneo.survey.domain.Question;
 import com.freeneo.survey.domain.ResponseItem;
 import com.freeneo.survey.domain.Survey;
+import com.freeneo.survey.domain.Target;
 import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.mapper.ConfigMapper;
 import com.freeneo.survey.mapper.QuestionMapper;
@@ -160,6 +161,7 @@ public class SurveyService {
 			JsonMappingException, IOException {
 
 		List<Customer> customers = null;
+		List<Target> targets = null;
 		
 		if(survey.getTargetRegistrationType().equals("CRM DB 추출")){
 			customers = customerList(survey.getTargetCategory1(),
@@ -167,6 +169,8 @@ public class SurveyService {
 					survey.getLimit(), survey.getTargetStartDate(), survey.getTargetEndDate());
 		}else if(survey.getTargetRegistrationType().equals("캠페인 그룹 선택")){
 			customers = customerListByTargetGroupIds(survey.getTargetGroupIds(), survey.getTargetStartDate(), survey.getTargetEndDate());
+		}else if(survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
+			targets = targetMapper.selectBySurveyId(survey.getId()); 
 		}
 
 		logger.debug("customers = {}", customers);
@@ -175,18 +179,35 @@ public class SurveyService {
 		
 		String domain = configMapper.select("domain").getValue();
 
-		for (Customer customer : customers) {
-			Mms mms = new Mms();
-			mms.setSubject(survey.getMsgSubject());
-			mms.setPhone(customer.getHp());
-			mms.setCallback("0000");
-			mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
-			
-
-			mms.setMsg(survey.getMsg()
-					+ " "+ domain + "/survey/"
-					+ survey.getId());
-			mmsList.add(mms);
+		if(survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
+			for (Target target : targets) {
+				Mms mms = new Mms();
+				mms.setSubject(survey.getMsgSubject());
+				mms.setPhone(target.getHp());
+				mms.setCallback("0000");
+				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
+				
+	
+				mms.setMsg(survey.getMsg()
+						+ " "+ domain + "/survey/"
+						+ survey.getId());
+				mmsList.add(mms);
+			}			
+		}else{
+		
+			for (Customer customer : customers) {
+				Mms mms = new Mms();
+				mms.setSubject(survey.getMsgSubject());
+				mms.setPhone(customer.getHp());
+				mms.setCallback("0000");
+				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
+				
+	
+				mms.setMsg(survey.getMsg()
+						+ " "+ domain + "/survey/"
+						+ survey.getId());
+				mmsList.add(mms);
+			}
 		}
 
 		logger.debug("mmsList = {}", mmsList);
@@ -199,8 +220,10 @@ public class SurveyService {
 		for (Mms mms : mmsList) {
 			mmsMapper.insert(mms);
 		}
-
-		updateTargets(survey.getId(), customers);
+		
+		if(!survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
+			updateTargets(survey.getId(), customers);
+		}
 		survey.setSendCount(customers.size());
 		surveyMapper.update(survey);
 		return true;
