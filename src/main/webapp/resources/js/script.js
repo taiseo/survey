@@ -96,6 +96,11 @@ function bind_date_order_valid(){
 	$('[name=startDate], [name=endDate]').on('changeDate', function(){
 		var startDate = $('[name=startDate]').val();
 		var endDate = $('[name=endDate]').val();
+		
+		if( ! startDate || ! endDate){
+			return;
+		}
+		
 		if(startDate > endDate){
 			alert('시작일이 종료일보다 뒤입니다.');
 			$('[name=endDate]').focus();
@@ -106,6 +111,11 @@ function bind_date_order_valid(){
 	$('[name=targetStartDate], [name=targetEndDate]').on('changeDate', function(){
 		var startDate = $('[name=targetStartDate]').val();
 		var endDate = $('[name=targetEndDate]').val();
+		
+		if( ! startDate || ! endDate){
+			return;
+		}
+		
 		if(startDate > endDate){
 			alert('시작일이 종료일보다 뒤입니다.');
 			$('[name=targetEndDate]').focus();
