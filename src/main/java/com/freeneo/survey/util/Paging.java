@@ -50,14 +50,14 @@ public class Paging extends TagSupport {
 									+ "\">" + i + "</a></li>");
 						}
 						out.write("<li><a href=\"" + contextRoot
-								+ "/next\">&gt;&gt;</a></li>");
+								+ "/"+(pageListHolder.getPage() + 2)+"\">&gt;&gt;</a></li>");
 						out.write("<li><a href=\"/" + contextRoot
 								+ "/last\">&gt;|</a></li>");
 					} else if (pageListHolder.isLastPage()) {
 						out.write("<li><a href=\"" + contextRoot
 								+ "/first\">|&lt;</a></li>");
 						out.write("<li><a href=\"" + contextRoot
-								+ "/prev\">&lt;&lt;</a></li>");
+								+ "/"+(pageListHolder.getPage())+"\">&lt;&lt;</a></li>");
 						for (int i = pageListHolder.getPageCount() - offset; i <= pageListHolder
 								.getPageCount(); i++) {
 							int currentPage = pageListHolder.getPage() + 1;
@@ -73,7 +73,7 @@ public class Paging extends TagSupport {
 						out.write("<li><a href=\"" + contextRoot
 								+ "/first\">|&lt;</a></li>");
 						out.write("<li><a href=\"" + contextRoot
-								+ "/prev\">&lt;&lt;</a></li>");
+								+ "/"+(pageListHolder.getPage())+"\">&lt;&lt;</a></li>");
 						int currentPage = pageListHolder.getPage() + 1;
 						int startingPoint = getStartingPoint(currentPage);
 						int endingPoint = getEndingPoint(currentPage);
@@ -94,7 +94,7 @@ public class Paging extends TagSupport {
 							}
 						}
 						out.write("<li><a href=\"" + contextRoot
-								+ "/next\">&gt;&gt;</a></li>");
+								+ "/"+(pageListHolder.getPage() + 2)+"\">&gt;&gt;</a></li>");
 						out.write("<li><a href=\"" + contextRoot
 								+ "/last\">&gt;|</a></li>");
 					}
