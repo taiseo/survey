@@ -26,7 +26,6 @@ public class Paging extends TagSupport {
 			try {
 				out.write("<div class='pagination'><ul><li class='disabled'><a href='#' onclick='return false'>1</a></li></ul></div>");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
@@ -35,7 +34,9 @@ public class Paging extends TagSupport {
 				if (pageListHolder.getPageCount() <= offset) {
 					for (int i = 0; i < pageListHolder.getPageCount(); i++) {
 						if (pageListHolder.getPage() == i) {
-							out.write("<li class='disabled'><a href='#' onclick='return false'>" + (pageListHolder.getPage() + 1) + "</a></li>");
+							out.write("<li class='disabled'><a href='#' onclick='return false'>"
+									+ (pageListHolder.getPage() + 1)
+									+ "</a></li>");
 						} else {
 							out.write("<li><a href=\"" + contextRoot + "/"
 									+ (i + 1) + "\">" + (i + 1) + "</a></li>");
@@ -45,32 +46,33 @@ public class Paging extends TagSupport {
 					if (pageListHolder.isFirstPage()) {
 						out.write("<li class='disabled'><a href='#' onclick='return false'>1</a></li>");
 						for (int i = 2; i <= offset + 1; i++) {
-							out.write("<li><a href=\"/" + contextRoot + "/" + i
+							out.write("<li><a href=\"" + contextRoot + "/" + i
 									+ "\">" + i + "</a></li>");
 						}
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/next\">&gt;&gt;</a></li>");
 						out.write("<li><a href=\"/" + contextRoot
 								+ "/last\">&gt;|</a></li>");
 					} else if (pageListHolder.isLastPage()) {
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/first\">|&lt;</a></li>");
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/prev\">&lt;&lt;</a></li>");
 						for (int i = pageListHolder.getPageCount() - offset; i <= pageListHolder
 								.getPageCount(); i++) {
 							int currentPage = pageListHolder.getPage() + 1;
 							if (currentPage == i) {
-								out.write("<li class='disabled'><a href='#' onclick='return false'>" + (currentPage) + "</a></li>");
+								out.write("<li class='disabled'><a href='#' onclick='return false'>"
+										+ (currentPage) + "</a></li>");
 							} else {
-								out.write("<li><a href=\"/" + contextRoot + "/" + i
-										+ "\">" + i + "</a></li>");
+								out.write("<li><a href=\"" + contextRoot + "/"
+										+ i + "\">" + i + "</a></li>");
 							}
 						}
 					} else {
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/first\">|&lt;</a></li>");
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/prev\">&lt;&lt;</a></li>");
 						int currentPage = pageListHolder.getPage() + 1;
 						int startingPoint = getStartingPoint(currentPage);
@@ -84,15 +86,16 @@ public class Paging extends TagSupport {
 						}
 						for (int i = startingPoint; i <= endingPoint; i++) {
 							if (currentPage == i) {
-								out.write("<li class='disabled'><a href='#' onclick='return false'>" + (currentPage) + "</a></li>");
+								out.write("<li class='disabled'><a href='#' onclick='return false'>"
+										+ (currentPage) + "</a></li>");
 							} else {
-								out.write("<li><a href=\"/" + contextRoot + "/" + i
-										+ "\">" + i + "</a></li>");
+								out.write("<li><a href=\"" + contextRoot + "/"
+										+ i + "\">" + i + "</a></li>");
 							}
 						}
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/next\">&gt;&gt;</a></li>");
-						out.write("<li><a href=\"/" + contextRoot
+						out.write("<li><a href=\"" + contextRoot
 								+ "/last\">&gt;|</a></li>");
 					}
 				}

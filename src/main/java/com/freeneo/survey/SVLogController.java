@@ -2,6 +2,8 @@ package com.freeneo.survey;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,8 @@ public class SVLogController {
 	@RequestMapping(value = "/{page}", method = RequestMethod.GET)	
 	public String list(
 			@PathVariable(value = "page") String page,
-			Model model){
+			Model model
+			){
 		
 		List<SVLog> logs = svlogMapper.list();
 		
