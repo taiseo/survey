@@ -160,6 +160,8 @@
 					<th>엑셀파일 업로드</th>
 					<td>
 						<input type="file" name="excel" id="excel" />
+						<br />
+						<a href="<%=request.getContextPath()%>/resources/files/excel-example.xlsx">엑셀 예시 파일 다운로드</a>
 					</td>
 				</tr>
 			</tbody>
