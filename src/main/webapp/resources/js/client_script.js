@@ -95,16 +95,47 @@ function get_content($question){
 			break;
 		case '선호도':
 			var contents = [];
+			var temp_to_validation = [];
+			var max_value = $question.find('[name=content]').length;
 			$question.find('[name=content]').each(function(i, el){
 				contents.push({
 					content: $.trim($(el).parent().text()),
 					order: el.value
 				});
+				temp_to_validation.push(el.value);
+				
 				if(el.value == ''){
 					contents = [];
 					return false;
 				}
+				if(el.value > max_value){
+					alert('숫자가 ' + max_value + '보다 크면 안 됩니다.');
+					el.value = '';
+					el.focus();
+					contents = [];
+					return false;
+				}
+				if(el.value < 1){
+					alert('숫자가 1보다 작으면 안 됩니다.');
+					el.value = '';
+					el.focus();
+					contents = [];
+					return false;
+				}
 			});
+			
+			console.log('contents', contents);
+			console.log('temp_to_validation', temp_to_validation);
+			console.log(_.uniq(temp_to_validation).length);
+			console.log(max_value);
+			
+			if(contents.length > 0 
+					&& _.uniq(temp_to_validation).length < max_value){
+				alert('숫자를 중복으로 입력하면 안 됩니다.');
+				contents = [];
+				$question.find('[name=content]').val('').first().focus();
+			}
+			
 			return contents.length ? $.toJSON(contents) : '' ;
 	}
 }
