@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%@ taglib uri="http://www.okjsp.pe.kr/ok-taglib" prefix="pagination" %>
+
 <jsp:include page="include/header.jsp" />
 
 <div class="limit-width  center-block">
@@ -31,9 +34,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="survey" items="${list}" varStatus="status">
+			<c:forEach var="survey" items="${pagedListHolder.pageList}" varStatus="status">
 				<tr>
-					<td>${fn:length(list) - status.count +1}</td>
+					<td>${pagedListHolder.nrOfElements - (pagedListHolder.pageSize * pagedListHolder.page) - status.count +1}</td>
 					<td nowrap="nowrap">
 						<c:if test="${survey.status == '임시저장' or survey.status == '승인대기'}">
 							<a href="<%=request.getContextPath()%>/surveys/update/${survey.id}" class="survey-title">
@@ -161,7 +164,14 @@
 		<a href="<%=request.getContextPath() %>/surveys/insert" class="btn  btn-primary">
 			새 설문
 		</a>
+	</p>
+	
+	<p class="text-center">
+		<% String path = request.getContextPath() + "/surveys"; %>
+		<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
 	</p>	
 </div>
+
+
 
 <jsp:include page="include/footer.jsp" />

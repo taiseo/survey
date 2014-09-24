@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%@ taglib uri="http://www.okjsp.pe.kr/ok-taglib" prefix="pagination" %>
+
 <jsp:include page="include/header.jsp" />
 
 <div class="limit-width  center-block">
@@ -28,9 +31,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${targetGroups}" varStatus="status">
+			<c:forEach var="item" items="${pagedListHolder.pageList}" varStatus="status">
 				<tr>
-					<td>${fn:length(targetGroups) - status.count + 1} </td>
+					<td>${pagedListHolder.nrOfElements - (pagedListHolder.pageSize * pagedListHolder.page) - status.count +1} </td>
 					<td>
 						<a href="<%= request.getContextPath() %>/target-groups/update/${item.id}">
 							${item.title }
@@ -52,6 +55,11 @@
 		<a href="<%=request.getContextPath() %>/target-groups/insert" class="btn  btn-primary">
 			새 캠페인(타겟) 그룹
 		</a>
+	</p>
+	
+	<p class="text-center">
+		<% String path = request.getContextPath() + "/target-groups"; %>
+		<pagination:paging pageListHolder="${pagedListHolder}" offset="10" contextRoot="<%= path %>"/>
 	</p>	
 </div>
 

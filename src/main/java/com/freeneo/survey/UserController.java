@@ -9,6 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.freeneo.survey.domain.Survey;
 import com.freeneo.survey.domain.User;
 import com.freeneo.survey.service.UserService;
 
@@ -29,6 +31,14 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String users(Model model, HttpSession session) {
+		return users("1", model, session);
+	}
+	
+	@RequestMapping(value = "/{page}", method = RequestMethod.GET)	
+	public String users(
+			@PathVariable(value = "page") String page,
+			Model model, 
+			HttpSession session) {
 		
 		User currentUser = (User) session.getAttribute("user");
 		if( ! currentUser.getUserLevel().equals("시스템 관리자")){
@@ -54,8 +64,24 @@ public class UserController {
 						
 		}
 		
+		PagedListHolder<User> pagedListHolder = new PagedListHolder<User>(
+				users);
+		pagedListHolder.setPageSize(10);
+
+		if (page.equalsIgnoreCase("next")) {
+			pagedListHolder.nextPage();
+		} else if (page.equalsIgnoreCase("prev")) {
+			pagedListHolder.previousPage();
+		} else if (page.equalsIgnoreCase("first")) {
+			pagedListHolder.setPage(0);
+		} else if (page.equalsIgnoreCase("last")) {
+			pagedListHolder.setPage(pagedListHolder.getPageCount());
+		} else {
+			pagedListHolder.setPage(Integer.parseInt(page) - 1);
+		}
+		
 		model.addAttribute("pageTitle", "사용자 목록");
-		model.addAttribute("users", users);
+		model.addAttribute("pagedListHolder", pagedListHolder);
 
 		return "user_list";
 	}
