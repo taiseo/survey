@@ -73,6 +73,9 @@
 		</table>
 		<p class="text-center">
 			<input type="submit" value="저장" class="btn btn-primary btn-large" />
+			<c:if test="${listUrl != null}">
+				<a href="${listUrl }" class="btn  pull-right">목록</a>
+			</c:if>
 		</p>
 	</form:form>
 </div>
