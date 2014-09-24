@@ -98,10 +98,6 @@ public class HistoryController {
 		
 		logger.debug("targetList = {}", targetList);
 		
-		List<Map<String, ?>> countByBranch = responseMapper.countRespondentBySurveysAndBranches(surveyList, branchList);
-		
-		logger.debug("countByBranch = {}", countByBranch);
-		
 		int allRespondentCount = 0;
 		
 		for(String branch : branchList){
@@ -109,8 +105,13 @@ public class HistoryController {
 			branchHistory.setBranchName(branch);
 			
 			int sendCount = 0;
-			int respondentCount = getRespondentCount(countByBranch, branch);
+			int respondentCount = 0;
 			double responseRatio = 0;
+			
+			List<Survey> surveys = surveyMapper.listByBranchAndDates(branch, startDate, endDate);
+			for(Survey survey : surveys){
+				respondentCount += responseMapper.countRespondentBySurveyIdAndBranch(survey.getId(), branch);
+			}
 			
 			allRespondentCount += respondentCount;
 			
