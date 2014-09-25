@@ -1,4 +1,4 @@
-package com.freeneo.survey.mapper;
+package com.freeneo.survey.mapperInner;
 
 import java.util.List;
 

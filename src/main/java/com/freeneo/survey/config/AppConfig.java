@@ -62,6 +62,31 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return sessionFactory.getObject();
 	}
 	
+	@Bean
+    public DataSource innerDataSource() {
+        InitialContext cxt;
+        DataSource ds = null;
+        try {
+            cxt = new InitialContext();
+            ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/freeneoSurveyInner");
+        } catch (NamingException e) {
+            logger.error(e.getMessage());
+        }
+        return ds;
+    }
+    
+    @Bean
+    public PlatformTransactionManager innerTransactionManager() {
+        return new DataSourceTransactionManager(innerDataSource());
+    }
+
+    @Bean
+    public SqlSessionFactory innerSqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(innerDataSource());
+        return sessionFactory.getObject();
+    }
+	
 	
 	
 	

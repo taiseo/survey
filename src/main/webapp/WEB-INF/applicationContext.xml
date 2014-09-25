@@ -13,6 +13,11 @@
        <property name="basePackage" value="com.freeneo.survey.mapper"/>
        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"  />
     </bean>
+
+    <bean id="innerMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapperInner"/>
+       <property name="sqlSessionFactoryBeanName" value="innerSqlSessionFactory"  />
+    </bean>
     
     <bean id="crmMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
        <property name="basePackage" value="com.freeneo.survey.mapperCrm"/>

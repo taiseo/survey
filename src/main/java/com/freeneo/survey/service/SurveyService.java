@@ -29,7 +29,7 @@ import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetGroupMapper;
-import com.freeneo.survey.mapper.TargetMapper;
+import com.freeneo.survey.mapperInner.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.mapperMms.MmsMapper;
 import com.freeneo.survey.util.Util;

@@ -15,7 +15,7 @@ import com.freeneo.survey.mapper.QuestionMapper;
 import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
-import com.freeneo.survey.mapper.TargetMapper;
+import com.freeneo.survey.mapperInner.TargetMapper;
 import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.service.QuestionService;
 import com.freeneo.survey.service.StatisticsService;

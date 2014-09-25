@@ -26,7 +26,7 @@ import com.freeneo.survey.domain.User;
 import com.freeneo.survey.domain.UserHistory;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
-import com.freeneo.survey.mapper.TargetMapper;
+import com.freeneo.survey.mapperInner.TargetMapper;
 import com.freeneo.survey.mapper.UserMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.HistoryService;

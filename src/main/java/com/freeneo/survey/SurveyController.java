@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -42,8 +41,8 @@ import com.freeneo.survey.mapper.ResponseItemMapper;
 import com.freeneo.survey.mapper.ResponseMapper;
 import com.freeneo.survey.mapper.SurveyMapper;
 import com.freeneo.survey.mapper.TargetGroupMapper;
-import com.freeneo.survey.mapper.TargetMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
+import com.freeneo.survey.mapperInner.TargetMapper;
 import com.freeneo.survey.service.SurveyService;
 import com.freeneo.survey.util.ExcelImport;
 import com.freeneo.survey.util.Util;
