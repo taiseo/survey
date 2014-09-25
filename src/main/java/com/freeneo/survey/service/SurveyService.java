@@ -191,6 +191,9 @@ public class SurveyService {
 				mms.setMsg(survey.getMsg()
 						+ " "+ domain + "/survey/"
 						+ survey.getId());
+				//SMS용 임시!
+				mms.setMsg( domain + "/survey/"
+						+ survey.getId());
 				mmsList.add(mms);
 			}			
 		}else{
@@ -205,6 +208,9 @@ public class SurveyService {
 	
 				mms.setMsg(survey.getMsg()
 						+ " "+ domain + "/survey/"
+						+ survey.getId());
+				//SMS용 임시!
+				mms.setMsg( domain + "/survey/"
 						+ survey.getId());
 				mmsList.add(mms);
 			}
