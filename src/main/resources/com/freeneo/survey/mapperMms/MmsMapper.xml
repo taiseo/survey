@@ -15,7 +15,7 @@
 		INSERT INTO SC_TRAN (TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
 		,TR_CALLBACK , TR_MSG)
 		VALUES (sysdate, '0', '0', #{phone,jdbcType=VARCHAR},
-		#{callback,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR});
+		#{callback,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR})
 
 	</insert>
 
