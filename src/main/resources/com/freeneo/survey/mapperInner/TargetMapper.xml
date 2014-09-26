@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapperInner.TargetMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Target">
+		<id column="survey_id" jdbcType="NUMERIC" property="surveyId" />
+		<result column="cst_no" jdbcType="VARCHAR" property="cstNo" />
+		<result column="ptcp_tit" jdbcType="VARCHAR" property="ptcpTit" />
+		<result column="ptcp_dttm" jdbcType="VARCHAR" property="ptcpDttm" />
+		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
+		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
+		<result column="hp" jdbcType="VARCHAR" property="hp" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+	</select>
+
+	<select id="selectBySurveyId" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="countBySurveyId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="branchListBySurveyId" parameterType="Long" resultType="String">
+		SELECT
+		DISTINCT(ETC_01)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="countRespondentBySurvyeId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM SV_RESPONDENTS
+		WHERE 
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="countBySurveyIdAndBranch" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM sv_targets
+		where survey_id = #{surveyId,jdbcType=NUMERIC}
+		<if test="branch != ''">
+			and ETC_01 = #{branch,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="countRespondentBySurvyeIdAndBranch" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM SV_RESPONDENTS
+		WHERE 
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+			<if test="branch != ''">
+				AND BRANCH = #{branch,jdbcType=VARCHAR}
+			</if>
+	</select>
+
+	<select id="select" parameterType="com.freeneo.survey.domain.Target"
+		resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_target
+		WHERE survey_id = #{surveyId,jdbcType=VARCHAR}
+		AND
+		cst_no = #{cstNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="listBySurveyId" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="listBySurveysAndBranches" parameterType="java.util.List" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM sv_targets
+		WHERE 
+			SURVEY_ID IN 
+				<foreach collection="surveyList" open="(" close=")" separator="," item="survey">
+					#{survey.id,jdbcType=NUMERIC}
+				</foreach>
+			AND ETC_01 IN
+				<foreach collection="branchList" open="(" close=")" separator="," item="branch">
+					#{branch,jdbcType=VARCHAR}
+				</foreach>
+	</select>
+
+	<insert id="insertAll" parameterType="com.freeneo.survey.domain.Target">
+		INSERT ALL
+			<foreach item="customer" index="index" collection="customers">
+				INTO SV_TARGETS (SURVEY_ID, CST_NO, PTCP_TIT, PTCP_DTTM, ETC_01, CST_NM, HP)
+				VALUES (
+					#{surveyId,jdbcType=NUMERIC},
+					#{customer.cstNo,jdbcType=VARCHAR},
+					#{customer.ptcpTit,jdbcType=VARCHAR},
+					#{customer.ptcpDttm,jdbcType=VARCHAR},
+					#{customer.etc01,jdbcType=VARCHAR},
+					#{customer.cstNm,jdbcType=VARCHAR},
+					#{customer.hp,jdbcType=VARCHAR}
+				)
+			</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM sv_targets
+		WHERE survey_id = #{surveyId,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>
