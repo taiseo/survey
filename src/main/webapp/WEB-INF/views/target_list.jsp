@@ -8,10 +8,13 @@
 		<h1>${pageTitle }</h1>
 	</div>
 	
+	<div class="base-margin">
+		<a href="${listUrl }" class="btn">목록</a>
+	</div>
+	
 	<table class="table">
 	<thead>
 		<tr>
-			<th>고객번호</th>
 			<th>사업명</th>
 			<th>계약체결일</th>
 			<th>지사명</th>
@@ -21,7 +24,6 @@
 	</thead>
 	<c:forEach var="target" items="${targets}">
 		<tr>
-			<td>${target.cstNo }</td>
 			<td>${target.ptcpTit }</td>
 			<td>${target.ptcpDttm }</td>
 			<td>${target.etc01 }</td>
@@ -30,6 +32,10 @@
 		</tr>
 	</c:forEach>
 	</table>
+	
+	<div class="base-margin">
+		<a href="${listUrl }" class="btn">목록</a>
+	</div>
 	
 </div>
 <jsp:include page="include/footer.jsp" />

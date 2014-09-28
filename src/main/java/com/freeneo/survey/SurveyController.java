@@ -160,12 +160,12 @@ public class SurveyController {
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
 		
 		String listUrl = Util.getListUrl(request, "/surveys");
+		model.addAttribute("listUrl", listUrl);
 
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pageTitle", "새 설문");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
-		model.addAttribute("listUrl", listUrl);
 		return "survey_manage";
 	}
 
@@ -521,7 +521,9 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "/targets/{surveyId}", method = RequestMethod.GET)
-	public String targets(@PathVariable(value = "surveyId") Long surveyId,
+	public String targets(
+			@PathVariable(value = "surveyId") Long surveyId,
+			HttpServletRequest request,
 			Model model) {
 
 		Survey survey = surveyMapper.select(surveyId);
@@ -531,6 +533,9 @@ public class SurveyController {
 			target.setPtcpDttm(Util.formating(target.getPtcpDttm(),
 					"####-##-##"));
 		}
+		
+		String listUrl = Util.getListUrl(request, "/surveys");
+		model.addAttribute("listUrl", listUrl);
 
 		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
 		model.addAttribute("survey", survey);
