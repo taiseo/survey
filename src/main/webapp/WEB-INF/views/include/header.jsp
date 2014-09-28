@@ -20,20 +20,6 @@
 	</script>
 </head>
 <body>
-
-	<c:if test="${isClient}">
-		<div class="navbar  limit-width  center-block">
-			<div class="navbar-inner">
-				<a class="brand" href="<%=request.getContextPath()%>" onclick="return false;">${survey.title }</a>
-				<ul class="nav">
-					<c:forEach var="page" begin="1" end="${pages }">
-						<li class="${page == 1 ? 'active' : '' }"><a href="#${page}" onclick="return false;">${page }p</a></li>
-					</c:forEach>
-				</ul>
-			</div>
-		</div>
-	</c:if>
-
 	<c:if test="${not empty sessionScope.user and ! isClient}">
 		<!-- 관리자 -->
 		<div class="navbar  limit-width  center-block">

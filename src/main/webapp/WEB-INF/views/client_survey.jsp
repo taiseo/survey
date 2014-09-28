@@ -3,16 +3,18 @@
 
 <jsp:include page="include/header.jsp" />
 
+<img src="<%=request.getContextPath() %>/resources/images/client-logo.png" class="l-block  client-logo-img" />
+<h1 class="client-headline">
+	고객만족 설문 조사
+</h1>
 <div class="limit-width  center-block  client" data-client="${sessionId}" data-survey-id="${survey.id }">
-	<div class="page-header">
-		<h1>${pageTitle }</h1>
+	
+	<div class="desc">
+		${survey.description }
 	</div>
 	
 	<div class="questions-block">
-		<div class="well">
-			${survey.description }
-		</div>
-		<div class="js-search-by-branch">
+		<div class="js-search-by-branch  search-by-branch">
 			<h2>귀하께서 계약을 체결하신 공사의 지사는 어디인가요?</h2>
 			<select id="bonbu"></select>
 			<select name="branch"></select>
