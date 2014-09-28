@@ -154,6 +154,9 @@
 							onclick="return confirm('정말로 삭제할까요?')">
 							삭제
 						</a>
+						<a class="btn  btn-small" href="<%=request.getContextPath()%>/surveys/clone/${survey.id}">
+							복사
+						</a>
 					</td>
 				</tr>
 			</c:forEach>

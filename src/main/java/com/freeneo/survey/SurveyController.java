@@ -571,4 +571,43 @@ public class SurveyController {
 		model.addAttribute("pageTitle", "지사별 대상수");
 		return "target_detail";
 	}
+	
+	@RequestMapping(value = "/clone/{id}", method = RequestMethod.GET)
+	public String clone(
+			@PathVariable(value="id") long id,
+			HttpServletRequest request,
+			HttpSession session
+			){
+		
+		User user = (User) session.getAttribute("user");
+		
+		// 설문 복사
+		Survey survey = surveyMapper.select(id);
+		
+		survey.setId(null);
+		survey.setPart(user.getPart());
+		survey.setWriter(user.getUsername());
+		survey.setStatus("임시저장");
+		survey.setSendCount(0);
+		
+		surveyMapper.insert(survey);
+		logger.debug("inserted survey = {}", survey);
+		
+		// 질문과 답항 복사
+		List<Question> questions = questionMapper.list(id);
+
+		for (Question question : questions) {
+			List<ResponseItem> responseItems = responseItemMapper.list(question.getId());
+			question.setId(null);
+			question.setSurveyId(survey.getId());
+			questionMapper.insert(question);
+			for(ResponseItem responseItem : responseItems){
+				responseItem.setId(null);
+				responseItem.setQuestionId(question.getId());
+				responseItemMapper.insert(responseItem);
+			}
+		}
+		
+		return "redirect:/surveys/";
+	}
 }
