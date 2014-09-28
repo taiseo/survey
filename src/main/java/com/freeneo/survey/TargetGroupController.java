@@ -27,6 +27,7 @@ import com.freeneo.survey.domain.TargetGroup;
 import com.freeneo.survey.mapper.TargetGroupMapper;
 import com.freeneo.survey.mapperCrm.CustomerMapper;
 import com.freeneo.survey.service.SurveyService;
+import com.freeneo.survey.util.Util;
 
 @RequestMapping(value="/target-groups")
 @Controller
@@ -77,14 +78,19 @@ public class TargetGroupController {
 	@RequestMapping(value="/branches", method=RequestMethod.POST)
 	@ResponseBody
 	public List<String> getBranches(
+			HttpServletRequest request,
 			@RequestParam(value="targetGroupIds") String targetGroupIds
 			) throws JsonParseException, JsonMappingException, IOException{
+		
+		request.setAttribute("log_msg", "");
 		
 		return surveyService.getBranchesByTargetGroupIds(targetGroupIds);
 	}
 	
 	@RequestMapping(value="/insert", method = RequestMethod.GET)
-	public String insertPage(Model model){
+	public String insertPage(
+			HttpServletRequest request,
+			Model model){
 		
 		TargetGroup targetGroup = new TargetGroup();
 		
@@ -92,12 +98,16 @@ public class TargetGroupController {
 		model.addAttribute("pageTitle", "새 캠페인(타겟) 그룹");
 		model.addAttribute("targetGroup", targetGroup);
 		
+		String listUrl = request.getContextPath() + "/target-groups";
+		model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
+		
 		return "target_group_manage";
 	}
 	
 	@RequestMapping(value="/update/{id}", method = RequestMethod.GET)
 	public String updatePage(
 			@PathVariable(value="id") Long id,
+			HttpServletRequest request,
 			Model model){
 		
 		TargetGroup targetGroup = targetGroupMapper.select(id);
@@ -108,6 +118,10 @@ public class TargetGroupController {
 		model.addAttribute("httpMethod", "PUT");
 		model.addAttribute("pageTitle", "새 캠페인(타겟) 그룹");
 		model.addAttribute("targetGroup", targetGroup);
+		
+		String listUrl = request.getContextPath() + "/target-groups";
+		model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
+
 		
 		return "target_group_manage";
 	}
@@ -173,6 +187,8 @@ public class TargetGroupController {
 		}else{
 			linkStr = "0명";
 		}
+		
+		request.setAttribute("log_msg", "");
 		
 		return linkStr;
 	}

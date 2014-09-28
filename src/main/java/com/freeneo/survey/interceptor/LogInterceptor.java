@@ -67,21 +67,37 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			if(modelAndView != null){
 				model = modelAndView.getModel();
 			}
-			logger.debug("model = {}", model);
+			
 			if (model.containsKey("log_msg")) {
-				newContent = model.get("log_msg").toString();
+				String log_msg = model.get("log_msg").toString();
+				if(Util.isEmptyStr(log_msg)){
+					newContent = null;
+				}else{
+					newContent = log_msg;
+				}
+			} else if (request.getAttribute("log_msg") != null) {
+				String log_msg = (String) request.getAttribute("log_msg");
+				if(Util.isEmptyStr(log_msg)){
+					newContent = null;
+				}else{
+					newContent = log_msg;
+				}
 			} else if (model.containsKey("pageTitle")) {
 				newContent = model.get("pageTitle").toString();
 			} else {
 				newContent = Util.getUri(request);
 			}
 
-			if(isNew){
-				log.setContent(newContent);
-				svlogMapper.insert(log);
-			}else{
-				log.setContent(log.getContent() + "<br>" + newContent);
-				svlogMapper.update(log);
+			logger.debug("log content = {}", newContent);
+			
+			if(newContent != null){
+				if(isNew){
+					log.setContent(newContent);
+					svlogMapper.insert(log);
+				}else{
+					log.setContent(log.getContent() + "<br>" + newContent);
+					svlogMapper.update(log);
+				}
 			}
 		}
 	}

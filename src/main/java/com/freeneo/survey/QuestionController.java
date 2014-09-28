@@ -1,5 +1,7 @@
 package com.freeneo.survey;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,28 +28,31 @@ public class QuestionController {
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public Question insert(Question question){
+	public Question insert(HttpServletRequest request, Question question){
 		questionMapper.insert(question);
 		logger.debug("insertedQuestion = {}", question);
+		request.setAttribute("log_msg", "");
 		return question;
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Question update(Question question){
+	public Question update(HttpServletRequest request, Question question){
 		logger.debug("question = {}", question);
 		questionMapper.update(question);
+		request.setAttribute("log_msg", "");
 		return question;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Question delete(@RequestParam(value="id") Long id){
+	public Question delete(HttpServletRequest request, @RequestParam(value="id") Long id){
 		Question question = questionMapper.select(id);
 		logger.debug("question to delete = {}", question);
 		questionMapper.delete(id);
+		request.setAttribute("log_msg", "");
 		
 		// TODO responseItem 삭제
 		

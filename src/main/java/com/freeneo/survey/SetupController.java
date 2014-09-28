@@ -55,6 +55,8 @@ public class SetupController {
 		drop(request, session);
 		create(request, session);
 		
+		request.setAttribute("log_msg", "");
+		
 		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
 	}
 	
@@ -70,6 +72,8 @@ public class SetupController {
 		
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../create-tables.sql");
 		logger.info("테이블과 시퀀스 생성함.");
+		
+		request.setAttribute("log_msg", "");
 		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
 	}
 	
@@ -85,6 +89,7 @@ public class SetupController {
 		
 		executeSqlFile(this.getClass().getResource("").getPath() + "../../../drop-tables.sql");
 		logger.info("테이블과 시퀀스 드롭함.");
+		request.setAttribute("log_msg", "");
 		return "<meta charset='utf-8'><p>Complete. See log for detail.</p>";
 	}
 	

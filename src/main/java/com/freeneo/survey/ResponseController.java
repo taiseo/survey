@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class ResponseController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public Response insert(Model model, Response response, HttpSession session) throws ParseException{
+	public Response insert(Model model, HttpServletRequest request, Response response, HttpSession session) throws ParseException{
 		logger.debug("response = {}", response);
 		
 		Survey survey = surveyMapper.select(response.getSurveyId());
@@ -57,6 +58,8 @@ public class ResponseController {
 		model.addAttribute("log_msg", response.toString());
 		logger.debug("model ={}", model);
 		
+		request.setAttribute("log_msg", "");
+		
 		return response;
 	}
 	
@@ -67,6 +70,7 @@ public class ResponseController {
 			@RequestParam(value="questionId") Long questionId,
 			@RequestParam(value="response[]") String[] response,
 			@RequestParam(value="respondent") String respondent,
+			HttpServletRequest request,
 			HttpSession session
 			) throws ParseException{
 		
@@ -93,6 +97,8 @@ public class ResponseController {
 			responseMapper.insert(responseToInsert);
 			responses.add(responseToInsert);
 		}
+		
+		request.setAttribute("log_msg", "");
 		
 		return responses;
 	}
@@ -132,6 +138,7 @@ public class ResponseController {
 			@RequestParam(value="bonbu") String bonbu,
 			@RequestParam(value="branch") String branch,
 			@RequestParam(value="surveyId") Long surveyId,
+			HttpServletRequest request,
 			HttpSession session
 			){
 		
@@ -144,6 +151,8 @@ public class ResponseController {
 		}else{
 			responseMapper.insertRespondent(session.getId(), bonbu, branch, surveyId);
 		}
+		
+		request.setAttribute("log_msg", "");
 		
 		return "1";
 	}

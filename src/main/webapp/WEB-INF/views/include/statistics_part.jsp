@@ -12,8 +12,8 @@
 			</h2>
 			<p class="text-right">
 				<c:if test="${fn:contains(question.type, '주관식')}">
-				<a href="#" class="btn btn-small" 
-					onclick="$(this).parent().next().removeClass('limit-height');$(this).remove();return false;">펼치기</a>
+				<a href="#" class="btn  btn-small  js-open-responses">펼치기</a>
+				<a href="#" class="btn  btn-small  js-close-responses" style="display: none">접기</a>
 				</c:if>
 				<small>${question.questionRespondentCount }명<!-- 
 				 -->(<fmt:formatNumber 

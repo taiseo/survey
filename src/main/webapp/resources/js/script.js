@@ -5,6 +5,7 @@ $(document).ready(function(){
 	init_only_number();
 	init_underscore_template();
 	bind_show_hide();
+	bind_show_hide_responses();
 	bind_date_order_valid();
 });
 
@@ -121,5 +122,20 @@ function bind_date_order_valid(){
 			$('[name=targetEndDate]').focus();
 			return false;
 		}
+	});
+}
+
+function bind_show_hide_responses(){
+	$('.js-open-responses').click(function(e){
+		e.preventDefault();
+		$(this).parent().next().removeClass('limit-height');
+		$(this).hide();
+		$(this).next().show();
+	});
+	$('.js-close-responses').click(function(e){
+		e.preventDefault();
+		$(this).parent().next().addClass('limit-height');
+		$(this).hide();
+		$(this).prev().show();
 	});
 }

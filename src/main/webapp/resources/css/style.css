@@ -158,3 +158,42 @@ th label {
 	width: 30px;
 	font-weight: normal;
 }
+
+.client-logo-img {
+	width: 100%;
+}
+
+.client-headline {
+	font-size: 34px;
+	letter-spacing: -1px;
+	color: #004ea1;
+	text-align: center;
+}
+
+.client .desc {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	border-bottom-width: 3px;
+	padding: 1em;
+	margin-bottom: 20px;
+}
+
+.client .desc p:last-child {
+	margin-bottom: 0;
+}
+.client .search-by-branch {
+	background: #eee;
+	margin-left: -20px;
+	margin-right: -20px;
+	padding: 20px;
+}
+
+.client .search-by-branch h2 {
+	margin-top: 0;
+	font-weight: normal;
+}
+
+.questions-block h2 {
+	line-height: 1.3;
+	font-size: 18px;
+}
