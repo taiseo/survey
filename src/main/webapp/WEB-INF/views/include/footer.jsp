@@ -11,5 +11,8 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/lib/underscore-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/branches.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/script.js"></script>
+
+<iframe name="_fra" id="_fra" width="0" height="0" style="display:none"></iframe>
+
 </body>
 </html>
