@@ -242,8 +242,13 @@ public class SurveyController {
 			model.addAttribute("error_msg", "MMS 인사말을 입력해 주세요");
 			return false;
 		}
+		
+		if(survey.getTargetRegistrationType() == null){
+			model.addAttribute("error_msg", "타겟 등록 방식을 선택해 주세요.");
+			return false;
+		}
 
-		if (!survey.getTargetRegistrationType().equals("엑셀파일 업로드")) {
+		if ( ! survey.getTargetRegistrationType().equals("엑셀파일 업로드")) {
 
 			if (Util.isEmptyStr(survey.getTargetStartDate())) {
 				model.addAttribute("error_msg", "계약기간 시작일을 입력해 주세요.");
@@ -516,6 +521,8 @@ public class SurveyController {
 		}else{
 			linkStr = "0명";
 		}
+		
+		request.setAttribute("log_msg", "");
 		
 		return linkStr;
 	}

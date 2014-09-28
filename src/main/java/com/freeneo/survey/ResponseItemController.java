@@ -1,5 +1,7 @@
 package com.freeneo.survey;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,32 +28,37 @@ public class ResponseItemController {
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public ResponseItem insert(ResponseItem responseItem){
+	public ResponseItem insert(HttpServletRequest request, ResponseItem responseItem){
 		
 		responseItemMapper.insert(responseItem);
 		logger.debug("insertedResponseItem = {}", responseItem);
+		
+		request.setAttribute("log_msg", "");
+		
 		return responseItem;
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseItem update(ResponseItem responseItem){
+	public ResponseItem update(HttpServletRequest request, ResponseItem responseItem){
 		logger.debug("responseItem = {}", responseItem);
 		responseItemMapper.update(responseItem);
+		
+		request.setAttribute("log_msg", "");
 		return responseItem;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ResponseItem delete(@RequestParam(value="id") Long id){
+	public ResponseItem delete(HttpServletRequest request, @RequestParam(value="id") Long id){
 		ResponseItem responseItem = responseItemMapper.select(id);
 		logger.debug("responseItem to delete = {}", responseItem);
 		responseItemMapper.delete(id);
 		
 		// TODO responseItem 삭제
-		
+		request.setAttribute("log_msg", "");
 		return responseItem;
 	}
 	

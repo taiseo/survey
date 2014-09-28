@@ -78,8 +78,11 @@ public class TargetGroupController {
 	@RequestMapping(value="/branches", method=RequestMethod.POST)
 	@ResponseBody
 	public List<String> getBranches(
+			HttpServletRequest request,
 			@RequestParam(value="targetGroupIds") String targetGroupIds
 			) throws JsonParseException, JsonMappingException, IOException{
+		
+		request.setAttribute("log_msg", "");
 		
 		return surveyService.getBranchesByTargetGroupIds(targetGroupIds);
 	}
@@ -184,6 +187,8 @@ public class TargetGroupController {
 		}else{
 			linkStr = "0명";
 		}
+		
+		request.setAttribute("log_msg", "");
 		
 		return linkStr;
 	}
