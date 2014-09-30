@@ -19,6 +19,8 @@
 			<select id="bonbu"></select>
 			<select name="branch"></select>
 		</div>
+	</div>
+	<div class='questions-block' style='display: none'>
 		<c:forEach items="${survey.questions}" var="question">
 			<c:set var="question" value="${question }" scope="request"/>
 			<c:choose>
