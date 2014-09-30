@@ -20,7 +20,11 @@ function attach_active_to_nav(){
 function init_tinymce(){
 	if($('.wysiwyg').length > 0){
 		tinymce.init({
-			selector: '.wysiwyg'
+			content_css : survey.context_path + "/resources/css/editor_style.css",
+			selector: '.wysiwyg',
+			plugins: ["link", "image"],
+			menubar : false,
+			toolbar: "bold | link unlink | image | bullist numlist | alignleft aligncenter alignright"
 		});
 	}
 }
