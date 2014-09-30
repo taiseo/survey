@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,7 @@ public class HistoryController {
 	@Autowired ResponseMapper responseMapper;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String history(Model model){
+	public String history(HttpServletRequest request, Model model){
 		
 		List<String> branchList = customerMapper.branchList(null);
 		
@@ -67,6 +69,7 @@ public class HistoryController {
 		model.addAttribute("partList", partList);
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageTitle", "조사 결과(분석 통계)");
+		request.setAttribute("log_msg", "조사 결과(분석 통계) : 열람");
 		
 		return "history";
 	}
@@ -77,6 +80,7 @@ public class HistoryController {
 			@RequestParam(value="endDate", required=false, defaultValue="") String endDate,
 			@RequestParam(value="branches", required=false, defaultValue="") String branches,
 			@RequestParam(value="isExcel", required=false, defaultValue="") String isExcel,
+			HttpServletRequest request,
 			Model model
 			) throws JsonParseException, JsonMappingException, IOException{
 		
@@ -149,10 +153,16 @@ public class HistoryController {
 		
 		logger.debug("if excel....");
 		
+		String logMsg = "조사 결과(분석 통계) 지회로 검색(" + startDate + "~" + endDate + ")";
+		
+		
+		
 		if(isExcel != null && isExcel.equals("Y")){
 			logger.debug("excel START....");
+			request.setAttribute("log_msg", logMsg + " 결과 엑셀 다운로드 : 열람");
 			return "search_by_branch_excel";
 		}else{
+			request.setAttribute("log_msg", logMsg + " : 열람");
 			return "search_by_branch";
 		}
 		
@@ -205,6 +215,7 @@ public class HistoryController {
 			@RequestParam(value="part") String part,
 			@RequestParam(value="username") String username,
 			@RequestParam(value="isExcel", required=false, defaultValue="") String isExcel,
+			HttpServletRequest request,
 			Model model
 			){
 		
@@ -234,9 +245,13 @@ public class HistoryController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("userHistoryList", userHistoryList);
 		
+		String logMsg = "조사 결과(분석 통계) 사용자(" + username + ")로 검색(" + startDate + "~" + endDate + ")";
+		
 		if(isExcel !=null && isExcel.equals("Y")){
+			request.setAttribute("log_msg", logMsg + " 결과 엑셀 다운로드 : 열람");
 			return "search_by_user_excel";
 		}else{
+			request.setAttribute("log_msg", logMsg + " 열람");
 			return "search_by_user";
 		}
 	}

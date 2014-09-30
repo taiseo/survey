@@ -1,7 +1,6 @@
 package com.freeneo.survey;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +65,8 @@ public class StatisticsController {
 		model.addAttribute("surveyByBranch", surveyByBranch);
         model.addAttribute("pageTitle", survey.getTitle() + " 통계");
         
+        request.setAttribute("log_msg", survey.getTitle() + " 통계 : 열람");
+        
         String listUrl = request.getContextPath() + "/surveys";
         model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
         
@@ -89,6 +90,8 @@ public class StatisticsController {
 		model.addAttribute("survey", survey);
         model.addAttribute("pageTitle", branch + " " + survey.getTitle() + " 통계");
         
+        request.setAttribute("log_msg", branch + " " + survey.getTitle() + " 통계 : 열람");
+        
         String listUrl = request.getContextPath() + "/surveys";
         model.addAttribute("listUrl", Util.getListUrl(request, listUrl));
         
@@ -100,6 +103,7 @@ public class StatisticsController {
 			@PathVariable(value="branch") String branch,
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
+			HttpServletRequest request,
 			Model model
 			) throws JsonParseException, JsonMappingException, IOException{
 
@@ -119,6 +123,7 @@ public class StatisticsController {
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("pageTitle", branch + " 통계");
+		request.setAttribute("log_msg", branch + " 통계 : 열람");
 		model.addAttribute("branch", branch);
 		model.addAttribute("surveys", surveys);
 		
@@ -130,6 +135,7 @@ public class StatisticsController {
 			@PathVariable(value="userId") Long userId,
 			@PathVariable(value="startDate") String startDate,
 			@PathVariable(value="endDate") String endDate,
+			HttpServletRequest request,
 			Model model
 			) throws JsonParseException, JsonMappingException, IOException{
 		
@@ -149,7 +155,8 @@ public class StatisticsController {
 		
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		model.addAttribute("pageTitle", user.getName() + " 님이 만든 설문들의 통계");
+		model.addAttribute("pageTitle", user.getName() + " 님이 만든 설문들");
+		request.setAttribute("log_msg", user.getName() + " 님이 만든 설문들(" + startDate + "~" + endDate + ") : 열람");
 		model.addAttribute("surveys", surveys);
 		
 		return "statistics_user";

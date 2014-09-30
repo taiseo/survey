@@ -93,14 +93,16 @@ public class SurveyController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model, HttpSession session){
-		return list("1", model, session);
+	public String list(HttpServletRequest request, Model model, HttpSession session){
+		return list("1", request, model, session);
 	}
 	
 	@RequestMapping(value = "/{page}", method = RequestMethod.GET)	
 	public String list(
 			@PathVariable(value = "page") String page,
-			Model model, HttpSession session) {
+			HttpServletRequest request,
+			Model model, 
+			HttpSession session) {
 
 		User user = (User) session.getAttribute("user");
 		logger.debug("user = {}", user);
@@ -140,6 +142,7 @@ public class SurveyController {
 
 		model.addAttribute("pagedListHolder", pagedListHolder);
 		model.addAttribute("pageTitle", "설문 목록");
+		request.setAttribute("log_msg", "설문 목록 " + page + "p : 열람");
 		return "survey_list";
 	}
 
@@ -163,6 +166,7 @@ public class SurveyController {
 
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pageTitle", "새 설문");
+		request.setAttribute("log_msg", "새 설문 입력 페이지 : 열람");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
 		return "survey_manage";
@@ -211,6 +215,8 @@ public class SurveyController {
 		}
 
 		logger.debug("insertedSurvey = {}", survey);
+		
+		request.setAttribute("log_msg", "새 설문 입력 : 입력");
 
 		return "redirect:/surveys/detail/" + survey.getId();
 	}
@@ -305,7 +311,7 @@ public class SurveyController {
 		if (survey.getStatus() != null && !survey.getStatus().equals("승인대기")
 				&& !survey.getStatus().equals("임시저장")) {
 			model.addAttribute("msg", "임시저장이거나 승인대기중인 설문만 수정할 수 있습니다.");
-			return list(model, session);
+			return list(request, model, session);
 		}
 
 		// 시스템 관리자가 아닌데, 남의 것을 수정하려고 하면
@@ -315,7 +321,7 @@ public class SurveyController {
 		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(survey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
-			return list(model, session);
+			return list(request, model, session);
 		}
 
 		logger.debug("survey.targetBranches = {}", survey.getTargetBranches());
@@ -326,6 +332,7 @@ public class SurveyController {
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("targetBranches", survey.getTargetBranches());
 		model.addAttribute("pageTitle", survey.getTitle() + " 수정");
+		request.setAttribute("log_msg", survey.getTitle() + " 수정 페이지 : 열람");
 		model.addAttribute("survey", survey);
 		model.addAttribute("httpMethod", "POST");
 		model.addAttribute("listUrl", listUrl);
@@ -350,7 +357,7 @@ public class SurveyController {
 		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(oldSurvey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것은 수정할 수 없습니다.");
-			return list(model, session);
+			return list(request, model, session);
 		}
 
 		if (!validateSurvey(survey, model)) {
@@ -399,12 +406,17 @@ public class SurveyController {
 		logger.debug("new survey = {}", survey);
 
 		surveyMapper.update(survey);
+		
+		request.setAttribute("log_msg", survey.getTitle() + " 수정 : 수정");
 
 		return "redirect:/surveys/detail/" + survey.getId();
 	}
 
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public String detailPage(@PathVariable(value = "id") Long id, Model model,
+	public String detailPage(
+			@PathVariable(value = "id") Long id, 
+			HttpServletRequest request,
+			Model model,
 			HttpSession session) {
 
 		User currentUser = (User) session.getAttribute("user");
@@ -412,7 +424,7 @@ public class SurveyController {
 		if (!currentUser.getUserLevel().equals("시스템 관리자")
 				&& !currentUser.getUsername().equals(survey.getWriter())) {
 			model.addAttribute("error_msg", "남의 것을 편집할 수는 없습니다.");
-			return list(model, session);
+			return list(request, model, session);
 		}
 
 		List<Question> questions = questionMapper.list(id);
@@ -437,20 +449,18 @@ public class SurveyController {
 		model.addAttribute("survey", survey);
 		model.addAttribute("questionsString", questionsString);
 		model.addAttribute("pageTitle", survey.getTitle() + " 문항 편집");
+		request.setAttribute("log_msg", survey.getTitle() + " 문항 편집 : 수정");
 		return "survey_detail";
 	}
 
-	@RequestMapping(value = "/status/{id}", method = RequestMethod.GET)
-	public String status(@PathVariable(value = "id") Long id, Model model) {
-		Survey survey = surveyService.getFullSurvey(id);
-		model.addAttribute("survey", survey);
-
-		return "survey_status";
-	}
-
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable(value = "id") Long id) {
+	public String delete(
+			@PathVariable(value = "id") Long id,
+			HttpServletRequest request
+			) {
+		Survey survey = surveyMapper.select(id);
 		surveyMapper.delete(id);
+		request.setAttribute("log_msg", survey.getTitle() + " : 삭제");
 		return "redirect:/surveys";
 	}
 
@@ -468,7 +478,7 @@ public class SurveyController {
 
 		if (user.getUserLevel().equals("일반") && status.contains("승인자")) {
 			model.addAttribute("error_msg", "권한이 없습니다.");
-			return list(model, session);
+			return list(request, model, session);
 		}
 
 		Survey survey = surveyMapper.select(id);
@@ -489,11 +499,13 @@ public class SurveyController {
 
 		if (status.equals("발송")) {
 			if (!surveyService.sendMms(survey, request, model)) {
-				return list(model, session);
+				return list(request, model, session);
 			}
 		}
 
 		surveyMapper.update(survey);
+		
+		request.setAttribute("log_msg", survey.getTitle() + " 상태 변경 - " + survey.getStatus() + " : 수정");
 
 		return "redirect:/surveys";
 	}
@@ -544,6 +556,7 @@ public class SurveyController {
 		model.addAttribute("listUrl", listUrl);
 
 		model.addAttribute("pageTitle", survey.getTitle() + " 발송 명단");
+		request.setAttribute("log_msg", survey.getTitle() + " 발송 명단 : 열람");
 		model.addAttribute("survey", survey);
 		model.addAttribute("targets", targets);
 
@@ -580,6 +593,7 @@ public class SurveyController {
 
 		model.addAttribute("targetInfosByBranch", targetInfosByBranch);
 		model.addAttribute("pageTitle", "지사별 대상수");
+		request.setAttribute("log_msg", "지사별 대상수 : 열람");
 		return "target_detail";
 	}
 	
@@ -618,6 +632,8 @@ public class SurveyController {
 				responseItemMapper.insert(responseItem);
 			}
 		}
+		
+		request.setAttribute("log_msg", survey.getTitle() + " 복사 : 입력");
 		
 		return "redirect:/surveys/";
 	}

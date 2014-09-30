@@ -39,13 +39,14 @@ public class TargetGroupController {
 	@Autowired SurveyService surveyService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model){
-		return list("1", model);		
+	public String list(HttpServletRequest request, Model model){
+		return list("1", request, model);		
 	}
 	
 	@RequestMapping(value = "/{page}", method = RequestMethod.GET)
 	public String list(
 			@PathVariable(value = "page") String page,
+			HttpServletRequest request,
 			Model model){
 		
 		List<TargetGroup> targetGroups = targetGroupMapper.list();
@@ -71,6 +72,8 @@ public class TargetGroupController {
 		model.addAttribute("pageTitle", "캠페인(타겟) 그룹 목록");
 		model.addAttribute("targetGroups", targetGroups);
 		model.addAttribute("pagedListHolder", pagedListHolder);
+		
+		request.setAttribute("log_msg", "캠페인(타겟) 그룹 목록 " + page + "p : 열람");
 		
 		return "target_group_list";
 	}
