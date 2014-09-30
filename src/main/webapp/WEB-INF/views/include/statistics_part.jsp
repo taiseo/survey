@@ -17,7 +17,7 @@
 				</c:if>
 				<small>${question.questionRespondentCount }명<!-- 
 				 -->(<fmt:formatNumber 
-					value="${question.questionRespondentCount / survey.respondentCount * 100 }"
+					value="${survey.respondentCount != 0 ? question.questionRespondentCount / survey.respondentCount * 100 : 0 }"
 					pattern="0.0" />%) 
 				응답</small>
 			</p>
@@ -161,11 +161,18 @@
 					<c:forEach items="${question.responseItems }" var="responseItem">
 						<tr>
 						<th>${responseItem.content }</th>
-						<c:forEach items="${responseItem.preference }" var="point">
-						<td>
-							<fmt:formatNumber value="${point.value / question.questionRespondentCount * 100}" pattern="0.0" />%
-							<small class="muted">(${point.value })</small>
-						</td>
+						<c:forEach begin="1" end="${fn:length(question.responseItems) }" varStatus="status">
+							<c:set var="count" value="${responseItem.preference[fn:trim(status.count)] }" />
+							<td>
+								<c:if test="${question.questionRespondentCount != 0 }">
+									<fmt:formatNumber value="${count / question.questionRespondentCount * 100}" pattern="0.0" />%	
+								</c:if>
+								<c:if test="${question.questionRespondentCount == 0 }">
+									0
+								</c:if>
+								
+								<small class="muted">(${count == null ? 0 : count})</small>
+							</td>
 						</c:forEach>
 						</tr>
 					</c:forEach>
