@@ -110,7 +110,7 @@ public class ClientController {
 		ConfigItem logo_image = configMapper.select("logo_image");
 		ConfigItem domain = configMapper.select("domain");
 
-		model.addAttribute("msg", "로그인한 사용자는 설문에 응답해도 저장되지 않습니다. 테스트 용도로 오신 거라면 로그아웃한 뒤 응답하세요.");
+		//model.addAttribute("msg", "로그인한 사용자는 설문에 응답해도 저장되지 않습니다. 테스트 용도로 오신 거라면 로그아웃한 뒤 응답하세요.");
 		model.addAttribute("organization", ( organization != null ? organization.getValue() : "" ) );
 		model.addAttribute("phone", ( phone != null ? phone.getValue() : "" ) );
 		model.addAttribute("fax", ( fax != null ? fax.getValue() : "" ) );
