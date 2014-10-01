@@ -305,8 +305,11 @@ public class SurveyService {
 			String branches, int limit, String startDate, String endDate) throws JsonParseException, JsonMappingException, IOException {
 
 		// 기간은 필수
-		if(Util.isEmptyStr(startDate) || Util.isEmptyStr(endDate)){
-			return 0;
+		if(Util.isEmptyStr(startDate)){
+			startDate = "1970-01-01";
+		}
+		if(Util.isEmptyStr(endDate)){
+			endDate = "2999-12-31";
 		}
 		
 		if( ! Util.isEmptyStr(startDate) && startDate.length() > 8){
