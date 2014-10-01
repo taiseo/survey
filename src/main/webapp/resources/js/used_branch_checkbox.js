@@ -37,14 +37,13 @@ function load_branch(){
 	}, function(html){
 		$('.js-target-branches-checkbox-area').html(html).show();
 		check_seleted_branches();
-		fill_target_branches();
 		show_branch_by_bonbu();
 		write_target_count();
 	});
 }
 
 function bind_set_branches(){
-	$('.js-used-branch-checkbox-area').on('click, change', '.js-target-branch', fill_target_branches);
+	$('.js-used-branch-checkbox-area').on('click, change', '.js-target-branch', write_target_count);
 }
 
 function attr_disabled_cat2(){
@@ -70,17 +69,16 @@ function check_seleted_branches(){
 	
 }
 
-function fill_target_branches(){
-	var branches = [];
+function write_target_count(){
+	var params, 
+		branches = [];
+	
 	$('.js-target-branch:checked:not(:disabled)').each(function(index, branch){
 		branches.push($(branch).val());
 	});
 	$('.js-target-branches').val($.toJSON(branches));
-	write_target_count();
-}
-
-function write_target_count(){
-	var params = get_target_params();
+	
+	params = get_target_params();
 	
 	if(params.targetBranches == '[]'){
 		$('.js-target-count').html('0명');

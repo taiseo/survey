@@ -4,8 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <p>
-<input type="button" onclick='$(".chkbox").prop("checked",true);' class="btn btn-primary btn-small" value="전체선택"/>
-<input type="button" onclick='$(".chkbox").prop("checked",false);' class="btn btn-warning btn-small" value="전체해제"/> 
+<input type="button" onclick='$(".chkbox").prop("checked",true); write_target_count();' class="btn btn-primary btn-small" value="전체선택"/>
+<input type="button" onclick='$(".chkbox").prop("checked",false); write_target_count();' class="btn btn-warning btn-small" value="전체해제"/> 
 </p>
 
 <c:if test="${fn:length(branches) > 0 }">
