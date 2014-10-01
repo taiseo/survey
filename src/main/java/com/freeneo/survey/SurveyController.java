@@ -582,11 +582,11 @@ public class SurveyController {
 
 			// branch를 json으로 전달해야 한다. 이미 있는 걸 또 만들기 귀찮아서 그냥 json으로 만들어서 넘겨 준다.
 			// - ahw 2014-09-24
-			List<Customer> customers = surveyService.customerList(category1,
+			int count = surveyService.customerCount(category1,
 					category2, "[\"" + branch + "\"]", limit, startDate,
 					endDate);
 			targetInfo.put("branchName", branch);
-			targetInfo.put("count", String.valueOf(customers.size()));
+			targetInfo.put("count", String.valueOf(count));
 
 			targetInfosByBranch.add(targetInfo);
 		}

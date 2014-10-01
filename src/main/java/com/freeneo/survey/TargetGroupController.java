@@ -222,10 +222,10 @@ public class TargetGroupController {
 			Map<String, String> targetInfo = new HashMap<String, String>();
 
 			TargetGroup tg = targetGroupMapper.select(id);
-			List<Customer> customers = surveyService.customerList(tg.getCategory1(), tg.getCategory2(), tg.getBranches(), tg.getLimit(), startDate, endDate);
+			int count = surveyService.customerCount(tg.getCategory1(), tg.getCategory2(), tg.getBranches(), tg.getLimit(), startDate, endDate);
 			
 			targetInfo.put("targetGroupName", tg.getTitle());
-			targetInfo.put("count", String.valueOf(customers.size()));
+			targetInfo.put("count", String.valueOf(count));
 			
 			targetInfosByTargetGroup.add(targetInfo);
 		}
