@@ -68,10 +68,10 @@
 
 </div>
 
-<div class="limit-width  center-block well">
-	<p><img src="<%=request.getContextPath() %>/images/${logo_image}"/>  </p>
-	<p>${organization } | ${address }</p>
-	<p>Phone : ${phone } / Fax : ${fax } / <a href="http://${domain_value }" target="_blank">${domain_value }</a></p>
+<div class="limit-width  center-block well" style="background-color: #787878; color: #ffffff">
+	<p><img src="<%=request.getContextPath() %>/resources/images/kr_footer_logo.png"/>  </p>
+	<p><%-- ${organization } |  --%>${address }</p>
+	<p>Phone : ${phone } / Fax : ${fax }<%--  / <a href="http://${domain_value }" target="_blank">${domain_value }</a> --%></p>
 </div>
 
 
