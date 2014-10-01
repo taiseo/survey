@@ -4,9 +4,6 @@
 <jsp:include page="include/header.jsp" />
 
 <img src="<%=request.getContextPath() %>/resources/images/client-logo.png" class="l-block  client-logo-img" />
-<h1 class="client-headline">
-	고객만족 설문 조사
-</h1>
 <div class="limit-width  center-block  client" data-client="${sessionId}" data-survey-id="${survey.id }">
 	
 	<div class="desc">
