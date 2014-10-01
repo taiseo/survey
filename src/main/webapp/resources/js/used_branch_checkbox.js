@@ -5,7 +5,7 @@ $(document).ready(function(){
 	load_branch();
 	fill_target_bonbus();
 	bind_bonbu_select();
-	bind_rewrite_count_by_target_date();
+	bind_rewrite_count();
 	bind_target_detail();
 });
 
@@ -134,8 +134,8 @@ function show_branch_by_bonbu(){
 	});
 }
 
-function bind_rewrite_count_by_target_date(){
-	$('.js-target-start-date, .js-target-end-date').change(write_target_count);
+function bind_rewrite_count(){
+	$('.js-target-start-date, .js-target-end-date, .js-target-limit').change(write_target_count);
 }
 
 function bind_target_detail(){

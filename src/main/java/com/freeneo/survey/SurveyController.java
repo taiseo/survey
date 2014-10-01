@@ -523,12 +523,12 @@ public class SurveyController {
 			Model model)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit, startDate, endDate);
+		int count = surveyService.customerCount(category1, category2, branches, limit, startDate, endDate);
 
 		String linkStr = "";
 
-		if(customers.size() > 0){
-			linkStr = "<a href='#' class='js-target-detail'>" + customers.size() + "명 <small>(자세히 보기)</small></a>";
+		if(count > 0){
+			linkStr = "<a href='#' class='js-target-detail'>" + count + "명 <small>(자세히 보기)</small></a>";
 		}else{
 			linkStr = "0명";
 		}
