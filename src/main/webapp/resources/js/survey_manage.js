@@ -6,8 +6,14 @@ $(document).ready(function(){
 	bind_target_el_show_hide();
 	target_el_show_hide();
 	bind_target_group_detail();
+	bind_targets();
+	target_group_change_event();
 });
 
+function bind_targets(){
+	$('.js-target-start-date').change(target_group_change_event);
+	$('.js-target-end-date').change(target_group_change_event);
+}
 
 function bind_target_registration_type(){
 	$('.js-survey-form').on('change', '[name=targetRegistrationType]', target_registration_type);
@@ -128,3 +134,4 @@ function target_group_detail(){
 	});
 	return false;
 }
+
