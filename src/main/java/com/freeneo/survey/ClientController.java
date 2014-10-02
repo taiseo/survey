@@ -75,7 +75,7 @@ public class ClientController {
 			
 			logger.debug("설문날짜 초과!!!");
 			
-			model.addAttribute("pageTitle", survey.getTitle() + " 설문기간 종료");
+			model.addAttribute("pageTitle", survey.getTitle() + " 기간 종료");
 			model.addAttribute("error_msg", "설문기간이 종료되었습니다.");
 			
 			User user = (User) session.getAttribute("user");
