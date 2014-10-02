@@ -13,7 +13,15 @@
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM SV_TARGET_GROUPS ORDER BY ID DESC
+		SELECT
+		  id
+		  , title
+		  , category1
+		  , category2
+		  , bonbu
+		  , nvl(replace(replace(replace(branches, ']', ''), '[', ''), '"', ''), '') as branches
+		FROM SV_TARGET_GROUPS
+		ORDER BY ID DESC
 	</select>
 
 	<select id="select" resultMap="BaseResultMap">

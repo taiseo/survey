@@ -33,7 +33,10 @@
 		<tbody>
 			<c:forEach var="item" items="${pagedListHolder.pageList}" varStatus="status">
 				<tr>
-					<td>${pagedListHolder.nrOfElements - (pagedListHolder.pageSize * pagedListHolder.page) - status.count +1} </td>
+					<td>
+						${pagedListHolder.nrOfElements - (pagedListHolder.pageSize * pagedListHolder.page) - status.count +1}
+						<c:set var="index" value="${pagedListHolder.nrOfElements - (pagedListHolder.pageSize * pagedListHolder.page) - status.count +1}"/>
+					</td>
 					<td>
 						<a href="<%= request.getContextPath() %>/target-groups/update/${item.id}">
 							${item.title }
@@ -42,7 +45,18 @@
 					<td>${item.category1 }</td>
 					<td>${item.category2 }</td>
 					<td>${item.bonbu }</td>
-					<td style="width: 150px">${item.branches }</td>
+					<c:if test="${fn:length(item.branches) < 20 }">
+						<td style="width: 150px">${item.branches }</td>
+					</c:if>
+					<c:if test="${fn:length(item.branches) > 20 }">
+						<td style="width: 150px">
+							<h2 class="jquery-on-container">
+								<a class="js-open-target  btn btn-info btn-small"
+									data-target=".closed-content_${index }">펼치기</a>
+							</h2>
+							<div class="closed-content_${index }">${item.branches }</div>
+						</td>
+					</c:if>
 					<td>
 						<a href="<%= request.getContextPath() %>/target-groups/delete/${item.id}" class="btn btn-danger">삭제</a>
 					</td>
