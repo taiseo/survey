@@ -523,12 +523,12 @@ public class SurveyController {
 			Model model)
 			throws JsonParseException, JsonMappingException, IOException {
 
-		List<Customer> customers = surveyService.customerList(category1, category2, branches, limit, startDate, endDate);
+		int count = surveyService.customerCount(category1, category2, branches, limit, startDate, endDate);
 
 		String linkStr = "";
 
-		if(customers.size() > 0){
-			linkStr = "<a href='#' class='js-target-detail'>" + customers.size() + "명 <small>(자세히 보기)</small></a>";
+		if(count > 0){
+			linkStr = "<a href='#' class='js-target-detail'>" + count + "명 <small>(자세히 보기)</small></a>";
 		}else{
 			linkStr = "0명";
 		}
@@ -582,11 +582,11 @@ public class SurveyController {
 
 			// branch를 json으로 전달해야 한다. 이미 있는 걸 또 만들기 귀찮아서 그냥 json으로 만들어서 넘겨 준다.
 			// - ahw 2014-09-24
-			List<Customer> customers = surveyService.customerList(category1,
+			int count = surveyService.customerCount(category1,
 					category2, "[\"" + branch + "\"]", limit, startDate,
 					endDate);
 			targetInfo.put("branchName", branch);
-			targetInfo.put("count", String.valueOf(customers.size()));
+			targetInfo.put("count", String.valueOf(count));
 
 			targetInfosByBranch.add(targetInfo);
 		}

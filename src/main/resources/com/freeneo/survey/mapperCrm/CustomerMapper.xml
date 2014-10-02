@@ -58,6 +58,21 @@
 		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
 	</select>
 
+	<select id="customerCount" parameterType="map"
+		resultType="Integer">
+		select count(*) from (
+			select distinct c.cst_no 
+			from tbcr_1000 c, tbcr_1040 d
+			where
+				c.cst_no = d.cst_no
+				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and d.etc_01 like #{branch,jdbcType=VARCHAR}
+				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
+				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
+			order by DBMS_RANDOM.RANDOM
+		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
+	</select>
+
 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">
 		INSERT INTO TBCR_1000 (cst_no,

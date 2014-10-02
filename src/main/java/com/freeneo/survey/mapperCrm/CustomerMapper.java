@@ -22,4 +22,11 @@ public interface CustomerMapper {
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate
 			);
+	public int customerCount(
+			@Param("category") String category, 
+			@Param("branch") String branch,
+			@Param("limit") int limit,
+			@Param("startDate") String startDate,
+			@Param("endDate") String endDate
+			);
 }

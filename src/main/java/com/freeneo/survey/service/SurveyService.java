@@ -301,4 +301,50 @@ public class SurveyService {
 		return branches;
 	}
 
+	public int customerCount(String category1, String category2,
+			String branches, int limit, String startDate, String endDate) throws JsonParseException, JsonMappingException, IOException {
+
+		// 기간은 필수
+		if(Util.isEmptyStr(startDate)){
+			startDate = "1970-01-01";
+		}
+		if(Util.isEmptyStr(endDate)){
+			endDate = "2999-12-31";
+		}
+		
+		if( ! Util.isEmptyStr(startDate) && startDate.length() > 8){
+			startDate = startDate.replace("-", "").substring(0, 8);
+			endDate = endDate.replace("-", "").substring(0, 8);
+		}
+		
+		logger.debug("startDate = {}", startDate);
+		logger.debug("endDate = {}", endDate);
+		
+		String category = null;
+		if (Util.isEmptyStr(category1)) {
+			category = category1;
+		} else {
+			category = category2;
+		}
+
+		List<String> branchList = makeBranchList(branches);
+
+		int count = 0;
+		
+		for (String branch : branchList) {
+			if(Util.isEmptyStr(startDate)){
+				startDate = startDate + "000000";
+			}
+			if(Util.isEmptyStr(endDate)){
+				endDate = endDate + "235959";
+			}
+			int customerCount = customerMapper.customerCount(category, branch, limit, startDate, endDate);
+			logger.debug(branch + " 대상수 = {}", customerCount);
+			count+= customerCount;
+			logger.debug("누적 대상수 = {}", count);
+		}
+
+		return count;
+	}
+
 }
