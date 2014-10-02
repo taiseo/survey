@@ -6,7 +6,9 @@
 	<div class="page-header">
 		<h1>${pageTitle }</h1>
 	</div>
-	
+	<div class="base-margin  text-right">
+		<a href="${listUrl }" class="btn">목록</a>
+	</div>
 	<form:form method="${httpMethod }" modelAttribute="targetGroup" cssClass="js-used-branch-checkbox-area">
 		<table class="table  table-striped">
 			<colgroup>
