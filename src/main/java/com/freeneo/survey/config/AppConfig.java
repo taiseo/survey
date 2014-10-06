@@ -59,6 +59,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
+		logger.debug("outer sessionFactory.getObject()"+sessionFactory.getObject());
 		return sessionFactory.getObject();
 	}
 	
@@ -84,6 +85,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public SqlSessionFactory innerSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(innerDataSource());
+        logger.debug("inner sessionFactory.getObject()"+sessionFactory.getObject());
         return sessionFactory.getObject();
     }
 	
@@ -98,6 +100,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         try {
             cxt = new InitialContext();
             ds = (DataSource) cxt.lookup("java:/comp/env/jdbc/crm");
+            logger.debug("crm ds ::: "+ds);
         } catch (NamingException e) {
             logger.error(e.getMessage());
         }
@@ -113,6 +116,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public SqlSessionFactory crmSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(crmDataSource());
+        logger.debug("crm ds sessionFactory.getObject()"+sessionFactory.getObject());
         return sessionFactory.getObject();
     }
     

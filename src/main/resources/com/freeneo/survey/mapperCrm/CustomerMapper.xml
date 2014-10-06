@@ -19,12 +19,12 @@
 
 	<select id="projectList" resultType="String">
 		select distinct(ptcp_tit)
-		from tbcr_1040
+		from TBCR_1040
 	</select>
 
 	<select id="branchList" parameterType="String" resultType="String">
 		select distinct(etc_01)
-		from tbcr_1040
+		from TBCR_1040
 		<if test="category != null">
 			where ptcp_tit like
 			#{category,jdbcType=VARCHAR}
@@ -35,7 +35,7 @@
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, tbcr_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, TBCR_1040 d
 			where
 				c.cst_no = d.cst_no
 				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
@@ -47,7 +47,7 @@
 	<select id="customerListByDate" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, tbcr_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, TBCR_1040 d
 			where
 				c.cst_no = d.cst_no
 				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
@@ -62,7 +62,7 @@
 		resultType="Integer">
 		select count(*) from (
 			select distinct c.cst_no 
-			from tbcr_1000 c, tbcr_1040 d
+			from tbcr_1000 c, TBCR_1040 d
 			where
 				c.cst_no = d.cst_no
 				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
