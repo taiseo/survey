@@ -21,7 +21,7 @@
 	<style type="text/css">
 	#dvLoading
 {
-   background:#000 url(images/loader.gif) no-repeat center center;
+   background:#000 url(<%=request.getContextPath()%>/resources/images/loader.gif) no-repeat center center;
    height: 220px;
    width: 176px;
    position: fixed;
