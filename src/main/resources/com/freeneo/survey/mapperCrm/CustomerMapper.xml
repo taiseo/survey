@@ -74,7 +74,6 @@
 				and d.etc_04 like #{branch,jdbcType=VARCHAR}
 				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
 				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
-			order by DBMS_RANDOM.RANDOM
 		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
 	</select>
 
