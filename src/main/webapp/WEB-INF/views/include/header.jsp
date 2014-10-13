@@ -14,9 +14,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/style.css" />
 	<script type="text/javascript">
-	jQuery(document).ready(function(){
-		jQuery("#dvLoading").hide();
-	});
+	
 	var survey = {
 		context_path: '<%=request.getContextPath()%>'
 	};
