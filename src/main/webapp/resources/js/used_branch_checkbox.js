@@ -70,6 +70,9 @@ function check_seleted_branches(){
 }
 
 function write_target_count(){
+	
+	$("#dvLoading").show();
+	
 	var params, 
 		branches = [];
 	
@@ -87,6 +90,8 @@ function write_target_count(){
 	
 	$.post(survey.context_path + '/surveys/target-count', params, function(data){
 		$('.js-target-count').html(data);
+		
+		$("#dvLoading").hide();
 	});
 }
 
