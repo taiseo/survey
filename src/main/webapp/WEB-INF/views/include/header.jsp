@@ -36,7 +36,7 @@
 <body>
 	<c:if test="${not empty sessionScope.user and ! isClient}">
 		<!-- 관리자 -->
-		<div id="dvLoading"></div>
+		<div id="dvLoading" style="display:none;"></div>
 		<div class="navbar  limit-width  center-block">
 			<div class="navbar-inner">
 				<a class="brand" href="<%=request.getContextPath()%>">
