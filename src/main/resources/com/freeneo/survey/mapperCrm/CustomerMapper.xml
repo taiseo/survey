@@ -18,7 +18,7 @@
 	</select>
 
 	<select id="projectList" resultType="String">
-		select distinct(ptcp_tit)
+		select distinct(cat_nm)
 		from TBCR_1041
 	</select>
 
@@ -26,7 +26,7 @@
 		select distinct(etc_04)
 		from TBCR_1040
 		<if test="category != null">
-			where cat_cd in (select cat_cd from TBCR_1041 where ptcp_tit like
+			where cat_cd in (select cat_cd from TBCR_1041 where cat_nm like
 			#{category,jdbcType=VARCHAR})
 		</if>
 		ORDER BY etc_04 ASC
@@ -35,7 +35,7 @@
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, e.ptcp_tit, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, e.cat_nm, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
 			, tbcr_1041 e
 			where
 				e.CAT_CD=d.CAT_CD
@@ -49,7 +49,7 @@
 	<select id="customerListByDate" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, e.ptcp_tit, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, e.cat_nm, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
 			, tbcr_1041 e
 			where
 				d.CAT_CD=e.CAT_CD
@@ -70,7 +70,7 @@
 			where
 				d.cat_cd=e.cat_cd
 				and c.cst_no = d.cst_no
-				and e.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and e.cat_nm like #{category,jdbcType=VARCHAR}
 				and d.etc_04 like #{branch,jdbcType=VARCHAR}
 				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
 				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
