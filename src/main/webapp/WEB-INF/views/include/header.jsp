@@ -14,6 +14,9 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/style.css" />
 	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#dvLoading").hide();
+	});
 	var survey = {
 		context_path: '<%=request.getContextPath()%>'
 	};
@@ -36,7 +39,7 @@
 <body>
 	<c:if test="${not empty sessionScope.user and ! isClient}">
 		<!-- 관리자 -->
-		<div id="dvLoading" style="display:none;"></div>
+		<div id="dvLoading"></div>
 		<div class="navbar  limit-width  center-block">
 			<div class="navbar-inner">
 				<a class="brand" href="<%=request.getContextPath()%>">
