@@ -189,11 +189,11 @@ public class SurveyService {
 				
 	
 				mms.setMsg(survey.getMsg()
-						+ " "+ domain + "/survey/"
+						+ " "+ domain + "/survey/survey/"
 						+ survey.getId());
 				//SMS용 임시!
-				mms.setMsg( domain + "/survey/"
-						+ survey.getId());
+				//mms.setMsg( domain + "/survey/survey/"
+				//		+ survey.getId());
 				mmsList.add(mms);
 			}			
 		}else{
