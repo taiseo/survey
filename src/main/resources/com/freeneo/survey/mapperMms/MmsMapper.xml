@@ -2,14 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.freeneo.survey.mapperMms.MmsMapper">
 
-	<!-- 임시로 SMS로 바꿈 -->
-	<!-- <insert id="insert" parameterType="com.freeneo.survey.domain.Mms"> 
+	<!-- MMS -->
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Mms"> 
 		INSERT INTO MMS_MSG (MSGKEY, SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, 
 		TYPE, FILE_CNT, FILE_PATH1) VALUES ( MMS_MSG_SEQ.NEXTVAL, #{subject,jdbcType=VARCHAR}, 
 		#{phone,jdbcType=VARCHAR}, #{callback,jdbcType=VARCHAR}, '0', SYSDATE, #{msg,jdbcType=VARCHAR}, 
-		'0', '1', #{filePath1,jdbcType=VARCHAR} ) </insert> -->
+		'0', '1', #{filePath1,jdbcType=VARCHAR} ) </insert>
 
-
+	<!-- SMS -->
+	<!-- 
 	<insert id="insert" parameterType="com.freeneo.survey.domain.Mms">
 
 		INSERT INTO SC_TRAN (TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
@@ -18,5 +19,6 @@
 		#{callback,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR})
 
 	</insert>
+	 -->
 
 </mapper>
