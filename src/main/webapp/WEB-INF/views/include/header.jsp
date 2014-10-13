@@ -19,16 +19,16 @@
 	};
 	</script>
 	<style type="text/css">
-	dvLoading
+	#dvLoading
 {
    background:#000 url(images/loader.gif) no-repeat center center;
-   height: 100px;
-   width: 100px;
+   height: 220px;
+   width: 176px;
    position: fixed;
    z-index: 1000;
    left: 50%;
    top: 50%;
-   margin: -25px 0 0 -25px;
+   margin: -88px 0 0 -110px;
    border: 1px;
 }
 	</style>
@@ -36,7 +36,7 @@
 <body>
 	<c:if test="${not empty sessionScope.user and ! isClient}">
 		<!-- 관리자 -->
-		<div id="dvLoading">데이타 로딩...</div>
+		<div id="dvLoading"></div>
 		<div class="navbar  limit-width  center-block">
 			<div class="navbar-inner">
 				<a class="brand" href="<%=request.getContextPath()%>">
