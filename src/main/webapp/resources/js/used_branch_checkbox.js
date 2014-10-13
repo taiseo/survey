@@ -23,6 +23,9 @@ function bind_target_select(){
 
 function load_branch(){
 	var $select_el, category;
+	
+	$("#dvLoading").show();
+	$("#dvLoading").css("display", "block");
 	if($('.js-target-category2').is(':disabled')){
 		$select_el = $('.js-target-category1'); 
 	}else{
@@ -40,6 +43,7 @@ function load_branch(){
 		show_branch_by_bonbu();
 		write_target_count();
 	});
+	$("#dvLoading").hide();
 }
 
 function bind_set_branches(){
@@ -70,11 +74,10 @@ function check_seleted_branches(){
 }
 
 function write_target_count(){
-	
-	$("#dvLoading").show();
-	
 	var params, 
 		branches = [];
+	
+	$("#dvLoading").show();
 	
 	$('.js-target-branch:checked:not(:disabled)').each(function(index, branch){
 		branches.push($(branch).val());
@@ -85,6 +88,9 @@ function write_target_count(){
 	
 	if(params.targetBranches == '[]'){
 		$('.js-target-count').html('0명');
+		
+		$("#dvLoading").hide();
+		
 		return;
 	}
 	

@@ -29,8 +29,7 @@
    z-index: 1000;
    left: 50%;
    top: 50%;
-   margin: -88px 0 0 -110px;
-   border: 1px;
+   margin: -25px 0 0 -25px;
 }
 	</style>
 </head>
