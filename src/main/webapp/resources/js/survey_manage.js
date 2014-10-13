@@ -39,6 +39,7 @@ function bind_target_group_ids(){
 }
 
 function target_group_change_event(){
+	$("#dvLoading").show();
 	$('.js-target-category1').val('');
 	$('.js-target-category2').val('');
 	$('.js-target-bonbu').val('');
@@ -56,14 +57,14 @@ function target_group_change_event(){
 	}, 'json');
 	
 	// targetGroup에 따른 인원수를 세서 세팅한다.
-	$("#dvLoading").show();
+	
 	$.post(survey.context_path + '/target-groups/count', {
 		targetGroupIds: target_group_ids,
 		startDate: $('.js-target-start-date').val(),
 		endDate: $('.js-target-end-date').val()
 	}, function(html){
 		$('.js-target-count').html(html);
-		$("#dvLoading").hide();
+		$("#dvLoading").fadeOut(3000);
 	});
 }
 
