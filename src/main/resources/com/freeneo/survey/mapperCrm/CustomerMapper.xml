@@ -8,7 +8,7 @@
 		<result column="hp" jdbcType="VARCHAR" property="hp" />
 		<result column="ptcp_tit" jdbcType="VARCHAR" property="ptcpTit" />
 		<result column="ptcp_dttm" jdbcType="VARCHAR" property="ptcpDttm" />
-		<result column="etc_01" jdbcType="VARCHAR" property="etc01" />
+		<result column="etc_04" jdbcType="VARCHAR" property="etc01" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
@@ -19,27 +19,29 @@
 
 	<select id="projectList" resultType="String">
 		select distinct(ptcp_tit)
-		from TBCR_1040
+		from TBCR_1041
 	</select>
 
 	<select id="branchList" parameterType="String" resultType="String">
-		select distinct(etc_01)
+		select distinct(etc_04)
 		from TBCR_1040
 		<if test="category != null">
-			where ptcp_tit like
-			#{category,jdbcType=VARCHAR}
+			where cat_cd in (select cat_cd from TBCR_1041 where ptcp_tit like
+			#{category,jdbcType=VARCHAR})
 		</if>
-		ORDER BY etc_01 ASC
+		ORDER BY etc_04 ASC
 	</select>
 
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, TBCR_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, e.ptcp_tit, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
+			, tbcr_1041 e
 			where
-				c.cst_no = d.cst_no
-				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
-				and d.etc_01 like #{branch,jdbcType=VARCHAR}
+				e.CAT_CD=d.CAT_CD
+				and c.cst_no = d.cst_no
+				and e.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and d.etc_04 like #{branch,jdbcType=VARCHAR}
 			order by DBMS_RANDOM.RANDOM
 		) where rownum &lt;= #{limit,jdbcType=NUMERIC}
 	</select>
@@ -47,11 +49,13 @@
 	<select id="customerListByDate" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, d.ptcp_tit, d.ptcp_dttm, d.etc_01 from tbcr_1000 c, TBCR_1040 d
+			select distinct c.cst_no, c.cst_nm, c.hp, e.ptcp_tit, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
+			, tbcr_1041 e
 			where
-				c.cst_no = d.cst_no
-				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
-				and d.etc_01 like #{branch,jdbcType=VARCHAR}
+				d.CAT_CD=e.CAT_CD
+				and c.cst_no = d.cst_no
+				and e.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and d.etc_04 like #{branch,jdbcType=VARCHAR}
 				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
 				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
 			order by DBMS_RANDOM.RANDOM
@@ -62,11 +66,12 @@
 		resultType="Integer">
 		select count(*) from (
 			select distinct c.cst_no 
-			from tbcr_1000 c, TBCR_1040 d
+			from tbcr_1000 c, TBCR_1040 d, TBCR_1041 e
 			where
-				c.cst_no = d.cst_no
-				and d.ptcp_tit like #{category,jdbcType=VARCHAR}
-				and d.etc_01 like #{branch,jdbcType=VARCHAR}
+				d.cat_cd=e.cat_cd
+				and c.cst_no = d.cst_no
+				and e.ptcp_tit like #{category,jdbcType=VARCHAR}
+				and d.etc_04 like #{branch,jdbcType=VARCHAR}
 				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
 				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
 			order by DBMS_RANDOM.RANDOM
@@ -74,14 +79,6 @@
 	</select>
 
 
-	<insert id="insert" parameterType="com.freeneo.survey.domain.Customer">
-		INSERT INTO TBCR_1000 (cst_no,
-		cst_nm, hp)
-		VALUES (
-		#{cstNo,jdbcType=VARCHAR},
-		#{cstNm,jdbcType=VARCHAR},
-		#{hp,jdbcType=VARCHAR}
-		)
-	</insert>
+
 
 </mapper>

@@ -119,7 +119,7 @@
 									<td>
 										<form:select path="targetCategory1" cssClass="js-target-category1">
 											<option value="">사업 대분류 선택</option>>
-											<form:option value="목적외사업" />
+											<form:option value="목적외이용자" />
 											<form:option value="농지은행" />
 											<form:option value="유지관리" />
 										</form:select>
@@ -131,7 +131,7 @@
 										<form:select path="targetCategory2" cssClass="js-target-category2">
 											<form:option value="농지연금" />
 											<form:option value="농지은행" />
-											<form:option value="경영이양직불" />
+											<form:option value="경영이양직접지불사업" />
 										</form:select>
 									</td>
 								</tr>
