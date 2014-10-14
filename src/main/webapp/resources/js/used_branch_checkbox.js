@@ -106,7 +106,7 @@ function get_target_params(){
 		category1: $('.js-target-category1').val(),
 		category2: $('.js-target-category2').val(),
 		branches: $('.js-target-branches').val(),
-		limit: ( $('.js-target-limit').val() || 30 ),
+		limit: ( $('.js-target-limit').val() ),
 		startDate: ( $('.js-target-start-date').val() || null ),
 		endDate: ( $('.js-target-end-date').val() || null )
 	};
