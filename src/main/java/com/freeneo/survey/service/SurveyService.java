@@ -323,11 +323,12 @@ public class SurveyService {
 		logger.debug("endDate = {}", endDate);
 		
 		String category = null;
-		if (Util.isEmptyStr(category1)) {
-			category = category1;
-		} else {
+		if (Util.checkStr(category1).equals("농지은행")) {
 			category = category2;
+		} else {
+			category = category1;
 		}
+		logger.debug("categoryxxxxx = {}", category);
 
 		List<String> branchList = makeBranchList(branches);
 

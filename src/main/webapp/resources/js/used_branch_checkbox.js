@@ -52,10 +52,10 @@ function bind_set_branches(){
 
 function attr_disabled_cat2(){
 	if($('.js-target-category1').val() == '농지은행'){
-		$('.js-target-category2').attr('disabled', false);
+		$('.js-target-category2').prop('disabled', false);
 		$('.js-target-category2-wrapper').show();
 	}else{
-		$('.js-target-category2').attr('disabled', true);
+		$('.js-target-category2').prop('disabled', true);
 		$('.js-target-category2-wrapper').hide();
 	}
 }
