@@ -8,8 +8,7 @@
 	response.setHeader("Content-Disposition",
 			"attachment; filename=sv_logs.xls");
 	response.setHeader("Content-Description", "JSP Generated Data");
-%>
-<!DOCTYPE table PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+%><!DOCTYPE table PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>

@@ -95,7 +95,7 @@ function add_response_item($question, response_item){
 
 function bind_sortable(){
 	var tmp = $('.js-questions-area').sortable({
-		handle: '.js-move-question, h2',
+		handle: '.js-move-question, h2'
 	});
 	tmp.on('sortstop', function(){
 		$('.question').each(function(index, question){

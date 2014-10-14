@@ -24,23 +24,28 @@
 	</select>
 
 	<select id="branchList" parameterType="String" resultType="String">
-		select distinct(dep_nm)
+		select distinct dep_nm
 		from VW_SURVEY
 		<if test="category != ''">
-			where cat_cd in (select cat_cd from VW_SURVEY where
+			where cat_cd in (select cat_cd from VW_SURVEY 
 			<if test="category == '목적외이용자'">
+				where
 				cat_cd='AAE000000000'
 			</if>
 			<if test="category == '농지은행'">
+				where
 				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000') 
 			</if>
 			<if test="category == '농지연금'">
+				where
 				cat_cd='CAA000000000'
 			</if>
 			<if test="category == '경영이양직불사업'">
+				where
 				cat_cd='DAA000000000'
 			</if>
 			<if test="category == '유지관리'">
+				where
 				cat_cd='MANAGE'
 			</if>
 			)
@@ -54,22 +59,26 @@
 		where 
 
 			<if test="category == '목적외이용자'">
-				cat_cd='AAE000000000'
+				cat_cd='AAE000000000' and
 			</if>
 			<if test="category == '농지은행'">
-				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000') 
+				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+				and 
 			</if>
 			<if test="category == '농지연금'">
 				cat_cd='CAA000000000'
+				and
 			</if>
 			<if test="category == '경영이양직불사업'">
 				cat_cd='DAA000000000'
+				and
 			</if>
 			<if test="category == '유지관리'">
 				cat_cd='MANAGE'
+				and
 			</if>
 
-		and dep_nm like #{branch,jdbcType=VARCHAR}
+		 dep_nm like #{branch,jdbcType=VARCHAR}
 
 		)
 		<if test="category == '유지관리'">
@@ -84,21 +93,25 @@
 		select distinct cst_no, cst_nm, hp, cat_nm, cont_dd, dep_nm from VW_SURVEY
 		where 
 			<if test="category == '목적외이용자'">
-				cat_cd='AAE000000000'
+				cat_cd='AAE000000000' and
 			</if>
 			<if test="category == '농지은행'">
-				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000') 
+				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+				and 
 			</if>
 			<if test="category == '농지연금'">
 				cat_cd='CAA000000000'
+				and
 			</if>
 			<if test="category == '경영이양직불사업'">
 				cat_cd='DAA000000000'
+				and
 			</if>
 			<if test="category == '유지관리'">
 				cat_cd='MANAGE'
+				and
 			</if>
-		and dep_nm like #{branch,jdbcType=VARCHAR}
+		 dep_nm like #{branch,jdbcType=VARCHAR}
 		and cont_dd &gt;= #{startDate,jdbcType=VARCHAR}
 		and cont_dd &lt;= #{endDate,jdbcType=VARCHAR}
 
@@ -118,20 +131,25 @@
 		
 			<if test="category == '목적외이용자'">
 				cat_cd='AAE000000000'
+				and
 			</if>
 			<if test="category == '농지은행'">
-				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000') 
+				CAT_CD IN ('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+				and 
 			</if>
 			<if test="category == '농지연금'">
 				cat_cd='CAA000000000'
+				and
 			</if>
 			<if test="category == '경영이양직불사업'">
 				cat_cd='DAA000000000'
+				and
 			</if>
 			<if test="category == '유지관리'">
 				cat_cd='MANAGE'
+				and
 			</if>
-		and dep_nm like #{branch,jdbcType=VARCHAR}
+		 dep_nm like #{branch,jdbcType=VARCHAR}
 		and cont_dd &gt;= #{startDate,jdbcType=VARCHAR}
 		and cont_dd &lt;= #{endDate,jdbcType=VARCHAR}
 		)

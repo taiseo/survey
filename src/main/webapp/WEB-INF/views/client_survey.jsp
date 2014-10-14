@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<jsp:include page="include/header.jsp" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %><jsp:include page="include/header.jsp" />
 
 <img src="<%=request.getContextPath() %>/resources/images/client-logo.png" class="l-block  client-logo-img" />
 <div class="limit-width  center-block  client" data-client="${sessionId}" data-survey-id="${survey.id }">
@@ -50,11 +47,12 @@
 
 	<div class="complete-page" style="display: none">
 		<div class="hero-unit">
-			<h1>감사합니다</h1>
+			<h3>고객님의 소중한 의견에 감사합니다.</h3>
 			<p>설문을 완료했습니다.</p>
-			<a class="btn  btn-large  js-rewrite">
+			<!-- <a class="btn  btn-large  js-rewrite">
 				다시 작성하기
 		    </a>
+		    -->
 		</div>
 	</div>
 	<p class="text-center">
