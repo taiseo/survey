@@ -6,9 +6,9 @@
 		<id column="cst_no" jdbcType="VARCHAR" property="cstNo" />
 		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
 		<result column="hp" jdbcType="VARCHAR" property="hp" />
-		<result column="ptcp_tit" jdbcType="VARCHAR" property="ptcpTit" />
-		<result column="ptcp_dttm" jdbcType="VARCHAR" property="ptcpDttm" />
-		<result column="etc_04" jdbcType="VARCHAR" property="etc01" />
+		<result column="cat_nm" jdbcType="VARCHAR" property="ptcpTit" />
+		<result column="cont_dd" jdbcType="VARCHAR" property="ptcpDttm" />
+		<result column="dep_nm" jdbcType="VARCHAR" property="etc01" />
 	</resultMap>
 
 	<select id="list" resultMap="BaseResultMap">
