@@ -26,7 +26,7 @@
 	<select id="branchList" parameterType="String" resultType="String">
 		select distinct(dep_nm)
 		from VW_SURVEY
-		<if test="category == ''">
+		<if test="category != ''">
 			where cat_cd in (select cat_cd from VW_SURVEY where
 			<if test="category == '목적외이용자'">
 				cat_cd='AAE000000000'
