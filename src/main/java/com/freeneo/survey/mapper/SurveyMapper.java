@@ -10,7 +10,7 @@ public interface SurveyMapper {
 	public List<Survey> list();
 	public List<Survey> myList(String username);
 	public Survey select(Long id);
-	public void insert(Survey survey);
+	public Long insert(Survey survey);
 	public void update(Survey survey);
 	public void delete(Long id);
 	public List<Survey> selectByWriter(String writer);

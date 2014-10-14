@@ -50,7 +50,7 @@
 		WHERE SURVEY_ID = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<insert id="insert" parameterType="com.freeneo.survey.domain.Survey">
+	<insert  id="insert" parameterType="com.freeneo.survey.domain.Survey">
 		<selectKey keyProperty="id" order="BEFORE" resultType="long">
 			SELECT seq_sv_surveys.nextval from DUAL 
 		</selectKey>
