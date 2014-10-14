@@ -226,7 +226,7 @@ public class SurveyService {
 		}
 		
 		for (Mms mms : mmsList) {
-//			mmsMapper.insert(mms);
+			mmsMapper.insert(mms);
 		}
 		
 		if(!survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
