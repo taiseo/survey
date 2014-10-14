@@ -14,19 +14,19 @@
 	<select id="list" resultMap="BaseResultMap">
 		SELECT
 		*
-		FROM TBCR_1000
+		FROM vw_survey
 	</select>
 
 	<select id="projectList" resultType="String">
 		select distinct(cat_nm)
-		from TBCR_1041
+		from vw_survey
 	</select>
 
 	<select id="branchList" parameterType="String" resultType="String">
-		select distinct(etc_04)
-		from TBCR_1040
+		select distinct(dep_nm)
+		from VW_SURVEY
 		<if test="category != null">
-			where cat_cd in (select cat_cd from TBCR_1041 where 
+			where cat_cd in (select cat_cd from VW_SURVEY where 
 			<if test="category != '농지은행'">
 					cat_nm like #{category,jdbcType=VARCHAR}
 				</if>
@@ -37,27 +37,25 @@
 				</if>
 				)
 		</if>
-		ORDER BY etc_04 ASC
+		ORDER BY dep_nm ASC
 	</select>
 
 	<select id="customerList" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, e.cat_nm, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
-			, tbcr_1041 e
-			where
-				e.CAT_CD=d.CAT_CD
-				and c.cst_no = d.cst_no
+			select distinct cst_no, cst_nm, hp, cat_nm, cont_dd, dep_nm from VW_SURVEY
+			where 1
+				
 				<if test="category != '농지은행'">
-					and e.cat_nm like #{category,jdbcType=VARCHAR}
+					and cat_nm like #{category,jdbcType=VARCHAR}
 				</if>
 				<if test="category == '농지은행'">
-					and e.cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
+					cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
 					'BAE000000000','BAF000000000','BAG000000000','BAH000000000',
 					'BAI000000000','BAJ000000000')
 				</if>
 				
-				and d.etc_04 like #{branch,jdbcType=VARCHAR}
+				and dep_nm like #{branch,jdbcType=VARCHAR}
 			
 		) 
 		<if test="category == '유지관리'">
@@ -70,22 +68,19 @@
 	<select id="customerListByDate" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from (
-			select distinct c.cst_no, c.cst_nm, c.hp, e.cat_nm, d.ptcp_dttm, d.etc_04 from tbcr_1000 c, TBCR_1040 d
-			, tbcr_1041 e
-			where
-				d.CAT_CD=e.CAT_CD
-				and c.cst_no = d.cst_no
+			select distinct cst_no, cst_nm, hp, cat_nm, cont_dd, dep_nm from VW_SURVEY
+			where 1
 				<if test="category != '농지은행'">
-					and e.cat_nm like #{category,jdbcType=VARCHAR}
+					and cat_nm like #{category,jdbcType=VARCHAR}
 				</if>
 				<if test="category == '농지은행'">
-					and e.cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
+					and cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
 					'BAE000000000','BAF000000000','BAG000000000','BAH000000000',
 					'BAI000000000','BAJ000000000')
 				</if>
-				and d.etc_04 like #{branch,jdbcType=VARCHAR}
-				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
-				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
+				and dep_nm like #{branch,jdbcType=VARCHAR}
+				and cont_dd &gt;= #{startDate,jdbcType=VARCHAR}
+				and cont_dd &lt;= #{endDate,jdbcType=VARCHAR}
 			
 		) 
 		<if test="category == '유지관리'">
@@ -98,22 +93,21 @@
 	<select id="customerCount" parameterType="map"
 		resultType="Integer">
 		select count(*) from (
-			select distinct c.cst_no 
-			from tbcr_1000 c, TBCR_1040 d, TBCR_1041 e
+			select distinct cst_no 
+			from VW_SURVEY
 			where
-				d.cat_cd=e.cat_cd
-				and c.cst_no = d.cst_no
+				1
 				<if test="category != '농지은행'">
-					and e.cat_nm like #{category,jdbcType=VARCHAR}
+					and cat_nm like #{category,jdbcType=VARCHAR}
 				</if>
 				<if test="category == '농지은행'">
-					and e.cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
+					and cat_cd in ('BAA000000000','BAB000000000','BAC000000000','BAD000000000',
 					'BAE000000000','BAF000000000','BAG000000000','BAH000000000',
 					'BAI000000000','BAJ000000000')
 				</if>
-				and d.etc_04 like #{branch,jdbcType=VARCHAR}
-				and d.ptcp_dttm &gt;= #{startDate,jdbcType=VARCHAR}
-				and d.ptcp_dttm &lt;= #{endDate,jdbcType=VARCHAR}
+				and dep_nm like #{branch,jdbcType=VARCHAR}
+				and cont_dd &gt;= #{startDate,jdbcType=VARCHAR}
+				and cont_dd &lt;= #{endDate,jdbcType=VARCHAR}
 		) 
 		<if test="category == '유지관리'">
 		where rownum &lt;= #{limit,jdbcType=NUMERIC}
