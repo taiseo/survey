@@ -188,12 +188,13 @@ public class SurveyService {
 				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 				
 	
-				mms.setMsg(survey.getMsg()
+				mms.setMsg(
+						survey.getMsgSubject() 
+						+ " / "
+						+ survey.getMsg()
 						+ " "+ domain + "/survey/survey/"
 						+ survey.getId());
-				//SMS용 임시!
-				//mms.setMsg( domain + "/survey/survey/"
-				//		+ survey.getId());
+				
 				mmsList.add(mms);
 			}			
 		}else{
@@ -206,12 +207,13 @@ public class SurveyService {
 				mms.setFilePath1(request.getRealPath("/images/upload_logo.jpg"));
 				
 	
-				mms.setMsg(survey.getMsg()
-						+ " "+ domain + "/survey/"
+				mms.setMsg(
+						survey.getMsgSubject() 
+						+ " / "
+						+ survey.getMsg()
+						+ " "+ domain + "/survey/survey/"
 						+ survey.getId());
-				//SMS용 임시!
-				mms.setMsg( domain + "/survey/"
-						+ survey.getId());
+				
 				mmsList.add(mms);
 			}
 		}
@@ -224,7 +226,7 @@ public class SurveyService {
 		}
 		
 		for (Mms mms : mmsList) {
-			mmsMapper.insert(mms);
+//			mmsMapper.insert(mms);
 		}
 		
 		if(!survey.getTargetRegistrationType().equals("엑셀파일 업로드")){
