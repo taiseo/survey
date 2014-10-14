@@ -615,19 +615,27 @@ public class SurveyController {
 		survey.setStatus("임시저장");
 		survey.setSendCount(0);
 		
-		Long newSurveyId = surveyMapper.insert(survey);
+		surveyMapper.insert(survey);
 		logger.debug("inserted survey = {}", survey);
 		
-		logger.debug("newSurveyId =???? {}", newSurveyId);
+		//logger.debug("newSurveyId =???? {}", newSurveyId);
 		
 		// 질문과 답항 복사
 		List<Question> questions = questionMapper.list(id);
+		
+		logger.debug("questions..... = {}", questions);
 
 		for (Question question : questions) {
 			List<ResponseItem> responseItems = responseItemMapper.list(question.getId());
+			
+			logger.debug("responseItems..... = {}", responseItems);
+			
 			question.setId(null);
-			question.setSurveyId(newSurveyId);
+			question.setSurveyId(survey.getId());
 			questionMapper.insert(question);
+			
+			logger.debug("question..... = {}", question);
+			
 			for(ResponseItem responseItem : responseItems){
 				responseItem.setId(null);
 				responseItem.setQuestionId(question.getId());
@@ -637,6 +645,6 @@ public class SurveyController {
 		
 		request.setAttribute("log_msg", survey.getTitle() + " 복사 : 입력");
 		
-		return "redirect:/login/";
+		return "redirect:/surveys/";
 	}
 }
