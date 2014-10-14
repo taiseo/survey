@@ -47,7 +47,7 @@
 
 	<div class="complete-page" style="display: none">
 		<div class="hero-unit">
-			<h3 style="font-size:22px;">고객님의 소중한 의견에 감사합니다.</h3>
+			<h3 style="font-size:22px;">고객님의 소중한 <br />의견에 감사합니다.</h3>
 			<p>설문을 완료했습니다.</p>
 			<!-- <a class="btn  btn-large  js-rewrite">
 				다시 작성하기
