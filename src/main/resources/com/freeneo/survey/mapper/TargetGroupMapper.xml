@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.TargetGroupMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.TargetGroup">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="TITLE" jdbcType="VARCHAR" property="title" />
+		<result column="CATEGORY1" jdbcType="VARCHAR" property="category1" />
+		<result column="CATEGORY2" jdbcType="VARCHAR" property="category2" />
+		<result column="BONBU" jdbcType="VARCHAR" property="bonbu" />
+		<result column="BRANCHES" jdbcType="VARCHAR" property="branches" />
+		<result column="LIMIT" jdbcType="NUMERIC" property="limit" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
+		  id
+		  , title
+		  , category1
+		  , category2
+		  , bonbu
+		  , nvl(replace(replace(replace(branches, ']', ''), '[', ''), '"', ''), '') as branches
+		FROM SV_TARGET_GROUPS
+		ORDER BY ID DESC
+	</select>
+
+	<select id="select" resultMap="BaseResultMap">
+		SELECT * FROM SV_TARGET_GROUPS 
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.TargetGroup">
+		INSERT INTO SV_TARGET_GROUPS 
+			(ID, TITLE, CATEGORY1, CATEGORY2, BONBU, BRANCHES, LIMIT)
+		VALUES (
+			SEQ_SV_TARGET_GROUPS.NEXTVAL, 
+			#{title,jdbcType=VARCHAR},
+			#{category1,jdbcType=VARCHAR},
+			#{category2,jdbcType=VARCHAR},
+			#{bonbu,jdbcType=VARCHAR},
+			#{branches,jdbcType=VARCHAR},
+			#{limit,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.TargetGroup">
+		UPDATE SV_TARGET_GROUPS SET
+		
+			TITLE = #{title,jdbcType=VARCHAR},
+			CATEGORY1 = #{category1,jdbcType=VARCHAR},
+			CATEGORY2 = #{category2,jdbcType=VARCHAR},
+			BONBU = #{bonbu,jdbcType=VARCHAR},
+			BRANCHES = #{branches,jdbcType=VARCHAR},
+			LIMIT = #{limit,jdbcType=NUMERIC}
+			
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SV_TARGET_GROUPS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+	
+</mapper>

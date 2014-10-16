@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.ResponseItemMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.ResponseItem">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="question_id" jdbcType="NUMERIC" property="questionId" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="order_no" jdbcType="NUMERIC" property="orderNo" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
+	</resultMap>
+
+	<select id="list" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT * FROM SV_RESPONSE_ITEMS
+		WHERE QUESTION_ID = #{questionId,jdbcType=NUMERIC}
+		ORDER BY ORDER_NO
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSE_ITEMS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectResponseItemCount" parameterType="com.freeneo.survey.domain.ResponseItem" resultType="Long">
+		select count(*) 
+		from sv_responses 
+		where question_id = #{questionId,jdbcType=NUMERIC} and response = #{content,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectResponseItemCountByBranch" resultType="Long">
+		select count(*) 
+		from sv_responses rs, sv_respondents rt 
+		where 
+			rs.respondent = rt.id
+			and rs.question_id = #{responseItem.questionId,jdbcType=NUMERIC} 
+			and rs.response = #{responseItem.content,jdbcType=VARCHAR}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.ResponseItem">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+	        SELECT seq_SV_RESPONSE_ITEMS.nextval FROM DUAL
+	    </selectKey>
+	
+		INSERT INTO SV_RESPONSE_ITEMS 
+			(id, question_id, content, order_no, datetime)
+		VALUES (
+			#{id}, 
+			#{questionId,jdbcType=NUMERIC},
+			#{content,jdbcType=VARCHAR},
+			#{orderNo, jdbcType=NUMERIC},
+			SYSDATE
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.ResponseItem">
+		UPDATE SV_RESPONSE_ITEMS SET
+			question_id = #{questionId,jdbcType=NUMERIC},
+			content = #{content,jdbcType=VARCHAR},
+			order_no = #{orderNo, jdbcType=NUMERIC}
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SV_RESPONSE_ITEMS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>

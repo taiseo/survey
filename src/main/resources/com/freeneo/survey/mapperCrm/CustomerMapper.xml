@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapperCrm.CustomerMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Customer">
+		<id column="cst_no" jdbcType="VARCHAR" property="cstNo" />
+		<result column="cst_nm" jdbcType="VARCHAR" property="cstNm" />
+		<result column="hp" jdbcType="VARCHAR" property="hp" />
+		<result column="cat_nm" jdbcType="VARCHAR" property="ptcpTit" />
+		<result column="cont_dd" jdbcType="VARCHAR" property="ptcpDttm" />
+		<result column="dep_nm" jdbcType="VARCHAR" property="etc01" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM vw_survey
+	</select>
+
+	<select id="projectList" resultType="String">
+		select distinct(cat_nm)
+		from
+		vw_survey
+	</select>
+
+	<select id="branchList" parameterType="String" resultType="String">
+		select distinct dep_nm
+		from VW_SURVEY
+			<if test="category == '목적외이용자'">
+				where
+				cat_cd='AAE000000000'
+			</if>
+			<if test="category == '농지은행'">
+				where
+				CAT_CD IN
+				('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+			</if>
+			<if test="category == '농지연금'">
+				where
+				cat_cd='CAA000000000'
+			</if>
+			<if test="category == '경영이양직불사업'">
+				where
+				cat_cd='DAA000000000'
+			</if>
+			<if test="category == '유지관리'">
+				where
+				cat_cd='MANAGE'
+			</if>
+		ORDER BY dep_nm ASC
+	</select>
+
+	<select id="customerList" parameterType="map" resultMap="BaseResultMap">
+		select * from (
+		select distinct cst_no, cst_nm, hp, cat_nm, cont_dd,
+		dep_nm from VW_SURVEY
+		where
+
+		<if test="category == '목적외이용자'">
+			cat_cd='AAE000000000' and
+		</if>
+		<if test="category == '농지은행'">
+			CAT_CD IN
+			('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+			and
+		</if>
+		<if test="category == '농지연금'">
+			cat_cd='CAA000000000'
+			and
+		</if>
+		<if test="category == '경영이양직불사업'">
+			cat_cd='DAA000000000'
+			and
+		</if>
+		<if test="category == '유지관리'">
+			cat_cd='MANAGE'
+			and
+		</if>
+
+		dep_nm like #{branch,jdbcType=VARCHAR}
+
+		)
+		<if test="category == '유지관리'">
+			where rownum &lt;= #{limit,jdbcType=NUMERIC}
+		</if>
+	</select>
+
+	<!-- order by DBMS_RANDOM.RANDOM -->
+
+	<select id="customerListByDate" parameterType="map" resultMap="BaseResultMap">
+		select * from (
+		select distinct cst_no, cst_nm, hp, cat_nm, cont_dd,
+		dep_nm from VW_SURVEY
+		where
+		<if test="category == '목적외이용자'">
+			cat_cd='AAE000000000' and
+		</if>
+		<if test="category == '농지은행'">
+			CAT_CD IN
+			('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+			and
+		</if>
+		<if test="category == '농지연금'">
+			cat_cd='CAA000000000'
+			and
+		</if>
+		<if test="category == '경영이양직불사업'">
+			cat_cd='DAA000000000'
+			and
+		</if>
+		<if test="category == '유지관리'">
+			cat_cd='MANAGE'
+			and
+		</if>
+		dep_nm like #{branch,jdbcType=VARCHAR}
+		and cont_dd &gt;=
+		#{startDate,jdbcType=VARCHAR}
+		and cont_dd &lt;=
+		#{endDate,jdbcType=VARCHAR}
+
+		)
+		<if test="category == '유지관리'">
+			where rownum &lt;= #{limit,jdbcType=NUMERIC}
+		</if>
+	</select>
+
+	<!-- order by DBMS_RANDOM.RANDOM -->
+
+	<select id="customerCount" parameterType="map" resultType="Integer">
+		select count(*) from (
+		select *
+		from VW_SURVEY
+		where
+
+		<if test="category == '목적외이용자'">
+			cat_cd='AAE000000000'
+			and
+		</if>
+		<if test="category == '농지은행'">
+			CAT_CD IN
+			('BAA000000000','BAB000000000','BAC000000000','BAD000000000','BAE000000000','BAF000000000','BAG000000000','BAH000000000','BAI000000000','BAJ000000000')
+			and
+		</if>
+		<if test="category == '농지연금'">
+			cat_cd='CAA000000000'
+			and
+		</if>
+		<if test="category == '경영이양직불사업'">
+			cat_cd='DAA000000000'
+			and
+		</if>
+		<if test="category == '유지관리'">
+			cat_cd='MANAGE'
+			and
+		</if>
+		dep_nm like #{branch,jdbcType=VARCHAR}
+		and cont_dd &gt;=
+		#{startDate,jdbcType=VARCHAR}
+		and cont_dd &lt;=
+		#{endDate,jdbcType=VARCHAR}
+		)
+		<if test="category == '유지관리'">
+			where rownum &lt;= #{limit,jdbcType=NUMERIC}
+		</if>
+	</select>
+</mapper>

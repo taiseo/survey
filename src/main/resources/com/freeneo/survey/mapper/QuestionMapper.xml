@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.QuestionMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Question">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="survey_id" jdbcType="NUMERIC" property="surveyId" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="content_detail" jdbcType="VARCHAR" property="contentDetail" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="order_no" jdbcType="NUMERIC" property="orderNo" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
+	</resultMap>
+
+	<select id="list" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT * FROM SV_QUESTIONS 
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+		ORDER BY ORDER_NO ASC
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_QUESTIONS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectRespondentCount" parameterType="java.lang.Long" resultType="Long">
+		select count(distinct(respondent)) 
+		from sv_responses 
+		where question_id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectRespondentCountByBranch" resultType="Long">
+		select count(distinct(respondent))
+		from sv_responses rs, sv_respondents rt
+		where 
+			rt.id = rs.respondent
+			and rs.question_id = #{questionId,jdbcType=NUMERIC}
+           	and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<select id="selectResponses" parameterType="Long" resultType="java.lang.String">
+		select response 
+		from sv_responses 
+		where question_id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectResponsesByBranch" resultType="java.lang.String">
+		select rs.response 
+		from sv_responses rs, sv_respondents rt
+		where 
+			rt.id = rs.respondent
+			and rs.question_id = #{id,jdbcType=NUMERIC}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Question" keyColumn="id">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+	        SELECT seq_SV_QUESTIONS.nextval FROM DUAL
+	    </selectKey>
+		INSERT INTO SV_QUESTIONS 
+			(id, survey_id, content, content_detail, type, order_no, datetime)
+		VALUES (
+			#{id}, 
+			#{surveyId,jdbcType=NUMERIC},
+			#{content,jdbcType=VARCHAR},
+			#{contentDetail,jdbcType=VARCHAR},
+			#{type,jdbcType=VARCHAR},
+			#{orderNo,jdbcType=NUMERIC},
+			SYSDATE
+		)
+	</insert>
+	
+
+	<update id="update" parameterType="com.freeneo.survey.domain.Question">
+		UPDATE SV_QUESTIONS SET
+			survey_id = #{surveyId,jdbcType=NUMERIC},
+			content = #{content,jdbcType=VARCHAR},
+			content_detail = #{contentDetail,jdbcType=VARCHAR},
+			type = #{type,jdbcType=VARCHAR},
+			order_no = #{orderNo,jdbcType=NUMERIC}
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SV_QUESTIONS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.ResponseMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Response">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="survey_id" jdbcType="NUMERIC" property="surveyId" />
+		<result column="question_id" jdbcType="NUMERIC" property="questionId" />
+		<result column="respondent" jdbcType="VARCHAR" property="respondent" />
+		<result column="response" jdbcType="VARCHAR" property="response" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
+		<result column="bonbu" jdbcType="VARCHAR" property="bonbu" />
+		<result column="branch" jdbcType="VARCHAR" property="branch" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT * FROM SV_RESPONSES
+	</select>
+	
+	<select id="listFullBySurveyId" resultMap="BaseResultMap">
+		select rt.question_id, rt.respondent, rt.response, rt.datetime, rt.survey_id, 
+				rs.bonbu, rs.branch, q.type
+		from sv_respondents rs, sv_responses rt, sv_questions q
+		where 
+			rs.id = rt.respondent 
+      		and q.id = rt.question_id
+			and rt.survey_id = #{surveyId}
+		order by branch, question_id
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSES
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByQuestionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSES
+		WHERE question_id = #{questionId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByQuestionIdAndBranch" resultMap="BaseResultMap">
+		SELECT
+		rs.*, rt.*
+		from sv_respondents rt, sv_responses rs
+		WHERE 
+			rt.id = rs.respondent 
+			and rs.question_id = #{questionId,jdbcType=NUMERIC}
+			and rt.branch = #{branch,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByQuestionIdAndRespondent" 
+		parameterType="com.freeneo.survey.domain.Response" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_RESPONSES
+		WHERE respondent = #{respondent,jdbcType=VARCHAR}
+			AND question_id = #{questionId,jdbcType=NUMERIC}
+	</select>
+	
+	<insert id="insert" parameterType="com.freeneo.survey.domain.Response">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+			SELECT seq_SV_RESPONSES.nextval from DUAL 
+		</selectKey>
+		INSERT INTO SV_RESPONSES 
+			(id, survey_id, question_id, respondent, response, datetime)
+		VALUES (
+			#{id}, 
+			#{surveyId,jdbcType=NUMERIC},
+			#{questionId,jdbcType=NUMERIC},
+			#{respondent,jdbcType=VARCHAR},
+			#{response,jdbcType=VARCHAR},
+			SYSDATE
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.Response">
+		UPDATE SV_RESPONSES SET
+			survey_id = #{surveyId,jdbcType=NUMERIC},
+			question_id = #{questionId,jdbcType=NUMERIC},
+			respondent = #{respondent,jdbcType=VARCHAR},
+			response = #{response,jdbcType=VARCHAR} 
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SV_RESPONSES
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+
+	<delete id="deleteByQuestionIdAndRespondent" parameterType="com.freeneo.survey.domain.Response">
+		DELETE FROM SV_RESPONSES
+		WHERE question_id = #{questionId,jdbcType=NUMERIC} AND respondent = #{respondent,jdbcType=VARCHAR}
+	</delete>
+
+	<select id="countRespondentById" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM SV_RESPONDENTS WHERE ID = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertRespondent" parameterType="String">
+		INSERT INTO SV_RESPONDENTS (ID, BONBU, BRANCH, SURVEY_ID) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{bonbu,jdbcType=VARCHAR},
+			#{branch,jdbcType=VARCHAR},
+			#{surveyId,jdbcType=NUMERIC}
+		)
+	</insert>
+
+	<update id="updateRespondent" parameterType="String">
+		UPDATE SV_RESPONDENTS SET 
+			BONBU = #{bonbu,jdbcType=VARCHAR},
+			BRANCH = #{branch,jdbcType=VARCHAR},
+			SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+		WHERE
+			ID = #{id,jdbcType=NUMERIC}
+	</update>
+	
+	<select id="countRespondentBySurveyId" parameterType="Long" resultType="Long">
+		SELECT COUNT(*)
+		FROM SV_RESPONDENTS
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="countRespondentBySurveyIdAndBranch"  resultType="Long">
+		SELECT COUNT(*)
+		FROM SV_RESPONDENTS
+		WHERE SURVEY_ID = #{surveyId,jdbcType=NUMERIC}
+			AND BRANCH = #{branch,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="countRespondentBySurveysAndBranches" parameterType="java.util.List" resultType="HashMap">
+		SELECT BRANCH, COUNT(*) as COUNT
+		FROM sv_RESPONDENTS
+		WHERE 
+			SURVEY_ID IN 
+				<foreach collection="surveyList" open="(" close=")" separator="," item="survey">
+					#{survey.id,jdbcType=NUMERIC}
+				</foreach>
+			AND BRANCH IN
+				<foreach collection="branchList" open="(" close=")" separator="," item="branch">
+					#{branch,jdbcType=VARCHAR}
+				</foreach>
+		GROUP BY BRANCH
+	</select>
+	
+</mapper>

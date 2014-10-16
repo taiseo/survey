@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--
+        Because MapperScannerConfigurer is a BeanDefinitionRegistryPostProcessor, it cannot be 
+        configured via @Configuration files with a @Bean annotaiton, because those files are
+        themselves configured via a BeanDefinitionRegistryPostProcessor which cannot spawn
+        another one.
+    -->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapper"/>
+       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"  />
+    </bean>
+
+    <bean id="innerMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapperInner"/>
+       <property name="sqlSessionFactoryBeanName" value="innerSqlSessionFactory"  />
+    </bean>
+    
+    <bean id="crmMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapperCrm"/>
+       <property name="sqlSessionFactoryBeanName" value="crmSqlSessionFactory"  />
+    </bean>
+    
+    <bean id="mmsMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+       <property name="basePackage" value="com.freeneo.survey.mapperMms"/>
+       <property name="sqlSessionFactoryBeanName" value="mmsSqlSessionFactory"  />
+    </bean>
+
+    <!-- 
+        Load the rest of our configuration via our base configuration class
+     -->
+     <bean class="com.freeneo.survey.config.AppConfig" />
+
+</beans>

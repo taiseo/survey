@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freeneo.survey.mapper.SurveyMapper">
+
+	<resultMap id="BaseResultMap" type="com.freeneo.survey.domain.Survey">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="msg_subject" jdbcType="VARCHAR" property="msgSubject" />
+		<result column="msg" jdbcType="VARCHAR" property="msg" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="start_date" jdbcType="VARCHAR" property="startDate" />
+		<result column="end_date" jdbcType="VARCHAR" property="endDate" />
+		<result column="target_category1" jdbcType="VARCHAR" property="targetCategory1" />
+		<result column="target_category2" jdbcType="VARCHAR" property="targetCategory2" />
+		<result column="target_bonbu" jdbcType="VARCHAR" property="targetBonbu" />
+		<result column="target_branches" jdbcType="VARCHAR" property="targetBranches" />
+		<result column="target_group_ids" jdbcType="VARCHAR" property="targetGroupIds" />
+		<result column="target_start_date" jdbcType="VARCHAR" property="targetStartDate" />
+		<result column="target_end_date" jdbcType="VARCHAR" property="targetEndDate" />
+		<result column="target_registration_type" jdbcType="VARCHAR" property="targetRegistrationType" />
+		<result column="limit" jdbcType="NUMERIC" property="limit" />
+		<result column="writer" jdbcType="VARCHAR" property="writer" />
+		<result column="part" jdbcType="VARCHAR" property="part" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="send_count" jdbcType="NUMERIC" property="sendCount" />
+		<result column="datetime" jdbcType="DATE" property="datetime" />
+	</resultMap>
+
+	<select id="list" resultMap="BaseResultMap">
+		SELECT S.* FROM SV_SURVEYS S ORDER BY ID DESC
+	</select>
+	
+	<select id="myList" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS 
+		WHERE writer LIKE #{username,jdbcType=VARCHAR}
+		ORDER BY ID DESC
+	</select>
+
+	<select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM SV_SURVEYS
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectRespondentCount" parameterType="java.lang.Long" resultType="Long">
+		SELECT 
+		COUNT(DISTINCT(RESPONDENT)) 
+		FROM SV_RESPONSES 
+		WHERE SURVEY_ID = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<insert  id="insert" parameterType="com.freeneo.survey.domain.Survey">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+			SELECT seq_sv_surveys.nextval from DUAL 
+		</selectKey>
+		
+		INSERT INTO sv_surveys 
+			(id, title, msg_subject, msg, description, start_date, end_date, 
+			target_category1, target_category2, target_bonbu, target_branches, 
+			target_group_ids, target_start_date, target_end_date, 
+			target_registration_type, limit, 
+			writer, part, status, send_count, datetime)
+		VALUES (
+			#{id}, 
+			#{title,jdbcType=VARCHAR},
+			#{msgSubject,jdbcType=VARCHAR},
+			#{msg,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{startDate,jdbcType=VARCHAR}, 
+			#{endDate,jdbcType=VARCHAR}, 
+			#{targetCategory1,jdbcType=VARCHAR},
+			#{targetCategory2,jdbcType=VARCHAR},
+			#{targetBonbu,jdbcType=VARCHAR},
+			#{targetBranches,jdbcType=VARCHAR},
+			#{targetGroupIds,jdbcType=VARCHAR},
+			#{targetStartDate,jdbcType=VARCHAR},
+			#{targetEndDate,jdbcType=VARCHAR},
+			#{targetRegistrationType,jdbcType=VARCHAR},
+			#{limit,jdbcType=NUMERIC},
+			#{writer,jdbcType=VARCHAR}, 
+			#{part,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{sendCount,jdbcType=NUMERIC},
+			SYSDATE
+		)
+	</insert>
+
+	<update id="update" parameterType="com.freeneo.survey.domain.Survey">
+		UPDATE sv_surveys SET
+		
+			title = #{title,jdbcType=VARCHAR},
+			msg_subject = #{msgSubject,jdbcType=VARCHAR},
+			msg = #{msg,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			start_date = #{startDate,jdbcType=VARCHAR}, 
+			end_date = #{endDate,jdbcType=VARCHAR}, 
+			target_category1 = #{targetCategory1,jdbcType=VARCHAR},
+			target_category2 = #{targetCategory2,jdbcType=VARCHAR},
+			target_bonbu = #{targetBonbu,jdbcType=VARCHAR},
+			target_branches = #{targetBranches,jdbcType=VARCHAR},
+			target_group_ids = #{targetGroupIds,jdbcType=VARCHAR},
+			target_start_date = #{targetStartDate,jdbcType=VARCHAR},
+			target_end_date = #{targetEndDate,jdbcType=VARCHAR},
+			target_registration_type = #{targetRegistrationType,jdbcType=VARCHAR},
+			limit = #{limit,jdbcType=VARCHAR},
+			writer = #{writer,jdbcType=VARCHAR}, 
+			status = #{status,jdbcType=VARCHAR},
+			send_count = #{sendCount,jdbcType=NUMERIC},
+			part = #{part,jdbcType=VARCHAR}
+			
+		WHERE ID = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM sv_surveys
+		WHERE id = #{id,jdbcType=NUMERIC}
+	</delete>
+	
+	<select id="selectByWriter" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS WHERE writer = #{writer,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByWriterAndDate" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS 
+		WHERE 
+			writer = #{writer,jdbcType=VARCHAR}
+			<if test="startDate != ''">
+				AND start_date &gt;= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate != ''">
+				AND end_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+	</select>
+
+	<select id="selectByDate" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS 
+		WHERE 1 = 1  
+			<if test="startDate != ''">
+				AND start_date &gt;= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate != ''">
+				AND end_date &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+	</select>
+	
+	<select id="listByBranch" parameterType="String" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS
+		WHERE TARGET_BRANCHES LIKE '%"' || #{branch} || '"%'
+	</select>
+
+	<select id="listByBranchAndDates" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS
+		WHERE 
+			TARGET_BRANCHES LIKE '%"' || #{branch,jdbcType=VARCHAR} || '"%'
+			AND START_DATE &gt;= #{startDate,jdbcType=VARCHAR}
+			AND END_DATE &lt;= #{endDate,jdbcType=VARCHAR}
+	</select>
+
+	<select id="listByUsernameAndDates" resultMap="BaseResultMap">
+		SELECT * FROM SV_SURVEYS
+		WHERE 
+			WRITER LIKE #{username,jdbcType=VARCHAR}
+			AND START_DATE &gt;= #{startDate,jdbcType=VARCHAR}
+			AND END_DATE &lt;= #{endDate,jdbcType=VARCHAR}
+	</select>
+
+</mapper>
