@@ -58,6 +58,9 @@ public class SurveyService {
 
 	public Survey getFullSurvey(Long id) {
 		Survey survey = surveyMapper.select(id);
+		if(survey == null){
+			return survey;
+		}
 		List<Question> questions = questionMapper.list(survey.getId());
 		for (Question question : questions) {
 			List<ResponseItem> responseItems = responseItemMapper.list(question

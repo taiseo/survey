@@ -55,6 +55,12 @@ public class ClientController {
 		
 		Survey survey = surveyService.getFullSurvey(id);
 		
+		if(survey == null){
+			model.addAttribute("error_msg", "존재하지 않는 설문입니다.");
+
+			return "client_end";
+		}
+		
 		List<Question> questions = survey.getQuestions();
 		int pageBreakerCount = 0;
 		for(Question question : questions){
